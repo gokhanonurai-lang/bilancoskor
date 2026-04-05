@@ -36,7 +36,7 @@ export default function LandingPage() {
             <button onClick={() => setShowSample(true)} className="text-sm text-brand-400 font-medium hover:text-brand-600 transition cursor-pointer">
               Örnek rapor
             </button>
-            <a href="mailto:info@finskor.com" className="text-sm text-gray-500 hover:text-gray-800 transition cursor-pointer">İletişim</a>
+            <a href="mailto:destek@bilancoskor.com" className="text-sm text-gray-500 hover:text-gray-800 transition cursor-pointer">İletişim</a>
             <Link href="/auth" className="text-sm text-gray-600 hover:text-gray-900 transition border border-gray-200 rounded-xl px-4 py-2">Giriş yap</Link>
             <Link href="/auth?tab=register" className="btn-primary text-sm py-2 px-4">Üye ol</Link>
           </div>
