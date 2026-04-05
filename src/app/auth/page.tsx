@@ -1,40 +1,19 @@
 'use client'
-import { useState, useEffect } from 'react'
+export const dynamic = 'force-dynamic'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  'https://ymjwtntlfioexudvacsj.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inltand0bnRsZmlvZXh1ZHZhY3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzODY5NTQsImV4cCI6MjA5MDk2Mjk1NH0.xW8XVjr0q7LQ_UStIf0s8q8MoYOsnJyg5ALkDAbT-CI'
-)
+import { supabase } from '@/lib/supabase'
 
 export default function AuthPage() {
   const router = useRouter()
-  const [tab, setTab] = useState(typeof window !== 'undefined' && window.location.search.includes('tab=login') ? 'login' : 'register')
+  const [tab, setTab] = useState<'login' | 'register'>('register')
+  const [sozlesmeKabul, setSozlesmeKabul] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
   const [form, setForm] = useState({ ad: '', soyad: '', email: '', sifre: '' })
-  const [resetEmail, setResetEmail] = useState('')
-  const [showReset, setShowReset] = useState(false)
-  const [showNewPassword, setShowNewPassword] = useState(false)
-  const [newPass, setNewPass] = useState('')
-  const [newPass2, setNewPass2] = useState('')
 
-  useEffect(() => {
-    // Şifre sıfırlama linkinden gelince PASSWORD_RECOVERY eventi tetiklenir
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY') {
-        setShowNewPassword(true)
-        setShowReset(false)
-        setTab('login')
-      }
-    })
-    return () => subscription.unsubscribe()
-  }, [])
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
@@ -46,7 +25,7 @@ export default function AuthPage() {
           options: { data: { ad: form.ad, soyad: form.soyad } }
         })
         if (error) throw error
-        router.push('/dashboard')
+        router.push('/analyze')
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email: form.email,
@@ -56,149 +35,114 @@ export default function AuthPage() {
         router.push('/dashboard')
       }
     } catch (err: any) {
-      const msg = err.message || 'Hata'
+      const msg = err.message || 'Bir hata oluştu'
       if (msg.includes('Invalid login')) setError('E-posta veya şifre hatalı.')
       else if (msg.includes('already registered')) setError('Bu e-posta zaten kayıtlı.')
+      else if (msg.includes('Password should be')) setError('Şifre en az 6 karakter olmalı.')
       else setError(msg)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleReset = async (e: any) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-        redirectTo: window.location.origin + '/auth',
-      })
-      if (error) throw error
-      setSuccess('Şifre sıfırlama bağlantısı e-postanıza gönderildi.')
-    } catch (err: any) {
-      setError(err.message || 'Hata oluştu.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleNewPassword = async (e: any) => {
-    e.preventDefault()
-    if (newPass !== newPass2) { setError('Şifreler eşleşmiyor.'); return }
-    if (newPass.length < 6) { setError('En az 6 karakter olmalı.'); return }
-    setLoading(true)
-    setError('')
-    const { error } = await supabase.auth.updateUser({ password: newPass })
-    setLoading(false)
-    if (error) { setError(error.message); return }
-    setSuccess('Şifreniz güncellendi!')
-    setTimeout(() => router.push('/dashboard'), 1500)
-  }
-
-  // Yeni şifre belirleme ekranı
-  if (showNewPassword) return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <nav className="border-b border-gray-100 bg-white">
-        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center">
-          <Link href="/" className="font-semibold text-xl tracking-tight">Bilanco<span className="text-brand-400">Skor</span></Link>
-        </div>
-      </nav>
-      <div className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md">
-          <div className="card">
-            {success ? (
-              <div className="text-center py-4">
-                <div className="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center mx-auto mb-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" strokeWidth="2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <h2 className="text-lg font-semibold text-gray-900 mb-2">Şifre güncellendi</h2>
-                <p className="text-sm text-gray-500">Hesabınıza yönlendiriliyorsunuz...</p>
-              </div>
-            ) : (
-              <>
-                <div className="mb-6">
-                  <h1 className="text-xl font-semibold text-gray-900 mb-1">Yeni şifre belirle</h1>
-                  <p className="text-sm text-gray-500">Hesabınız için yeni bir şifre oluşturun.</p>
-                </div>
-                <form onSubmit={handleNewPassword} className="space-y-4">
-                  <div><label className="label">Yeni şifre</label><input type="password" className="input" placeholder="En az 6 karakter" value={newPass} onChange={e => setNewPass(e.target.value)} required minLength={6} /></div>
-                  <div><label className="label">Şifre tekrar</label><input type="password" className="input" placeholder="Şifreyi tekrar girin" value={newPass2} onChange={e => setNewPass2(e.target.value)} required minLength={6} /></div>
-                  {error && <div className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</div>}
-                  <button type="submit" disabled={loading} className="btn-primary w-full py-3 disabled:opacity-60">{loading ? 'Güncelleniyor...' : 'Şifreyi güncelle'}</button>
-                </form>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <nav className="border-b border-gray-100 bg-white">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center">
-          <Link href="/" className="font-semibold text-xl tracking-tight">Bilanco<span className="text-brand-400">Skor</span></Link>
+          <Link href="/" className="font-semibold text-xl tracking-tight">
+            Fin<span className="text-brand-400">Skor</span>
+          </Link>
         </div>
       </nav>
+
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
-          {!showReset ? (
-            <>
-              <div className="bg-gray-100 p-1 rounded-2xl flex mb-6">
-                <button onClick={() => setTab('register')} className={"flex-1 py-2.5 text-sm font-medium rounded-xl transition-all " + (tab === 'register' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500')}>Üye ol</button>
-                <button onClick={() => setTab('login')} className={"flex-1 py-2.5 text-sm font-medium rounded-xl transition-all " + (tab === 'login' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500')}>Giriş yap</button>
-              </div>
-              <div className="card">
-                <div className="mb-6">
-                  <h1 className="text-xl font-semibold text-gray-900 mb-1">{tab === 'register' ? 'Hesap oluştur' : 'Tekrar hoş geldiniz'}</h1>
-                  <p className="text-sm text-gray-500">{tab === 'register' ? 'Üye olun ve bilanço raporunuzu oluşturun.' : 'Hesabınıza giriş yapın.'}</p>
-                </div>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {tab === 'register' && (
-                    <div className="grid grid-cols-2 gap-3">
-                      <div><label className="label">Ad</label><input className="input" placeholder="Gökhan" value={form.ad} onChange={e => setForm(p => ({ ...p, ad: e.target.value }))} required /></div>
-                      <div><label className="label">Soyad</label><input className="input" placeholder="Onur" value={form.soyad} onChange={e => setForm(p => ({ ...p, soyad: e.target.value }))} required /></div>
-                    </div>
-                  )}
-                  <div><label className="label">E-posta</label><input type="email" className="input" placeholder="ornek@firma.com" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} required /></div>
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label className="label" style={{margin:0}}>Şifre</label>
-                      {tab === 'login' && <button type="button" onClick={() => { setShowReset(true); setError('') }} className="text-xs text-brand-400 hover:text-brand-600 transition">Şifremi unuttum</button>}
-                    </div>
-                    <input type="password" className="input" placeholder="En az 6 karakter" value={form.sifre} onChange={e => setForm(p => ({ ...p, sifre: e.target.value }))} required minLength={6} />
-                  </div>
-                  {error && <div className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</div>}
-                  <button type="submit" disabled={loading} className="btn-primary w-full py-3 disabled:opacity-60">{loading ? 'Devam ediliyor...' : tab === 'register' ? 'Üye ol ve devam et' : 'Giriş yap'}</button>
-                </form>
-                <div className="mt-5 pt-5 border-t border-gray-100 text-center">
-                  <p className="text-xs text-gray-400">
-                    {tab === 'register' ? 'Zaten hesabınız var mı?' : 'Hesabınız yok mu?'}{' '}
-                    <button onClick={() => setTab(tab === 'register' ? 'login' : 'register')} className="text-brand-400 font-medium">{tab === 'register' ? 'Giriş yap' : 'Üye ol'}</button>
-                  </p>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="card">
-              <button onClick={() => { setShowReset(false); setSuccess(''); setError('') }} className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-800 mb-6 transition">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
-                Geri dön
+          <div className="bg-gray-100 p-1 rounded-2xl flex mb-6">
+            {(['register', 'login'] as const).map(t => (
+              <button key={t} onClick={() => setTab(t)}
+                className={`flex-1 py-2.5 text-sm font-medium rounded-xl transition-all ${
+                  tab === t ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                }`}>
+                {t === 'register' ? 'Üye ol' : 'Giriş yap'}
               </button>
-              <h1 className="text-xl font-semibold text-gray-900 mb-1">Şifre sıfırla</h1>
-              <p className="text-sm text-gray-500 mb-6">E-posta adresinize sıfırlama bağlantısı göndereceğiz.</p>
-              {success ? (
-                <div className="text-sm text-brand-600 bg-brand-50 border border-brand-100 rounded-xl px-4 py-4">{success}</div>
-              ) : (
-                <form onSubmit={handleReset} className="space-y-4">
-                  <div><label className="label">E-posta</label><input type="email" className="input" placeholder="ornek@firma.com" value={resetEmail} onChange={e => setResetEmail(e.target.value)} required /></div>
-                  {error && <div className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</div>}
-                  <button type="submit" disabled={loading} className="btn-primary w-full py-3 disabled:opacity-60">{loading ? 'Gönderiliyor...' : 'Sıfırlama bağlantısı gönder'}</button>
-                </form>
-              )}
+            ))}
+          </div>
+
+          <div className="card">
+            <div className="mb-6">
+              <h1 className="text-xl font-semibold text-gray-900 mb-1">
+                {tab === 'register' ? 'Hesap oluştur' : 'Tekrar hoş geldiniz'}
+              </h1>
+              <p className="text-sm text-gray-500">
+                {tab === 'register' ? 'Üye olun ve bilanço raporunuzu oluşturun.' : 'Hesabınıza giriş yapın.'}
+              </p>
             </div>
-          )}
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {tab === 'register' && (
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="label">Ad</label>
+                    <input className="input" placeholder="Ahmet" value={form.ad}
+                      onChange={e => setForm(p => ({ ...p, ad: e.target.value }))} required />
+                  </div>
+                  <div>
+                    <label className="label">Soyad</label>
+                    <input className="input" placeholder="Yılmaz" value={form.soyad}
+                      onChange={e => setForm(p => ({ ...p, soyad: e.target.value }))} required />
+                  </div>
+                </div>
+              )}
+              <div>
+                <label className="label">E-posta</label>
+                <input type="email" className="input" placeholder="ahmet@firma.com" value={form.email}
+                  onChange={e => setForm(p => ({ ...p, email: e.target.value }))} required />
+              </div>
+              <div>
+                <label className="label">Şifre</label>
+                <input type="password" className="input" placeholder="En az 6 karakter" value={form.sifre}
+                  onChange={e => setForm(p => ({ ...p, sifre: e.target.value }))} required minLength={6} />
+              </div>
+              {tab === 'register' && (
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <label className="flex items-start gap-2.5 cursor-pointer">
+                    <input type="checkbox" className="mt-0.5 flex-shrink-0 accent-brand-400" checked={sozlesmeKabul}
+                      onChange={e => setSozlesmeKabul(e.target.checked)} required />
+                    <span className="text-xs text-gray-500 leading-relaxed">
+                      <a href="/sozlesmeler/kullanici-sozlesmesi" target="_blank" className="text-brand-500 hover:underline">Kullanıcı Sözleşmesi</a>'ni,{' '}
+                      <a href="/sozlesmeler/gizlilik-politikasi" target="_blank" className="text-brand-500 hover:underline">Gizlilik Politikası</a>'nı ve{' '}
+                      <a href="/sozlesmeler/aydinlatma-metni" target="_blank" className="text-brand-500 hover:underline">KVKK Aydınlatma Metni</a>'ni okudum ve kabul ediyorum.
+                    </span>
+                  </label>
+                </div>
+              )}
+              {error && (
+                <div className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</div>
+              )}
+              <button type="submit" disabled={loading || (tab === 'register' && !sozlesmeKabul)}
+                className="btn-primary w-full py-3 disabled:opacity-60 disabled:cursor-not-allowed">
+                {loading ? (
+                  <span className="flex items-center gap-2 justify-center">
+                    <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="3" strokeOpacity=".3"/>
+                      <path d="M12 2a10 10 0 0 1 10 10" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+                    </svg>
+                    Devam ediliyor...
+                  </span>
+                ) : tab === 'register' ? 'Üye ol ve devam et' : 'Giriş yap'}
+              </button>
+            </form>
+
+            <div className="mt-5 pt-5 border-t border-gray-100 text-center">
+              <p className="text-xs text-gray-400">
+                {tab === 'register' ? 'Zaten hesabınız var mı?' : 'Hesabınız yok mu?'}{' '}
+                <button onClick={() => setTab(tab === 'register' ? 'login' : 'register')}
+                  className="text-brand-400 hover:text-brand-600 font-medium transition">
+                  {tab === 'register' ? 'Giriş yap' : 'Üye ol'}
+                </button>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
