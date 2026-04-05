@@ -32,7 +32,6 @@ export default function LandingPage() {
             Fin<span className="text-brand-400">Skor</span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-500 hover:text-gray-800 transition cursor-pointer">Nasıl çalışır</span>
             <button onClick={() => setShowSample(true)} className="text-sm text-brand-400 font-medium hover:text-brand-600 transition cursor-pointer">
               Örnek rapor
             </button>
