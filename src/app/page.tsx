@@ -25,23 +25,6 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
 
-      {/* NAVBAR */}
-      <nav className="border-b border-gray-100 bg-white sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-          <div className="font-semibold text-xl tracking-tight">
-            Bilanco<span className="text-brand-400">Skor</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <button onClick={() => setShowSample(true)} className="text-sm text-brand-400 font-medium hover:text-brand-600 transition cursor-pointer">
-              Örnek rapor
-            </button>
-            <a href="mailto:destek@bilancoskor.com" className="text-sm text-gray-500 hover:text-gray-800 transition cursor-pointer">İletişim</a>
-            <Link href="/auth" className="text-sm text-gray-600 hover:text-gray-900 transition border border-gray-200 rounded-xl px-4 py-2">Giriş yap</Link>
-            <Link href="/auth?tab=register" className="btn-primary text-sm py-2 px-4">Üye ol</Link>
-          </div>
-        </div>
-      </nav>
-
       {/* HERO */}
       <section className="max-w-5xl mx-auto px-6 pt-20 pb-0 text-center">
         <div className="inline-flex items-center gap-2 bg-brand-50 text-brand-600 text-xs font-medium px-3 py-1.5 rounded-full mb-6">

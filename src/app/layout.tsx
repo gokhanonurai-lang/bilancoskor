@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import NavbarClient from '@/components/NavbarClient'
 
 export const metadata: Metadata = {
   title: 'BilancoSkor — Bilanço Skorunuzu Öğrenin',
@@ -9,7 +10,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="tr">
-      <body>{children}</body>
+      <body>
+        <NavbarClient />
+        {children}
+      </body>
     </html>
   )
 }
