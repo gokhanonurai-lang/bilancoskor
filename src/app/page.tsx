@@ -29,7 +29,7 @@ export default function LandingPage() {
       <nav className="border-b border-gray-100 bg-white sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="font-semibold text-xl tracking-tight">
-            Fin<span className="text-brand-400">Skor</span>
+            Bilanco<span className="text-brand-400">Skor</span>
           </div>
           <div className="flex items-center gap-4">
             <button onClick={() => setShowSample(true)} className="text-sm text-brand-400 font-medium hover:text-brand-600 transition cursor-pointer">
