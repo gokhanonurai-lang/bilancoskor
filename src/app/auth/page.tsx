@@ -47,13 +47,6 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <nav className="border-b border-gray-100 bg-white">
-        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center">
-          <Link href="/" className="font-semibold text-xl tracking-tight">
-            Fin<span className="text-brand-400">Skor</span>
-          </Link>
-        </div>
-      </nav>
 
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
