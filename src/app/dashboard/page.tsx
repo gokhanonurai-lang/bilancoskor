@@ -40,16 +40,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="border-b border-gray-100 bg-white sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="font-semibold text-xl tracking-tight">Bilanco<span className="text-brand-400">Skor</span></Link>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-500">{email}</span>
-            <button onClick={cikis} className="text-sm text-gray-500 hover:text-gray-800">Çıkış yap</button>
-            <Link href="/analyze" className="btn-primary text-sm py-2 px-4">Yeni rapor</Link>
-          </div>
-        </div>
-      </nav>
       <div className="max-w-5xl mx-auto px-6 py-10">
         <div className="flex items-center justify-between mb-8">
           <div>

@@ -100,18 +100,6 @@ export default function ReportPage({ params }: { params: { id: string } }) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* NAVBAR */}
-      <nav className="border-b border-gray-100 bg-white sticky top-0 z-50 print:hidden">
-        <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="font-semibold text-xl tracking-tight">Bilanco<span className="text-brand-400">Skor</span></Link>
-          <div className="flex items-center gap-4">
-            <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-800 transition">Hesabım</Link>
-            <button onClick={handlePrint} className="btn-primary text-sm py-2 px-4 flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              PDF indir
-            </button>
-          </div>
-        </div>
-      </nav>
 
       <div className="max-w-4xl mx-auto px-6 py-10 space-y-6">
 
