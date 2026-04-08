@@ -106,6 +106,13 @@ export default function AuthPage() {
                 <label className="label">Şifre</label>
                 <input type="password" className="input" placeholder="En az 6 karakter" value={form.sifre}
                   onChange={e => setForm(p => ({ ...p, sifre: e.target.value }))} required minLength={6} />
+              {tab === 'login' && (
+                <div className="text-right -mt-1">
+                  <button type="button" onClick={handleForgotPassword} className="text-xs text-brand-400 hover:text-brand-600 transition">
+                    Şifremi unuttum
+                  </button>
+                </div>
+              )}
               </div>
               {tab === 'register' && (
                 <div className="bg-gray-50 rounded-xl p-3">
