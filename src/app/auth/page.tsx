@@ -13,6 +13,17 @@ export default function AuthPage() {
   const [error, setError] = useState('')
   const [form, setForm] = useState({ ad: '', soyad: '', email: '', sifre: '' })
 
+  const handleForgotPassword = async () => {
+    if (!form.email) { setError('Lütfen önce e-posta adresinizi girin.'); return }
+    setLoading(true)
+    const { error } = await supabase.auth.resetPasswordForEmail(form.email, {
+      redirectTo: 'https://bilancoskor.com/auth/reset-password',
+    })
+    setLoading(false)
+    if (error) { setError('Bir hata oluştu. Lütfen tekrar deneyin.') }
+    else { setError(''); alert('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.') }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
