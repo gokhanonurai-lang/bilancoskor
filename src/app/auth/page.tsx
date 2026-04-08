@@ -17,7 +17,7 @@ export default function AuthPage() {
     if (!form.email) { setError('Lütfen önce e-posta adresinizi girin.'); return }
     setLoading(true)
     const { error } = await supabase.auth.resetPasswordForEmail(form.email, {
-      redirectTo: 'https://bilancoskor.com/auth/reset-password',
+      redirectTo: 'https://www.bilancoskor.com/auth/reset-password',
     })
     setLoading(false)
     if (error) { setError('Bir hata oluştu. Lütfen tekrar deneyin.') }
