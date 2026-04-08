@@ -15,6 +15,20 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [done, setDone] = useState(false)
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        setReady(true)
+      }
+    })
+    // URL'de token varsa zaten session kurulmuş olabilir
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) setReady(true)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,6 +58,14 @@ export default function ResetPasswordPage() {
               </div>
               <p className="text-sm font-medium text-gray-900">Şifreniz güncellendi!</p>
               <p className="text-xs text-gray-500 mt-1">Hesabınıza yönlendiriliyorsunuz...</p>
+            </div>
+          ) : !ready ? (
+            <div className="text-center py-8">
+              <svg className="animate-spin w-6 h-6 mx-auto text-brand-400" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="#e5e7eb" strokeWidth="3"/>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke="#1D9E75" strokeWidth="3" strokeLinecap="round"/>
+              </svg>
+              <p className="text-sm text-gray-500 mt-3">Doğrulanıyor...</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
