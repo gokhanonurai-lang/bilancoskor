@@ -58,7 +58,7 @@ export default function AnalyzePage() {
 
   const handleFile = (f: File) => {
     if (f.size > 10 * 1024 * 1024) {
-      setError('Dosya boyutu 10MB'ı geçemez.')
+      setError("Dosya boyutu 10MB sinirini asiyor.")
       return
     }
     if (!f.name.endsWith('.xlsx') && !f.name.endsWith('.xls')) {
