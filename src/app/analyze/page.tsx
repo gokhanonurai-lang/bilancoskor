@@ -75,8 +75,11 @@ export default function AnalyzePage() {
       formData.append('sektor', sektor)
       formData.append('sirket_adi', file.name.replace('.xlsx', '').replace('.xls', ''))
 
+      const { data: { session } } = await supabase.auth.getSession()
+      const token = session?.access_token || ''
       const res = await fetch(`${API_URL}/analyze`, {
         method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
         body: formData,
       })
 
