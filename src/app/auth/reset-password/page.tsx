@@ -18,14 +18,32 @@ export default function ResetPasswordPage() {
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY') {
-        setReady(true)
+    // URL hash'inden token'ı al ve session kur
+    const hash = window.location.hash
+    if (hash && hash.includes('access_token')) {
+      const params = new URLSearchParams(hash.replace('#', ''))
+      const accessToken = params.get('access_token')
+      const refreshToken = params.get('refresh_token')
+      if (accessToken && refreshToken) {
+        supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken })
+          .then(() => setReady(true))
       }
-    })
-    // URL'de token varsa zaten session kurulmuş olabilir
+    } else {
+      // PKCE flow - code parametresi varsa
+      const urlParams = new URLSearchParams(window.location.search)
+      const code = urlParams.get('code')
+      if (code) {
+        supabase.auth.exchangeCodeForSession(code).then(() => setReady(true))
+      }
+    }
+
+    // Zaten session varsa direkt hazır
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) setReady(true)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') setReady(true)
     })
     return () => subscription.unsubscribe()
   }, [])
@@ -61,7 +79,7 @@ export default function ResetPasswordPage() {
             </div>
           ) : !ready ? (
             <div className="text-center py-8">
-              <svg className="animate-spin w-6 h-6 mx-auto text-brand-400" viewBox="0 0 24 24" fill="none">
+              <svg className="animate-spin w-6 h-6 mx-auto" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="#e5e7eb" strokeWidth="3"/>
                 <path d="M12 2a10 10 0 0 1 10 10" stroke="#1D9E75" strokeWidth="3" strokeLinecap="round"/>
               </svg>
