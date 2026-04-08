@@ -57,6 +57,10 @@ export default function AnalyzePage() {
   }, [router])
 
   const handleFile = (f: File) => {
+    if (f.size > 10 * 1024 * 1024) {
+      setError('Dosya boyutu 10MB'ı geçemez.')
+      return
+    }
     if (!f.name.endsWith('.xlsx') && !f.name.endsWith('.xls')) {
       setError('Lütfen Excel (.xlsx) dosyası yükleyin.')
       return
