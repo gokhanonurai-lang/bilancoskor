@@ -38,6 +38,7 @@ export default function NavbarClient() {
           {!loading && (
             user ? (
               <>
+                <span className="text-sm text-gray-400">{user.email}</span>
                 <Link href="/dashboard" className="text-sm text-gray-600 hover:text-gray-900 transition">Hesabım</Link>
                 <Link href="/analyze" className="btn-primary text-sm py-2 px-4">Yeni Rapor</Link>
                 <button onClick={cikis} className="text-sm text-gray-500 hover:text-gray-800 transition">Çıkış</button>
