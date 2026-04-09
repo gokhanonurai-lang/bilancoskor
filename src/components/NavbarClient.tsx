@@ -45,7 +45,10 @@ export default function NavbarClient() {
               </>
             ) : (
               <>
+                <Link href="/sss" className="text-sm text-gray-500 hover:text-gray-800 transition">SSS</Link>
+                <Link href="/hakkimizda" className="text-sm text-gray-500 hover:text-gray-800 transition">Hakkımızda</Link>
                 <a href="mailto:destek@bilancoskor.com" className="text-sm text-gray-500 hover:text-gray-800 transition">İletişim</a>
+                <a href="/#ornek-rapor" className="text-sm font-bold text-white bg-brand-400 hover:bg-brand-500 transition rounded-xl px-4 py-2">Örnek Rapor</a>
                 <Link href="/auth?tab=login" className="text-sm text-gray-600 hover:text-gray-900 transition border border-gray-200 rounded-xl px-4 py-2">Giriş yap</Link>
                 <Link href="/auth?tab=register" className="btn-primary text-sm py-2 px-4">Üye ol</Link>
               </>

@@ -94,7 +94,7 @@ export default function LandingPage() {
 
       {/* ÖRNEK RAPOR KARTI */}
       <section className="border-t border-gray-100 py-16">
-        <div className="max-w-5xl mx-auto px-6">
+        <div id="ornek-rapor" className="max-w-5xl mx-auto px-6">
           <div className="text-xs font-medium text-gray-400 uppercase tracking-widest text-center mb-8">Örnek rapor önizlemesi</div>
           <div className="max-w-2xl mx-auto card">
             <div className="flex items-center justify-between mb-4">
