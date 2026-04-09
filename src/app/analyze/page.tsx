@@ -48,6 +48,11 @@ export default function AnalyzePage() {
   const [sonuc, setSonuc] = useState<AnalizSonuc | null>(null)
   const [user, setUser] = useState<any>(null)
   const [rapor_fiyati, setRaporFiyati] = useState(600)
+
+  useEffect(() => {
+    supabase.from('settings').select('value').eq('key', 'rapor_fiyati').single()
+      .then(({ data }) => { if (data) setRaporFiyati(parseInt(data.value) || 600) })
+  }, [])
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
