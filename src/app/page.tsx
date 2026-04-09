@@ -21,6 +21,17 @@ const RAPOR_BASLIKLARI = [
 
 export default function LandingPage() {
   const [showSample, setShowSample] = useState(false)
+  const [rapor_fiyati, setRaporFiyati] = useState('600')
+
+  useEffect(() => {
+    // Fiyatı Supabase settings tablosundan oku
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+    supabase.from('settings').select('value').eq('key', 'rapor_fiyati').single()
+      .then(({ data }) => { if (data) setRaporFiyati(data.value) })
+  }, [])
 
   return (
     <div className="min-h-screen bg-white">
@@ -135,7 +146,7 @@ export default function LandingPage() {
 
             {/* Sol: fiyat + buton + notlar */}
             <div className="flex-shrink-0 w-44">
-              <div className="text-5xl font-semibold text-gray-900 mb-1 leading-none">600 ₺</div>
+              <div className="text-5xl font-semibold text-gray-900 mb-1 leading-none">{rapor_fiyati} ₺</div>
               <div className="text-sm text-gray-400 mb-6">tek seferlik · KDV dahil</div>
               <Link href="/auth" className="btn-primary w-full block text-center">Rapor oluştur</Link>
               <div className="mt-4 space-y-2">
