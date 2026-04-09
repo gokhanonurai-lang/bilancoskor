@@ -47,6 +47,7 @@ export default function AnalyzePage() {
   const [error, setError] = useState('')
   const [sonuc, setSonuc] = useState<AnalizSonuc | null>(null)
   const [user, setUser] = useState<any>(null)
+  const [rapor_fiyati, setRaporFiyati] = useState(600)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -128,7 +129,7 @@ export default function AnalyzePage() {
       await supabase.from('payments').insert({
         user_id: user.id,
         report_id: rapor.id,
-        tutar: 600,
+        tutar: rapor_fiyati as any,
         durum: 'tamamlandi',
       })
 
@@ -290,7 +291,7 @@ export default function AnalyzePage() {
                 ))}
               </div>
 
-              <button onClick={() => setStep('payment')} className="btn-primary w-full py-3.5">Tam raporu satın al — 600 ₺</button>
+              <button onClick={() => setStep('payment')} className="btn-primary w-full py-3.5">Tam raporu satın al — {rapor_fiyati.toString()} ₺</button>
               <button onClick={() => setStep('upload')} className="btn-outline w-full mt-2 py-3">Geri dön</button>
             </div>
           </div>
@@ -308,7 +309,7 @@ export default function AnalyzePage() {
                 <div className="text-sm font-medium text-gray-900">BilancoSkor Raporu</div>
                 <div className="text-xs text-gray-500">Tek seferlik · PDF çıktı · 3 gün erişim</div>
               </div>
-              <div className="text-lg font-semibold text-gray-900">600 ₺</div>
+              <div className="text-lg font-semibold text-gray-900">{rapor_fiyati.toString()} ₺</div>
             </div>
 
             <form onSubmit={handleOdeme} className="space-y-4">
@@ -400,7 +401,7 @@ export default function AnalyzePage() {
               {error && <div className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</div>}
 
               <button type="submit" className="btn-primary w-full py-3.5 text-base font-semibold">
-                600 ₺ öde ve raporu indir
+                {rapor_fiyati.toString()} ₺ öde ve raporu indir
               </button>
             </form>
 
