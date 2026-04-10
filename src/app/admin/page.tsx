@@ -20,6 +20,8 @@ export default function AdminPage() {
   const [users, setUsers] = useState<any[]>([])
   const [stats, setStats] = useState({ total_users: 0, total_reports: 0, total_revenue: 0, today_reports: 0 })
   const [saving, setSaving] = useState(false)
+  const [icerikTab, setIcerikTab] = useState<'hero'|'hakkimizda'|'sss'>('hero')
+  const [sssEdit, setSssEdit] = useState<{soru:string,cevap:string}[]>([])
   const [msg, setMsg] = useState('')
 
   useEffect(() => {
@@ -50,6 +52,10 @@ export default function AdminPage() {
     const { data: payments } = await supabase.from('payments').select('amount').eq('status', 'paid')
     const revenue = payments?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0
     setStats({ total_users: userCount || 0, total_reports: reportCount || 0, total_revenue: revenue, today_reports: todayCount || 0 })
+
+    // SSS
+    const { data: sssData } = await supabase.from('settings').select('value').eq('key', 'sss_sorular').single()
+    if (sssData?.value) { try { setSssEdit(JSON.parse(sssData.value)) } catch(e) {} }
 
     // Users
     const { data: profilesData } = await supabase
@@ -210,10 +216,77 @@ export default function AdminPage() {
 
         {/* İÇERİK */}
         {tab === 'icerik' && (
-          <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-gray-400">
-            <div className="text-4xl mb-3">🚧</div>
-            <div className="font-medium text-gray-600">İçerik yönetimi yakında</div>
-            <div className="text-sm mt-1">SSS ve Hakkımızda içerikleri buradan düzenlenebilecek</div>
+          <div className="space-y-6">
+            <div className="flex gap-2 border-b border-gray-100 pb-2">
+              {([['hero','Hero Metinler'],['hakkimizda','Hakkımızda'],['sss','SSS']] as [string,string][]).map(([k,l]) => (
+                <button key={k} onClick={() => setIcerikTab(k as any)}
+                  className={`px-4 py-1.5 text-sm rounded-lg font-medium transition ${icerikTab===k ? 'bg-brand-50 text-brand-600' : 'text-gray-500 hover:text-gray-700'}`}>
+                  {l}
+                </button>
+              ))}
+            </div>
+
+            {icerikTab === 'hero' && (
+              <div className="space-y-4">
+                {([
+                  ['hero_badge','Badge Yazısı','Yeşil rozetteki küçük yazı'],
+                  ['hero_baslik','Ana Başlık','H1 başlığı'],
+                  ['hero_alt_baslik','Alt Başlık','Açıklama metni (\\n ile satır kır)'],
+                  ['hero_aciklama','İtalik Açıklama','Küçük italic yazı'],
+                ] as [string,string,string][]).map(([key,label,desc]) => (
+                  <div key={key} className="bg-white rounded-2xl border border-gray-100 p-5">
+                    <div className="font-medium text-gray-900 mb-0.5">{label}</div>
+                    <div className="text-xs text-gray-400 mb-3">{desc}</div>
+                    <textarea rows={2} value={settings[key] || ''}
+                      onChange={e => setSettings(s => ({...s, [key]: e.target.value}))}
+                      className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm resize-none" />
+                    <button onClick={() => saveSetting(key, settings[key])} disabled={saving}
+                      className="btn-primary text-sm py-1.5 px-4 mt-2">Kaydet</button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {icerikTab === 'hakkimizda' && (
+              <div className="bg-white rounded-2xl border border-gray-100 p-5">
+                <div className="font-medium text-gray-900 mb-0.5">Hakkımızda Metni</div>
+                <div className="text-xs text-gray-400 mb-3">Hakkımızda sayfasında gösterilen açıklama</div>
+                <textarea rows={6} value={settings['hakkimizda_metin'] || ''}
+                  onChange={e => setSettings(s => ({...s, hakkimizda_metin: e.target.value}))}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm resize-none" />
+                <button onClick={() => saveSetting('hakkimizda_metin', settings['hakkimizda_metin'])} disabled={saving}
+                  className="btn-primary text-sm py-1.5 px-4 mt-2">Kaydet</button>
+              </div>
+            )}
+
+            {icerikTab === 'sss' && (
+              <div className="space-y-3">
+                {sssEdit.map((item, i) => (
+                  <div key={i} className="bg-white rounded-2xl border border-gray-100 p-5 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-400 font-medium">#{i+1}</span>
+                      <button onClick={() => {
+                        const next = sssEdit.filter((_,j) => j !== i)
+                        setSssEdit(next)
+                        saveSetting('sss_sorular', JSON.stringify(next))
+                      }} className="text-xs text-red-400 hover:text-red-600">Sil</button>
+                    </div>
+                    <input value={item.soru} placeholder="Soru"
+                      onChange={e => setSssEdit(prev => prev.map((x,j) => j===i ? {...x,soru:e.target.value} : x))}
+                      className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm" />
+                    <textarea rows={3} value={item.cevap} placeholder="Cevap"
+                      onChange={e => setSssEdit(prev => prev.map((x,j) => j===i ? {...x,cevap:e.target.value} : x))}
+                      className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm resize-none" />
+                    <button onClick={() => saveSetting('sss_sorular', JSON.stringify(sssEdit))} disabled={saving}
+                      className="btn-primary text-sm py-1.5 px-4">Kaydet</button>
+                  </div>
+                ))}
+                <button onClick={() => setSssEdit(prev => [...prev, {soru:'',cevap:''}])}
+                  className="w-full py-3 border-2 border-dashed border-gray-200 rounded-2xl text-sm text-gray-400 hover:border-brand-400 hover:text-brand-400 transition">
+                  + Yeni Soru Ekle
+                </button>
+              </div>
+            )}
           </div>
         )}
 
