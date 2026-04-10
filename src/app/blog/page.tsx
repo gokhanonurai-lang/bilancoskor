@@ -1,27 +1,29 @@
+'use client'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@supabase/supabase-js'
-import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Blog — BilancoSkor',
-  description: 'KOBİler için finansal analiz, kredi skoru ve banka ilişkileri hakkında rehber yazılar.',
-}
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
-async function getPosts() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
-  const { data } = await supabase
-    .from('blog_posts')
-    .select('slug,title,description,category,read_time,created_at')
-    .eq('published', true)
-    .order('created_at', { ascending: false })
-  return data || []
-}
+export default function BlogPage() {
+  const [posts, setPosts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-export default async function BlogPage() {
-  const posts = await getPosts()
+  useEffect(() => {
+    supabase
+      .from('blog_posts')
+      .select('slug,title,description,category,read_time,created_at')
+      .eq('published', true)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => {
+        setPosts(data || [])
+        setLoading(false)
+      })
+  }, [])
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-3xl mx-auto px-6 py-16">
@@ -30,7 +32,8 @@ export default async function BlogPage() {
           <p className="text-gray-500">Finansal analiz, kredi skoru ve banka ilişkileri hakkında rehber yazılar.</p>
         </div>
         <div className="space-y-4">
-          {posts.map(post => (
+          {loading && <div className="text-center text-gray-400 py-16">Yükleniyor...</div>}
+          {!loading && posts.map(post => (
             <Link key={post.slug} href={`/blog/${post.slug}`}
               className="block bg-white rounded-2xl border border-gray-100 p-6 hover:border-brand-300 hover:shadow-sm transition">
               <div className="flex items-center gap-2 mb-2">
@@ -44,7 +47,7 @@ export default async function BlogPage() {
               </div>
             </Link>
           ))}
-          {posts.length === 0 && (
+          {!loading && posts.length === 0 && (
             <div className="text-center text-gray-400 py-16">Henüz yazı yok.</div>
           )}
         </div>
