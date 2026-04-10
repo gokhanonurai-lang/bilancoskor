@@ -54,7 +54,7 @@ export default function AdminPage() {
     // Users
     const { data: profilesData } = await supabase
       .from('profiles')
-      .select('id, email, full_name, created_at')
+      .select('id, email, ad, soyad, created_at')
       .order('created_at', { ascending: false })
       .limit(100)
 
@@ -140,7 +140,7 @@ export default function AdminPage() {
                 {users.map((u, i) => (
                   <tr key={i} className="hover:bg-gray-50">
                     <td className="px-4 py-3 text-gray-900">{u.email}</td>
-                    <td className="px-4 py-3 text-gray-600">{u.full_name || '—'}</td>
+                    <td className="px-4 py-3 text-gray-600">{[u.ad, u.soyad].filter(Boolean).join(' ') || '—'}</td>
                     <td className="px-4 py-3 text-gray-500">{new Date(u.created_at).toLocaleDateString('tr-TR')}</td>
                     <td className="px-4 py-3">
                       <span className="bg-brand-50 text-brand-400 text-xs font-medium px-2 py-0.5 rounded-full">{u.report_count} rapor</span>
