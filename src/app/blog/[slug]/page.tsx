@@ -1,22 +1,31 @@
-import { getPostBySlug, getAllPosts } from '@/lib/blog'
+import { createClient } from '@supabase/supabase-js'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-export async function generateStaticParams() {
-  return getAllPosts().map(p => ({ slug: p.slug }))
+async function getPost(slug: string) {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+  const { data } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .eq('slug', slug)
+    .eq('published', true)
+    .single()
+  return data
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  try {
-    const post = getPostBySlug(params.slug)
-    return { title: `${post.title} — BilancoSkor`, description: post.description }
-  } catch { return {} }
+  const post = await getPost(params.slug)
+  if (!post) return {}
+  return { title: `${post.title} — BilancoSkor`, description: post.description }
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  let post
-  try { post = getPostBySlug(params.slug) } catch { notFound() }
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const post = await getPost(params.slug)
+  if (!post) notFound()
 
   return (
     <div className="min-h-screen bg-white">
@@ -26,10 +35,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         </div>
         <div className="flex items-center gap-2 mb-4">
           <span className="text-xs bg-brand-50 text-brand-600 px-2 py-0.5 rounded-full font-medium">{post.category}</span>
-          <span className="text-xs text-gray-400">{post.readTime}</span>
+          <span className="text-xs text-gray-400">{post.read_time}</span>
           <span className="text-xs text-gray-400">·</span>
           <span className="text-xs text-gray-400">
-            {new Date(post.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+            {new Date(post.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
           </span>
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">{post.title}</h1>

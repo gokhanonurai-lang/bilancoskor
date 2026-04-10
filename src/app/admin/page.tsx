@@ -10,7 +10,7 @@ const supabase = createClient(
 
 const ADMIN_EMAIL = 'gokhanonur.ai@icloud.com'
 
-type Tab = 'ayarlar' | 'icerik' | 'kullanicilar' | 'istatistikler'
+type Tab = 'ayarlar' | 'icerik' | 'kullanicilar' | 'istatistikler' | 'blog'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -22,6 +22,10 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false)
   const [icerikTab, setIcerikTab] = useState<'hero'|'hakkimizda'|'sss'>('hero')
   const [sssEdit, setSssEdit] = useState<{soru:string,cevap:string}[]>([])
+  const [blogPosts, setBlogPosts] = useState<any[]>([])
+  const [blogEdit, setBlogEdit] = useState<any>({ title:'', description:'', category:'Finansal Analiz', read_time:'5 dk okuma', content:'', published:false, slug:'' })
+  const [blogMode, setBlogMode] = useState<'list'|'edit'>('list')
+  const [blogSaving, setBlogSaving] = useState(false)
   const [msg, setMsg] = useState('')
 
   useEffect(() => {
@@ -52,6 +56,10 @@ export default function AdminPage() {
     const { data: payments } = await supabase.from('payments').select('amount').eq('status', 'paid')
     const revenue = payments?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0
     setStats({ total_users: userCount || 0, total_reports: reportCount || 0, total_revenue: revenue, today_reports: todayCount || 0 })
+
+    // Blog
+    const { data: blogData } = await supabase.from('blog_posts').select('*').order('created_at', { ascending: false })
+    if (blogData) setBlogPosts(blogData)
 
     // SSS
     const { data: sssData } = await supabase.from('settings').select('value').eq('key', 'sss_sorular').single()
@@ -100,13 +108,13 @@ export default function AdminPage() {
 
         {/* Sekmeler */}
         <div className="flex gap-2 mb-8 border-b border-gray-200">
-          {(['istatistikler', 'kullanicilar', 'ayarlar', 'icerik'] as Tab[]).map(t => (
+          {(['istatistikler', 'kullanicilar', 'blog', 'ayarlar', 'icerik'] as Tab[]).map(t => (
             <button
               key={t}
               onClick={() => setTab(t)}
               className={`px-4 py-2 text-sm font-medium border-b-2 transition capitalize ${tab === t ? 'border-brand-400 text-brand-400' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
             >
-              {t === 'istatistikler' ? 'İstatistikler' : t === 'kullanicilar' ? 'Kullanıcılar' : t === 'ayarlar' ? 'Ayarlar' : 'İçerik'}
+              {t === 'istatistikler' ? 'İstatistikler' : t === 'kullanicilar' ? 'Kullanıcılar' : t === 'blog' ? 'Blog' : t === 'ayarlar' ? 'Ayarlar' : 'İçerik'}
             </button>
           ))}
         </div>
@@ -211,6 +219,123 @@ export default function AdminPage() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* BLOG */}
+        {tab === 'blog' && (
+          <div className="space-y-4">
+            {blogMode === 'list' ? (
+              <>
+                <div className="flex justify-between items-center">
+                  <h2 className="font-semibold text-gray-900">Blog Yazıları ({blogPosts.length})</h2>
+                  <button onClick={() => { setBlogEdit({ title:'', description:'', category:'Finansal Analiz', read_time:'5 dk okuma', content:'', published:false, slug:'' }); setBlogMode('edit') }}
+                    className="btn-primary text-sm py-2 px-4">+ Yeni Yazı</button>
+                </div>
+                <div className="space-y-3">
+                  {blogPosts.map(p => (
+                    <div key={p.id} className="bg-white rounded-2xl border border-gray-100 p-5 flex items-center justify-between gap-4">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${p.published ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
+                            {p.published ? 'Yayında' : 'Taslak'}
+                          </span>
+                          <span className="text-xs text-gray-400">{p.category}</span>
+                        </div>
+                        <div className="font-medium text-gray-900 text-sm">{p.title}</div>
+                        <div className="text-xs text-gray-400 mt-0.5">/blog/{p.slug}</div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => { setBlogEdit(p); setBlogMode('edit') }}
+                          className="text-sm text-brand-500 hover:text-brand-700 border border-brand-200 rounded-xl px-3 py-1.5">Düzenle</button>
+                        <button onClick={async () => {
+                          if (!confirm('Silmek istediğinize emin misiniz?')) return
+                          await supabase.from('blog_posts').delete().eq('id', p.id)
+                          setBlogPosts(prev => prev.filter(x => x.id !== p.id))
+                        }} className="text-sm text-red-400 hover:text-red-600 border border-red-100 rounded-xl px-3 py-1.5">Sil</button>
+                      </div>
+                    </div>
+                  ))}
+                  {blogPosts.length === 0 && <div className="text-center text-gray-400 py-8">Henüz yazı yok.</div>}
+                </div>
+              </>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <button onClick={() => setBlogMode('list')} className="text-sm text-gray-400 hover:text-gray-600">← Listeye dön</button>
+                  <div className="flex gap-2">
+                    <button onClick={async () => {
+                      setBlogSaving(true)
+                      const data = { ...blogEdit, updated_at: new Date().toISOString() }
+                      if (blogEdit.id) {
+                        await supabase.from('blog_posts').update(data).eq('id', blogEdit.id)
+                        setBlogPosts(prev => prev.map(p => p.id === blogEdit.id ? { ...p, ...data } : p))
+                      } else {
+                        const { data: ins } = await supabase.from('blog_posts').insert(data).select().single()
+                        if (ins) setBlogPosts(prev => [ins, ...prev])
+                      }
+                      setBlogSaving(false)
+                      setMsg('Kaydedildi')
+                      setTimeout(() => setMsg(''), 2000)
+                      setBlogMode('list')
+                    }} disabled={blogSaving} className="text-sm border border-gray-200 rounded-xl px-4 py-2 text-gray-600 hover:bg-gray-50">
+                      {blogEdit.published ? 'Kaydet' : 'Taslak Kaydet'}
+                    </button>
+                    <button onClick={async () => {
+                      setBlogSaving(true)
+                      const data = { ...blogEdit, published: true, updated_at: new Date().toISOString() }
+                      if (blogEdit.id) {
+                        await supabase.from('blog_posts').update(data).eq('id', blogEdit.id)
+                        setBlogPosts(prev => prev.map(p => p.id === blogEdit.id ? { ...p, ...data } : p))
+                      } else {
+                        const { data: ins } = await supabase.from('blog_posts').insert(data).select().single()
+                        if (ins) setBlogPosts(prev => [ins, ...prev])
+                      }
+                      setBlogSaving(false)
+                      setMsg('Yayınlandı!')
+                      setTimeout(() => setMsg(''), 2000)
+                      setBlogMode('list')
+                    }} disabled={blogSaving} className="btn-primary text-sm py-2 px-4">Yayınla</button>
+                  </div>
+                </div>
+                <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-4">
+                  <div>
+                    <label className="text-xs font-medium text-gray-500 mb-1 block">Başlık</label>
+                    <input value={blogEdit.title} onChange={e => setBlogEdit((p:any) => ({...p, title:e.target.value}))}
+                      className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm" placeholder="Makale başlığı" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-gray-500 mb-1 block">Slug (URL)</label>
+                    <input value={blogEdit.slug} onChange={e => setBlogEdit((p:any) => ({...p, slug:e.target.value}))}
+                      className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm font-mono" placeholder="favok-nedir-bankalar-neden-onem-verir" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-gray-500 mb-1 block">Açıklama (SEO)</label>
+                    <textarea rows={2} value={blogEdit.description} onChange={e => setBlogEdit((p:any) => ({...p, description:e.target.value}))}
+                      className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm resize-none" placeholder="Makale özeti, Google'da görünür" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-medium text-gray-500 mb-1 block">Kategori</label>
+                      <input value={blogEdit.category} onChange={e => setBlogEdit((p:any) => ({...p, category:e.target.value}))}
+                        className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm" placeholder="Finansal Analiz" />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-gray-500 mb-1 block">Okuma Süresi</label>
+                      <input value={blogEdit.read_time} onChange={e => setBlogEdit((p:any) => ({...p, read_time:e.target.value}))}
+                        className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm" placeholder="5 dk okuma" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-gray-500 mb-1 block">İçerik (Markdown)</label>
+                    <textarea rows={20} value={blogEdit.content} onChange={e => setBlogEdit((p:any) => ({...p, content:e.target.value}))}
+                      className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm resize-none font-mono"
+                      placeholder="## Başlık&#10;&#10;Paragraf metni...&#10;&#10;**Kalın**, *italik*&#10;&#10;- Madde 1&#10;- Madde 2" />
+                    <div className="text-xs text-gray-400 mt-1">Markdown formatı: ## başlık, **kalın**, *italik*, - liste, | tablo</div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 

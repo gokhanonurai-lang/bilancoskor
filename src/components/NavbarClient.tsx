@@ -45,7 +45,7 @@ export default function NavbarClient() {
               </>
             ) : (
               <>
-                <Link href="/blog" className="text-sm text-gray-500 hover:text-gray-800 transition">Blog</Link>
+                <Link href="/blog" className="text-sm font-semibold text-brand-500 hover:text-brand-600 transition">Blog</Link>
                 <Link href="/sss" className="text-sm text-gray-500 hover:text-gray-800 transition">SSS</Link>
                 <Link href="/hakkimizda" className="text-sm text-gray-500 hover:text-gray-800 transition">Hakkımızda</Link>
                 <a href="mailto:destek@bilancoskor.com" className="text-sm text-gray-500 hover:text-gray-800 transition">İletişim</a>
