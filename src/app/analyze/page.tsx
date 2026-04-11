@@ -43,6 +43,8 @@ export default function AnalyzePage() {
   const [file, setFile] = useState<File | null>(null)
   const [dragging, setDragging] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [loadingStep, setLoadingStep] = useState(0)
+  const loadingTimerRef = useRef<any>(null)
   const [cardForm, setCardForm] = useState({ ad: '', no: '', tarih: '', cvv: '' })
   const [error, setError] = useState('')
   const [sonuc, setSonuc] = useState<AnalizSonuc | null>(null)
@@ -78,7 +80,12 @@ export default function AnalyzePage() {
   const handleAnaliz = async () => {
     if (!file) return
     setLoading(true)
+    setLoadingStep(0)
     setError('')
+    const stepTimes = [1500, 3000, 5000, 10000]
+    stepTimes.forEach((t, i) => {
+      loadingTimerRef.current = setTimeout(() => setLoadingStep(i + 1), t)
+    })
     try {
       const formData = new FormData()
       formData.append('file', file)
@@ -105,6 +112,8 @@ export default function AnalyzePage() {
       setError(err.message || 'API bağlantı hatası. Lütfen tekrar deneyin.')
     } finally {
       setLoading(false)
+      setLoadingStep(0)
+      if (loadingTimerRef.current) clearTimeout(loadingTimerRef.current)
     }
   }
 
@@ -145,8 +154,46 @@ export default function AnalyzePage() {
     }
   }
 
+  const LOADING_STEPS = [
+    'Mizan dosyası okunuyor...',
+    'Finansal rasyolar hesaplanıyor...',
+    'Kredi skoru belirleniyor...',
+    'Yönetici özeti yazılıyor...',
+    'Rapor hazırlanıyor...',
+  ]
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {loading && (
+        <div className="fixed inset-0 z-50 bg-white/90 backdrop-blur-sm flex items-center justify-center">
+          <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-10 w-full max-w-sm mx-4">
+            <div className="flex flex-col items-center mb-8">
+              <svg className="animate-spin w-10 h-10 text-brand-400 mb-4" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="#e5e7eb" strokeWidth="3"/>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke="#1D9E75" strokeWidth="3" strokeLinecap="round"/>
+              </svg>
+              <div className="text-base font-semibold text-gray-900">Rapor Hazırlanıyor</div>
+              <div className="text-xs text-gray-400 mt-1">Bu işlem 30–60 saniye sürebilir</div>
+            </div>
+            <div className="space-y-3">
+              {LOADING_STEPS.map((s, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  {loadingStep > i ? (
+                    <div className="w-5 h-5 rounded-full bg-brand-400 flex items-center justify-center flex-shrink-0">
+                      <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                    </div>
+                  ) : loadingStep === i ? (
+                    <div className="w-5 h-5 rounded-full border-2 border-brand-400 flex-shrink-0 animate-pulse"/>
+                  ) : (
+                    <div className="w-5 h-5 rounded-full border-2 border-gray-200 flex-shrink-0"/>
+                  )}
+                  <span className={`text-sm ${loadingStep > i ? 'text-brand-600 font-medium' : loadingStep === i ? 'text-gray-900 font-medium' : 'text-gray-400'}`}>{s}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-2xl mx-auto px-6 py-10">
 
