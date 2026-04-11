@@ -506,7 +506,30 @@ export default function ReportPage({ params }: { params: { id: string } }) {
           </div>
         )}
 
-        {/* 6. BİLANÇO ÖZETİ */}
+        {/* 12. MAKSİMUM SKORA NASIL ULAŞIRSINız */}
+        {rapor.potansiyel_raporu && (
+          <div className="card">
+            <Bolum num="12" title="Maksimum Skora Nasıl Ulaşırsınız?" />
+            <div className="p-4 bg-brand-50 border border-brand-100 rounded-2xl mb-4">
+              <div className="flex items-center gap-3">
+                <div className="text-center">
+                  <div className="text-xs text-gray-500 mb-1">Mevcut</div>
+                  <div className="text-2xl font-semibold text-gray-400">{rapor.skor}</div>
+                </div>
+                <div className="flex-1 h-px bg-gray-200"/>
+                <div className="text-xs text-brand-500 px-2">operasyonel iyileştirme</div>
+                <div className="flex-1 h-px bg-brand-400"/>
+                <div className="text-center">
+                  <div className="text-xs text-gray-500 mb-1">Maksimum</div>
+                  <div className="text-2xl font-semibold text-brand-400">100</div>
+                </div>
+              </div>
+            </div>
+            <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{rapor.potansiyel_raporu}</div>
+          </div>
+        )}
+
+        {/* 13. BİLANÇO ÖZETİ */}
         {oz && (
           <div className="card">
             <Bolum num="13" title="Bilanço Özeti" />
