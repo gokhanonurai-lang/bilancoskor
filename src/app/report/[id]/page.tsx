@@ -137,6 +137,12 @@ export default function ReportPage({ params }: { params: { id: string } }) {
               </div>
             </div>
           </div>
+          {rapor.yonetici_ozeti && (
+            <div className="mt-5 pt-5 border-t border-gray-100">
+              <div className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Yönetici Özeti</div>
+              <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{rapor.yonetici_ozeti}</div>
+            </div>
+          )}
           <div className="grid grid-cols-5 gap-2 text-center">
             {[
               {k:'Likidite',p:rapor.likidite_puan,m:22},
@@ -492,7 +498,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 6. BİLANÇO ÖZETİ */}
         {oz && (
           <div className="card">
-            <Bolum num="6" title="Bilanço Özeti" />
+            <Bolum num="12" title="Bilanço Özeti" />
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {[
                 ['Toplam Aktif', oz.toplam_aktif],
@@ -517,7 +523,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
 
         {/* 12. YASAL UYARI */}
         <div className="bg-gray-50 rounded-2xl p-5 text-xs text-gray-400 leading-relaxed space-y-1">
-          <p className="font-semibold text-gray-500 mb-2">12 · Yasal Uyarı</p>
+          <p className="font-semibold text-gray-500 mb-2">13 · Yasal Uyarı</p>
           <p>1. Tahmini analiz: KrediSkor ve limit tahminleri herhangi bir bankanın kararını temsil etmez.</p>
           <p>2. Banka bağımsızlığı: Her bankanın kendi metodolojisi ve risk iştahı farklıdır.</p>
           <p>3. Veri doğruluğu: Analizin kalitesi yüklenen mizanın doğruluğuna bağlıdır.</p>
