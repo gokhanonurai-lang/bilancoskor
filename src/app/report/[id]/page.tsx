@@ -382,7 +382,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
               <div className="text-center">
                 <div className="text-xs text-gray-500 mb-1">Potansiyel</div>
                 <div className="text-3xl font-semibold text-brand-400">
-                  {Math.min(100, rapor.skor + rapor.senaryolar.reduce((s: number, a: any) => s + (a.skor_delta || 0), 0))}
+                  {Math.min(100, rapor.skor + (rapor.senaryolar[rapor.senaryolar.length - 1]?.skor_delta || 0))}
                 </div>
               </div>
             </div>
