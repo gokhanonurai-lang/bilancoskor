@@ -112,24 +112,24 @@ export default function LandingPage() {
           <div className="text-xs font-medium text-gray-400 uppercase tracking-widest text-center mb-8">Örnek rapor önizlemesi</div>
           <div className="max-w-2xl mx-auto card">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-sm font-medium text-gray-900">ABC Ticaret A.Ş. — FinSkor Raporu</div>
-              <span className="text-xs bg-brand-50 text-brand-600 px-2 py-1 rounded-lg">Örnek</span>
+              <div className="text-sm font-medium text-gray-900">Örnek Firma · Ticaret Sektörü · 2024</div>
+              <span className="text-xs bg-amber-50 text-amber-600 px-2 py-1 rounded-lg">Örnek</span>
             </div>
             <div className="flex items-center gap-4 mb-4">
               <div className="w-16 h-16 rounded-full border-2 border-brand-400 flex flex-col items-center justify-center flex-shrink-0">
-                <span className="text-xl font-semibold text-brand-400 leading-none">68</span>
-                <span className="text-xs text-brand-400">A</span>
+                <span className="text-xl font-semibold text-brand-400 leading-none">77</span>
+                <span className="text-xs font-medium text-brand-400">AA</span>
               </div>
               <div>
-                <div className="text-sm font-medium text-gray-900 mb-1">İyi — Kredi onayı büyük olasılıkla</div>
-                <div className="text-xs text-gray-500">Likidite ve sermaye yapısı iyileştirme gerektiriyor.</div>
-                <div className="text-xs text-brand-400 mt-1">Tahmini limit: 740,000 ₺ · Teminat: kefalet + çek temliki</div>
+                <div className="text-sm font-medium text-gray-900 mb-1">Çok iyi — Uygun koşullarda kredi kullanabilirsiniz</div>
+                <div className="text-xs text-gray-500">Faaliyet etkinliği iyileştirilerek AAA bandına ulaşılabilir.</div>
+                <div className="text-xs text-brand-400 mt-1">Tahmini limit: 10.300.000 ₺ · Teminat: Kefalet + POS/çek</div>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-2 mb-4">
-              {['19 rasyo detayı', 'Senaryo motoru', 'Banka soruları', 'Aksiyon planı', 'Zaman çizelgesi', 'Banka rehberi'].map(t => (
-                <div key={t} className="bg-gray-50 rounded-xl h-9 flex items-center justify-center">
-                  <span className="text-xs text-gray-400">{t}</span>
+              {['Yönetici özeti','Güçlü yönler','Zayıf yönler','Skor bandı','Kredi türü önerisi','Nakit akış analizi','19 rasyo detayı','Senaryo motoru','Banka soruları','Banka başvuru rehberi','Aksiyon zaman çizelgesi','Maksimum skor yol haritası','Bilanço özeti','Yasal uyarı'].map(t => (
+                <div key={t} className="bg-gray-50 rounded-xl h-9 flex items-center justify-center px-2">
+                  <span className="text-xs text-gray-400 text-center">{t}</span>
                 </div>
               ))}
             </div>
