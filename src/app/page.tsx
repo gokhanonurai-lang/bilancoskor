@@ -17,7 +17,9 @@ const RAPOR_BASLIKLARI = [
   { n: '9',  t: 'Banka görüşme soruları' },
   { n: '10', t: 'Banka başvuru hazırlığı' },
   { n: '11', t: 'Aksiyon zaman çizelgesi' },
-  { n: '12', t: 'Yasal uyarı' },
+  { n: '12', t: 'Maksimum skora yol haritası' },
+  { n: '13', t: 'Bilanço özeti' },
+  { n: '14', t: 'Yasal uyarı' },
 ]
 
 export default function LandingPage() {
