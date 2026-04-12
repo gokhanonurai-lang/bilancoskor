@@ -113,7 +113,26 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-5 gap-2 text-center">
+              <div className="mt-5 pt-5 border-t border-gray-100 space-y-4">
+                <div className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Yönetici Özeti</div>
+                {[
+                  { baslik: 'GENEL DEĞERLENDİRME', metin: 'Şirketinizin 77/100 kredi skoru AA bandında bulunması, finansal güvenilirliğinizin oldukça yüksek seviyede olduğunu gösteriyor. Bu skor, bankaların gözünde "düşük riskli" kategorisinde yer aldığınız ve kredi başvurularınızda avantajlı konumda bulunduğunuz anlamına geliyor. 15,5 milyon TL net satışlarınız ve 5,9 milyon TL net kârınızla sektörünüzde sağlam bir oyuncu olduğunuz görülüyor. 43,7 milyon TL toplam aktifle yönettiğiniz bu büyüklük, şirketinizin önemli bir işletme olduğunu ortaya koyuyor.' },
+                  { baslik: 'VARLIK YAPISI YORUMU', metin: 'Varlık yapınıza bakıldığında, 4,4 milyon TL banka bakiyeniz aktiflerinizin %10,2'sini oluşturuyor ki bu makul bir düzeyde nakit tuttuğunuzu gösteriyor. Ancak 10,1 milyon TL ticari alacaklarınız aktiflerinizin %23,1'ini teşkil ediyor ve 237 günlük tahsil sürenizle birlikte düşünüldüğünde, müşterilerinizden para toplama konusunda sıkıntı yaşadığınız açık. Stok tutarınız 9,1 milyon TL ile aktiflerinizin %20,8'ini oluşturuyor ve stok devir hızınızın sadece 0,67x olması, stoklarınızın çok yavaş hareket ettiğini gösteriyor. Maddi duran varlığınızın sıfır olması bankaların gözünde teminat yetersizliği olarak değerlendirilebilir.' },
+                  { baslik: 'BORÇ VE ÖZKAYNAK YAPISI', metin: 'Borç yapınız incelendiğinde, toplam 8,7 milyon TL banka krediniz bulunuyor ve bunun 4,9 milyon TL'si uzun vadeli. Kısa vadeli kredilerinizin toplam borca oranı %72,4 seviyesinde olması vade uyumsuzluğu riski taşıdığınızı gösteriyor. 23,2 milyon TL özkaynaklarınız sağlam durumda ve borç/özkaynak oranınız 0,82x ile kabul edilebilir seviyede. Finansman giderleriniz 249 bin TL ile makul düzeyde kalıyor, faiz yükünüz şu an için kontrol altında.' },
+                  { baslik: 'GÜÇLÜ VE ZAYIF YÖNLER', metin: 'En güçlü yanlarınız arasında 1,79x cari oranınız ve %49 FAVÖK marjınız öne çıkıyor — bu karlılık oranı sektörde oldukça başarılı olduğunuzu gösteriyor. Ayrıca 0,82x borç/özkaynak oranınız da finansal dengenizi koruduğunuzu ortaya koyuyor. Ancak en kritik zayıflığınız nakit dönüşüm sürenizin 299 gün olması — bu, paranızın neredeyse 10 ay boyunca stok ve alacaklarda bağlı kaldığı anlamına geliyor. Alacak tahsil süreniz 237 gün ile çok uzun, müşterilerinizden para toplama politikanızı gözden geçirmeniz şart. Stok devir hızınızın 0,67x olması da stoklarınızı nakde çevirme konusunda zorlandığınızı açıkça gösteriyor.' },
+                  { baslik: 'KREDİ POTANSİYELİ VE ÖNERİLER', metin: 'Mevcut durumunuzla 10,3 milyon TL kullanılabilir krediniz var ve AA skorunuzla bankalardan uygun koşullarda finansman temin edebilirsiniz. Ancak öncelikle alacak tahsilat sürenizi kısaltmak için müşteri ödemelerinde vade indirimi gibi teşvikler uygulayın. Stok devir hızınızı artırmak için ürün karmasını gözden geçirin, yavaş hareket eden stokları indirimli satışlarla eritin. Genel olarak finansal durumunuz sağlam, sadece işletme sermayesi yönetiminizi iyileştirmeniz gerekiyor.' },
+                ].map(({ baslik, metin }) => (
+                  <div key={baslik}>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="w-1 h-4 bg-brand-400 rounded-full flex-shrink-0"/>
+                      <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{baslik}</span>
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed">{metin}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-5 gap-2 text-center mt-5">
                 {[{k:'Likidite',p:14.3,m:22},{k:'Sermaye',p:21.2,m:24},{k:'Kârlılık',p:25.3,m:26},{k:'Faaliyet',p:0,m:18},{k:'Borç öd.',p:16,m:16}].map(x => (
                   <div key={x.k} className="bg-white rounded-xl p-3">
                     <div className="text-xs text-gray-400 mb-1">{x.k}</div>
