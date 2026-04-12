@@ -555,15 +555,21 @@ export default function ReportPage({ params }: { params: { id: string } }) {
           </div>
         )}
 
-        {/* 12. YASAL UYARI */}
-        <div className="bg-gray-50 rounded-2xl p-5 text-xs text-gray-400 leading-relaxed space-y-1">
+        {/* 14. YASAL UYARI */}
+        <div className="bg-gray-50 rounded-2xl p-5 text-xs text-gray-400 leading-relaxed space-y-1.5">
           <p className="font-semibold text-gray-500 mb-2">14 · Yasal Uyarı</p>
-          <p>1. Tahmini analiz: KrediSkor ve limit tahminleri herhangi bir bankanın kararını temsil etmez.</p>
-          <p>2. Banka bağımsızlığı: Her bankanın kendi metodolojisi ve risk iştahı farklıdır.</p>
-          <p>3. Veri doğruluğu: Analizin kalitesi yüklenen mizanın doğruluğuna bağlıdır.</p>
-          <p>4. Mali müşavir: Bu rapor SMMM veya YMM görüşünün yerine geçmez.</p>
-          <p>5. Nitel faktörler: Yönetim kalitesi ve sektör görünümü de kredi kararını etkiler.</p>
-          <p>6. Güncellik: Bu analiz raporun üretildiği tarih itibarıyla geçerlidir.</p>
+          <p><strong className="text-gray-500">1. Değerleme faaliyeti değildir:</strong> Bu rapor, 6362 sayılı Sermaye Piyasası Kanunu ve ilgili mevzuat kapsamında SPK tarafından yetkilendirilmiş değerleme kuruluşlarınca gerçekleştirilen resmi değerleme faaliyeti niteliği taşımamaktadır. BilancoSkor, kullanıcı tarafından yüklenen mizan verilerini algoritmik olarak işleyen bir finansal analiz yazılımıdır; üretilen çıktılar tahmini nitelikte olup herhangi bir resmi değerleme, derecelendirme veya kredi kararının yerine geçmez.</p>
+          <p><strong className="text-gray-500">2. Resmi derecelendirme değildir:</strong> Bu rapor, SPK veya BDDK tarafından yetkilendirilmiş resmi bir kredi derecelendirme kuruluşunun notu değildir. Bankalar ve finansal kuruluşlar tarafından resmi kredi süreçlerinde bağlayıcı belge olarak kullanılamaz.</p>
+          <p><strong className="text-gray-500">3. Tahmini analiz:</strong> Rapordaki kredi skoru, limit tahminleri ve skor bandı hesaplamaları tamamen algoritmik ve tahmini niteliktedir; herhangi bir bankanın kredi kararını, onayını veya reddini temsil etmez.</p>
+          <p><strong className="text-gray-500">4. Banka bağımsızlığı:</strong> Her bankanın kendi metodolojisi, risk iştahı ve değerlendirme kriterleri farklıdır. Bu rapordan elde edilen sonuçlar bankanın vereceği kararı öngörmez veya garanti etmez.</p>
+          <p><strong className="text-gray-500">5. Veri sorumluluğu:</strong> Analizin doğruluğu ve kalitesi yüklenen mizanın eksiksizliğine ve doğruluğuna bağlıdır. Hatalı, eksik veya yanıltıcı veri girilmesi sonucu oluşan çıktılardan BilancoSkor sorumlu tutulamaz; veri doğruluğu tamamen kullanıcıya aittir.</p>
+          <p><strong className="text-gray-500">6. Geçmiş veri sınırlılığı:</strong> Rapor yalnızca yüklenen döneme ait finansal veriler üzerinden üretilmektedir. Geçmiş finansal performans gelecekteki sonuçları garanti etmez.</p>
+          <p><strong className="text-gray-500">7. Sektör ortalamaları:</strong> Karşılaştırma amacıyla kullanılan sektör ortalamaları genel referans niteliğinde olup resmi istatistik kurumlarından alınmış kesin veriler değildir.</p>
+          <p><strong className="text-gray-500">8. Mali müşavir yerini tutmaz:</strong> Bu rapor, SMMM veya YMM tarafından düzenlenen resmi mali müşavirlik görüşünün, vergi beyanının veya bağımsız denetim raporunun yerini almaz.</p>
+          <p><strong className="text-gray-500">9. Hukuki belge niteliği taşımaz:</strong> Bu rapor herhangi bir hukuki uyuşmazlıkta, idari süreçte veya resmi başvuruda delil ya da resmi belge olarak kullanılamaz.</p>
+          <p><strong className="text-gray-500">10. Paylaşım sorumluluğu:</strong> Raporun üçüncü şahıslarla, kurumlarla veya bankalarla paylaşılması kullanıcının kendi sorumluluğundadır. BilancoSkor, raporun üçüncü taraflarca kullanımından doğabilecek sonuçlardan sorumlu tutulamaz.</p>
+          <p><strong className="text-gray-500">11. Sorumluluk sınırı:</strong> BilancoSkor, bu rapordaki bilgilere, tahminlere veya önerilere dayanılarak alınan kararlar sonucunda doğabilecek doğrudan veya dolaylı zararlardan, kâr kaybından ya da üçüncü kişilere verilen zararlardan hiçbir koşulda sorumlu tutulamaz.</p>
+          <p className="pt-1 border-t border-gray-200">Bu raporu kullanmaya devam etmekle yukarıdaki tüm koşulları okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan etmiş olursunuz.</p>
         </div>
 
         {/* ALT BUTONLAR */}
