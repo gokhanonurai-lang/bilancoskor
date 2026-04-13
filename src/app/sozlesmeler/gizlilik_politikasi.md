@@ -62,6 +62,8 @@ Kişisel verileriniz aşağıdaki taraflara aktarılabilir:
 - **Bulut altyapısı sağlayıcıları:** Vercel, Supabase, Railway (teknik altyapı)
 - **Hukuki merciler:** Yasal zorunluluk durumunda yargı mercileri ve yetkili kamu kurumları
 
+Teknik altyapı sağlayıcılarının sunucuları yurt dışında bulunabilir. Bu kapsamda kişisel veriler, KVKK'nın 9. maddesi uyarınca gerekli teknik ve idari önlemler alınarak yurt dışına aktarılabilir.
+
 BilancoSkor, kişisel verilerinizi pazarlama veya ticari amaçlarla üçüncü kişilere satmaz.
 
 ## 6. Kişisel Verilerin Saklanma Süreleri
