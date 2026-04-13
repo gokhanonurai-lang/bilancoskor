@@ -10,6 +10,8 @@
 www.bilancoskor.com
 destek@bilancoskor.com
 
+BilancoSkor, kullanıcı tarafından sağlanan verileri yalnızca kullanıcının talebi doğrultusunda işleyen ve bu verileri kalıcı olarak saklamayan bir platform olarak veri sorumlusu sıfatıyla hareket etmektedir.
+
 ## 2. Kişisel Verilerinizin İşlenme Amacı
 
 Kişisel verileriniz aşağıdaki amaçlarla işlenmektedir:
@@ -40,7 +42,9 @@ Kişisel verileriniz aşağıdaki amaçlarla işlenmektedir:
 - **İşlem:** Satın alma tarihi, rapor bilgisi, ödeme kaydı
 - **Teknik:** Tarayıcı, cihaz, kullanım logları
 
-> **Not:** Yüklenen mizan/bilanço dosyaları kişisel veri niteliği taşısa dahi, analiz tamamlandıktan sonra sistemden kalıcı olarak silinmekte ve saklanmamaktadır.
+> **Not:** Yüklenen mizan/bilanço dosyaları kişisel veri niteliği taşısa dahi, yalnızca analiz süresi boyunca geçici olarak işlenir ve işlem tamamlandıktan hemen sonra sistemden geri döndürülemez şekilde silinir. Bu veriler hiçbir şekilde saklanmaz, arşivlenmez veya tekrar kullanılmaz.
+
+> **Algoritmik İşleme:** Platform tarafından gerçekleştirilen analizler tamamen algoritmik hesaplamalara dayalıdır. Bu çıktılar herhangi bir otomatik karar verme veya profil oluşturma amacı taşımaz; yalnızca kullanıcıya bilgi sunmak amacıyla üretilir.
 
 ## 4. Kişisel Verilerin Aktarılacağı Taraflar ve Amaçları
 
