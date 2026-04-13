@@ -89,21 +89,107 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 3 ADIM */}
-      <section className="border-t border-gray-100">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-3 divide-x divide-gray-100">
-          {[
-            { n: '1', title: 'Mizan yükle', desc: 'Excel formatındaki mizanınızı sürükleyip bırakın.' },
-            { n: '2', title: 'Bilanço skoru al', desc: 'Bilanço skorunuz hesaplanır ve raporunuz oluşturulur.' },
-            { n: '3', title: 'PDF indir', desc: 'Ödeme sonrası raporunuzu indirin.' },
-          ].map(s => (
-            <div key={s.n} className="py-8 px-8 text-center">
-              <div className="w-7 h-7 rounded-full bg-brand-50 text-brand-600 text-xs font-semibold flex items-center justify-center mx-auto mb-3">{s.n}</div>
-              <div className="text-sm font-medium text-gray-900 mb-2">{s.title}</div>
-              <div className="text-xs text-gray-500 leading-relaxed">{s.desc}</div>
+      {/* NASIL ÇALIŞIR */}
+      <section className="border-t border-gray-100 py-12">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-xs font-medium text-gray-400 uppercase tracking-widest text-center mb-10">Nasıl çalışır</p>
+          <div className="flex items-start justify-center gap-0">
+
+            {/* ADIM 1 */}
+            <div className="flex-1 max-w-[220px] flex flex-col items-center text-center px-3 group">
+              <div className="w-[100px] h-[80px] mb-5">
+                <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                  <rect x="18" y="8" width="48" height="60" rx="5" fill="#E6F1FB" stroke="#378ADD" strokeWidth="1.2"/>
+                  <path d="M50 8 L66 24 L50 24 Z" fill="#B5D4F4" stroke="#378ADD" strokeWidth="1"/>
+                  <line x1="26" y1="34" x2="58" y2="34" stroke="#378ADD" strokeWidth="1.2" strokeLinecap="round" opacity="0.5"/>
+                  <line x1="26" y1="41" x2="58" y2="41" stroke="#378ADD" strokeWidth="1.2" strokeLinecap="round" opacity="0.5"/>
+                  <line x1="26" y1="48" x2="50" y2="48" stroke="#378ADD" strokeWidth="1.2" strokeLinecap="round" opacity="0.5"/>
+                  <rect x="24" y="54" width="26" height="10" rx="3" fill="#378ADD"/>
+                  <text x="37" y="62" textAnchor="middle" fontSize="7" fontWeight="500" fill="#E6F1FB">XLSX</text>
+                  <circle cx="78" cy="58" r="13" fill="#EAF3DE" stroke="#639922" strokeWidth="1"/>
+                  <path d="M78 65 L78 53 M74 57 L78 53 L82 57" stroke="#3B6D11" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <p className="text-sm font-medium text-gray-900 group-hover:-translate-y-1 transition-transform">Mizanı yükleyin</p>
             </div>
-          ))}
+
+            {/* CONNECTOR 1 */}
+            <div className="flex-shrink-0 pt-8 flex flex-col items-center gap-1">
+              <div className="relative w-12 h-3 overflow-hidden rounded-full bg-gray-100">
+                <div className="absolute top-[3px] left-[-8px] w-[6px] h-[6px] rounded-full bg-[#378ADD] animate-[flowmove_1.6s_linear_infinite]" />
+                <div className="absolute top-[3px] left-[-8px] w-[6px] h-[6px] rounded-full bg-[#378ADD] animate-[flowmove_1.6s_linear_infinite_0.53s]" />
+                <div className="absolute top-[3px] left-[-8px] w-[6px] h-[6px] rounded-full bg-[#378ADD] animate-[flowmove_1.6s_linear_infinite_1.06s]" />
+              </div>
+              <span className="text-gray-300 text-sm">›</span>
+            </div>
+
+            {/* ADIM 2 */}
+            <div className="flex-1 max-w-[220px] flex flex-col items-center text-center px-3 group">
+              <div className="w-[100px] h-[80px] mb-5">
+                <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                  <g style={{transformOrigin:'50px 40px', animation:'spin 8s linear infinite'}}>
+                    <circle cx="50" cy="40" r="22" fill="#FAEEDA" stroke="#EF9F27" strokeWidth="1.2"/>
+                    <circle cx="50" cy="40" r="10" fill="#EF9F27" opacity="0.25"/>
+                    <circle cx="50" cy="40" r="6" fill="#EF9F27" opacity="0.6"/>
+                    <rect x="47" y="16" width="6" height="8" rx="2" fill="#EF9F27" opacity="0.7"/>
+                    <rect x="47" y="56" width="6" height="8" rx="2" fill="#EF9F27" opacity="0.7"/>
+                    <rect x="16" y="37" width="8" height="6" rx="2" fill="#EF9F27" opacity="0.7"/>
+                    <rect x="76" y="37" width="8" height="6" rx="2" fill="#EF9F27" opacity="0.7"/>
+                    <rect x="25" y="23" width="6" height="8" rx="2" fill="#EF9F27" opacity="0.5" transform="rotate(-45 28 27)"/>
+                    <rect x="65" y="23" width="6" height="8" rx="2" fill="#EF9F27" opacity="0.5" transform="rotate(45 68 27)"/>
+                    <rect x="25" y="51" width="6" height="8" rx="2" fill="#EF9F27" opacity="0.5" transform="rotate(45 28 55)"/>
+                    <rect x="65" y="51" width="6" height="8" rx="2" fill="#EF9F27" opacity="0.5" transform="rotate(-45 68 55)"/>
+                  </g>
+                </svg>
+              </div>
+              <p className="text-sm font-medium text-gray-900 group-hover:-translate-y-1 transition-transform">Otomatik veri analizi</p>
+            </div>
+
+            {/* CONNECTOR 2 */}
+            <div className="flex-shrink-0 pt-8 flex flex-col items-center gap-1">
+              <div className="relative w-12 h-3 overflow-hidden rounded-full bg-gray-100">
+                <div className="absolute top-[3px] left-[-8px] w-[6px] h-[6px] rounded-full bg-[#EF9F27] animate-[flowmove_1.6s_linear_infinite]" />
+                <div className="absolute top-[3px] left-[-8px] w-[6px] h-[6px] rounded-full bg-[#EF9F27] animate-[flowmove_1.6s_linear_infinite_0.53s]" />
+                <div className="absolute top-[3px] left-[-8px] w-[6px] h-[6px] rounded-full bg-[#EF9F27] animate-[flowmove_1.6s_linear_infinite_1.06s]" />
+              </div>
+              <span className="text-gray-300 text-sm">›</span>
+            </div>
+
+            {/* ADIM 3 */}
+            <div className="flex-1 max-w-[220px] flex flex-col items-center text-center px-3 group">
+              <div className="w-[100px] h-[80px] mb-5">
+                <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                  <rect x="15" y="6" width="52" height="66" rx="5" fill="#EAF3DE" stroke="#639922" strokeWidth="1.2"/>
+                  <rect x="22" y="14" width="30" height="5" rx="2" fill="#639922" opacity="0.5"/>
+                  <circle cx="60" cy="20" r="10" fill="#3B6D11" opacity="0.15" stroke="#3B6D11" strokeWidth="1"/>
+                  <text x="60" y="24" textAnchor="middle" fontSize="9" fontWeight="500" fill="#3B6D11">AA</text>
+                  <rect x="22" y="30" width="6" height="18" rx="1.5" fill="#639922" opacity="0.7"/>
+                  <rect x="31" y="36" width="6" height="12" rx="1.5" fill="#639922" opacity="0.5"/>
+                  <rect x="40" y="33" width="6" height="15" rx="1.5" fill="#639922" opacity="0.6"/>
+                  <rect x="49" y="28" width="6" height="20" rx="1.5" fill="#3B6D11" opacity="0.8"/>
+                  <line x1="22" y1="56" x2="60" y2="56" stroke="#639922" strokeWidth="1" opacity="0.4" strokeLinecap="round"/>
+                  <line x1="22" y1="62" x2="50" y2="62" stroke="#639922" strokeWidth="1" opacity="0.4" strokeLinecap="round"/>
+                  <rect x="55" y="52" width="24" height="16" rx="4" fill="#3B6D11"/>
+                  <path d="M67 57 L67 64 M64 62 L67 65 L70 62" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <p className="text-sm font-medium text-gray-900 group-hover:-translate-y-1 transition-transform">Raporunuzu alın</p>
+            </div>
+
+          </div>
         </div>
+        <style>{`
+          @keyframes flowmove {
+            0% { left: -8px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: 50px; opacity: 0; }
+          }
+          @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+        `}</style>
       </section>
 
       {/* ÖRNEK RAPOR KARTI */}
