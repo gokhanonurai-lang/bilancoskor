@@ -49,6 +49,10 @@ Platform, kullanıcı tarafından sağlanan finansal verileri algoritmik olarak 
 
 4.9. Kullanıcı, raporda yer alan bilgiler doğrultusunda aldığı kararların tüm sorumluluğunun kendisine ait olduğunu kabul eder.
 
+4.10. Platforma yüklenen finansal veriler analiz tamamlandıktan sonra sistemden kalıcı olarak silinir ve saklanmaz.
+
+4.11. Hizmet tamamen dijital ortamda sunulmakta olup herhangi bir fiziksel teslimat söz konusu değildir.
+
 ## 5. Ödeme ve Ücretlendirme
 
 5.1. BilancoSkor'da rapor satın alma işlemleri tek seferlik ödeme modeline dayanmaktadır.
