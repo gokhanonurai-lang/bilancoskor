@@ -81,8 +81,8 @@ export default function DashboardPage() {
         <div className="bg-brand-50 rounded-2xl p-5 flex gap-3">
           <div className="w-4 h-4 rounded-full bg-brand-400 flex-shrink-0 mt-0.5" />
           <div>
-            <div className="text-sm font-medium text-brand-600 mb-1">Raporlar 3 gün saklanır</div>
-            <div className="text-xs text-brand-600 opacity-80">Raporlarınız 3 gün boyunca erişilebilirdir.</div>
+            <div className="text-sm font-medium text-brand-600 mb-1">Raporlar hesabınızda saklanır</div>
+            <div className="text-xs text-brand-600 opacity-80">Raporlarınız satın alma tarihinden itibaren belirli süre erişilebilirdir.</div>
           </div>
         </div>
       </div>

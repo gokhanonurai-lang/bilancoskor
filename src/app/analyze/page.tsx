@@ -124,8 +124,10 @@ export default function AnalyzePage() {
 
     try {
       // Raporu Supabase'e kaydet
+      const { data: settingsRow } = await supabase.from("settings").select("value").eq("key", "rapor_erisim_gun").single()
+      const erisimGun = parseInt(settingsRow?.value || "3")
       const expires = new Date()
-      expires.setDate(expires.getDate() + 3)
+      expires.setDate(expires.getDate() + erisimGun)
 
       const { data: rapor, error } = await supabase.from('reports').insert({
         user_id: user.id,
