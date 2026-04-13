@@ -8,6 +8,8 @@ BilancoSkor (www.bilancoskor.com) web sitesi, kullanıcı deneyimini geliştirme
 
 Çerezler; web siteleri tarafından tarayıcınıza yerleştirilen küçük metin dosyalarıdır. Cihazınızda bir zarara yol açmazlar.
 
+Çerezler aracılığıyla elde edilen kişisel veriler, 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında işlenmektedir. Platformda performans, analitik veya reklam amaçlı üçüncü taraf çerezler kullanılmamaktadır. Zorunlu çerezler dışında herhangi bir çerez kullanılmadığından ayrıca açık rıza gerektiren bir çerez işleme faaliyeti bulunmamaktadır.
+
 ## 2. Kullandığımız Çerez Türleri
 
 ### 2.1 Zorunlu Çerezler
@@ -33,7 +35,7 @@ Platformun nasıl kullanıldığını anlamamıza yardımcı olur. Bu veriler an
 Bu tür çerezlerin kullanımı için açık onayınız alınmaktadır.
 
 ### 2.4 Üçüncü Taraf Çerezleri
-Platform altyapısında kullanılan üçüncü taraf hizmetleri (Vercel, Supabase) kendi çerezlerini yerleştirebilir. Bu hizmetlerin çerez politikaları için ilgili siteleri ziyaret edebilirsiniz.
+Platform altyapısında kullanılan üçüncü taraf hizmetleri (Vercel, Supabase) kendi çerezlerini yerleştirebilir. Çerez verileri, kullanılan teknik altyapı sağlayıcıları kapsamında yurt dışındaki sunucular üzerinden işlenebilir. Bu hizmetlerin çerez politikaları için ilgili siteleri ziyaret edebilirsiniz.
 
 ## 3. Çerezleri Yönetme
 
