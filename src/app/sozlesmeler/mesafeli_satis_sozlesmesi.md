@@ -26,11 +26,13 @@ E-posta: destek@bilancoskor.com
 - Mizan verilerinden otomatik bilanço skoru hesaplanması
 - 19 finansal rasyonun hesaplanması ve yorumlanması
 - Sektör karşılaştırması ve bant analizi
-- Kredi türü önerisi
+- Finansman araçlarına ilişkin genel bilgilendirme
 - Senaryo motoru
 - Banka görüşme soruları ve hazırlık rehberi
 - Aksiyon zaman çizelgesi
 - PDF formatında indirilebilir rapor
+
+Hizmet, kullanıcı tarafından sağlanan verilerin algoritmik olarak işlenmesi sonucu oluşturulan otomatik analiz çıktısıdır. Herhangi bir finansal danışmanlık veya kredi değerlendirme hizmeti sunulmamaktadır. Hizmet tamamen dijital ortamda sunulmakta olup herhangi bir fiziksel teslimat söz konusu değildir.
 
 **Erişim Süresi:** Satın alma tarihinden itibaren **3 (üç) gün**
 
@@ -38,7 +40,7 @@ E-posta: destek@bilancoskor.com
 
 ## 4. Fiyat
 
-**Satış Fiyatı:** 600 TL (KDV dahil)
+**Satış Fiyatı:** 750 TL (KDV dahil)
 
 Fiyata KDV dahil olup ayrıca herhangi bir ücret talep edilmemektedir.
 
@@ -71,6 +73,12 @@ Fiyata KDV dahil olup ayrıca herhangi bir ücret talep edilmemektedir.
 8.2. Rapor, yüklenen verinin doğruluğuna bağlıdır. Hatalı veri yüklenmesinden kaynaklanan sorunlarda BilancoSkor sorumlu tutulamaz.
 
 8.3. Bu rapor, 3568 sayılı Kanun kapsamında SMMM veya YMM görüşünün yerine geçmez.
+
+8.4. Rapor içerisinde yer alan skorlar ve sınıflandırmalar BilancoSkor'a özgü algoritmik model çıktılarıdır ve herhangi bir resmi derecelendirme niteliği taşımaz.
+
+8.5. Yüklenen finansal veriler analiz tamamlandıktan sonra sistemden kalıcı olarak silinir ve saklanmaz.
+
+8.6. Rapor içeriği herhangi bir karar önerisi niteliği taşımamakta olup rapor doğrultusunda alınacak tüm ticari ve finansal kararlar Alıcı'nın kendi sorumluluğundadır.
 
 ## 9. Alıcının Yükümlülükleri
 
