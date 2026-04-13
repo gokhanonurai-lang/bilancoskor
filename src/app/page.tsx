@@ -168,7 +168,7 @@ export default function LandingPage() {
             {/* Sağ: rapor başlıkları grid */}
             <div className="flex-1">
               <div className="text-xs font-medium text-gray-400 uppercase tracking-widest mb-4">Rapor içeriği</div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {RAPOR_BASLIKLARI.map(r => (
                   <div key={r.n} className="flex items-center gap-2.5 bg-white border border-gray-100 rounded-xl px-3 py-2.5">
                     <div className="w-5 h-5 rounded-full bg-brand-50 text-brand-600 text-xs font-semibold flex items-center justify-center flex-shrink-0">{r.n}</div>
