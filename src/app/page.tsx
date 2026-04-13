@@ -72,7 +72,7 @@ export default function LandingPage() {
           <div className="text-base font-medium text-gray-900 mb-1.5">Mizanınızı buraya sürükleyin</div>
           <div className="text-sm text-gray-500 mb-1">veya bilgisayarınızdan seçin</div>
           <div className="text-xs text-gray-400 mb-6">Excel (.xlsx)</div>
-          <Link href="/auth" className="btn-primary">Dosya seç ve devam et</Link>
+          <Link href="/auth" className="btn-primary">Analizi Başlat</Link>
           <div className="flex items-center justify-center gap-3 mt-5">
             <span className="text-xs text-gray-400">Sektör:</span>
             {['Ticaret', 'Üretim', 'Hizmet'].map((s, i) => (
@@ -152,7 +152,7 @@ export default function LandingPage() {
             <div className="flex-shrink-0 w-44">
               <div className="text-5xl font-semibold text-gray-900 mb-1 leading-none">{rapor_fiyati ?? "..."} ₺</div>
               <div className="text-sm text-gray-400 mb-6">tek seferlik · KDV dahil</div>
-              <Link href="/auth" className="btn-primary w-full block text-center">Rapor oluştur</Link>
+              <Link href="/auth" className="btn-primary w-full block text-center">Finansal Durumumu Analiz Et</Link>
               <div className="mt-4 space-y-2">
                 {['Rapor 1 gün hesapta saklanır, sonra kalıcı silinir', 'Mizan analiz sonrası silinir', 'PDF olarak indirilebilir'].map(f => (
                   <div key={f} className="flex items-center gap-2 text-xs text-gray-500">
