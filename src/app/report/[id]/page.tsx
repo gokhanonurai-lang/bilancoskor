@@ -244,7 +244,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
               ['BBB','55–64','Teminat bazlı','KGF + kısmi ipotek','Zorunlu'],
               ['BB','45–54','Teminat bazlı','1. derece ipotek','Zorunlu'],
               ['B','35–44','Teminat bazlı','Tam ipotek + bloke','Zorunlu'],
-              ['D','0–34','—','Kredi verilmez','—'],
+              ['D','0–34','—','Finansman erişimi sınırlı olabilir','—'],
             ].map(([b,s,l,t,k]) => {
               const aktif = rapor.harf === b
               return (
@@ -262,7 +262,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 5. KREDİ TÜRÜ ÖNERİSİ */}
         {rapor.kredi_turu && (
           <div className="card">
-            <Bolum num="5" title="Kredi Türü Önerisi" />
+            <Bolum num="5" title="Finansman Araçlarına İlişkin Genel Bilgilendirme" />
             <div className="p-5 bg-brand-50 border border-brand-100 rounded-2xl mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xs font-semibold text-brand-600 bg-brand-100 px-2.5 py-1 rounded-full">Finansman Aracı</span>
