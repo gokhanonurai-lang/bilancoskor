@@ -238,7 +238,7 @@ export default function LandingPage() {
             <div className="flex-shrink-0 w-44">
               <div className="text-5xl font-semibold text-gray-900 mb-1 leading-none">{rapor_fiyati ?? "..."} ₺</div>
               <div className="text-sm text-gray-400 mb-6">tek seferlik · KDV dahil</div>
-              <Link href="/auth" className="btn-primary w-full block text-center">Finansal Durumumu Analiz Et</Link>
+              <Link href="/auth" className="btn-primary w-full block text-center">Rapor Oluştur</Link>
               <div className="mt-4 space-y-2">
                 {['Rapor 1 gün hesapta saklanır, sonra kalıcı silinir', 'Mizan analiz sonrası silinir', 'PDF olarak indirilebilir'].map(f => (
                   <div key={f} className="flex items-center gap-2 text-xs text-gray-500">
