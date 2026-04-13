@@ -8,6 +8,8 @@
 
 **İletişim:** destek@bilancoskor.com
 
+BilancoSkor, kullanıcı tarafından yüklenen finansal verileri yalnızca kullanıcının talebi doğrultusunda işleyen ve bu verileri kalıcı olarak saklamayan bir sistem olarak faaliyet göstermektedir.
+
 ## 2. İşlenen Kişisel Veriler
 
 BilancoSkor, aşağıdaki kişisel verileri işlemektedir:
@@ -29,7 +31,7 @@ BilancoSkor, aşağıdaki kişisel verileri işlemektedir:
 - Çerez verileri
 
 **Finansal Veriler (Geçici):**
-- Yüklenen mizan/bilanço dosyaları — analiz tamamlandıktan sonra sistemden kalıcı olarak silinir, saklanmaz.
+- Yüklenen mizan/bilanço dosyaları — yalnızca analiz süresi boyunca geçici olarak işlenir ve işlem tamamlandıktan hemen sonra sistemden geri döndürülemez şekilde silinir. Bu veriler hiçbir şekilde saklanmaz, arşivlenmez veya tekrar kullanılmaz.
 
 ## 3. Kişisel Verilerin İşlenme Amaçları
 
@@ -84,7 +86,11 @@ BilancoSkor, kişisel verilerinizin güvenliği için aşağıdaki teknik ve ida
 - Şifrelerin hash (bcrypt) yöntemiyle saklanması
 - Finansal dosyaların analiz sonrası otomatik silinmesi
 
-## 8. Kullanıcı Hakları (KVKK Madde 11)
+## 8. Otomatik Karar Verme
+
+Platform tarafından gerçekleştirilen analizler tamamen algoritmik hesaplamalara dayalı olup bu çıktılar herhangi bir otomatik karar verme mekanizması oluşturmaz. Üretilen skorlar ve raporlar kullanıcıya bilgi sunmak amacıyla tasarlanmış olup bağlayıcı nitelik taşımaz.
+
+## 9. Kullanıcı Hakları (KVKK Madde 11)
 
 KVKK kapsamında aşağıdaki haklara sahipsiniz:
 
@@ -100,19 +106,19 @@ KVKK kapsamında aşağıdaki haklara sahipsiniz:
 
 **Başvuru:** destek@bilancoskor.com adresine yazılı olarak başvurabilirsiniz. Başvurular 30 gün içinde yanıtlanır.
 
-## 9. Çocuklara İlişkin Veriler
+## 10. Çocuklara İlişkin Veriler
 
 BilancoSkor hizmetleri 18 yaş altı bireylere yönelik değildir. 18 yaş altı kişilerin üye olması kabul edilmemekte olup bu durum tespit edildiğinde hesap derhal kapatılır.
 
-## 10. Üçüncü Taraf Bağlantıları
+## 11. Üçüncü Taraf Bağlantıları
 
 Platform içerisinde üçüncü taraf web sitelerine bağlantı bulunabilir. BilancoSkor, bu sitelerin gizlilik uygulamalarından sorumlu değildir.
 
-## 11. Politika Değişiklikleri
+## 12. Politika Değişiklikleri
 
 İşbu Gizlilik Politikası zaman zaman güncellenebilir. Önemli değişiklikler e-posta yoluyla bildirilir.
 
-## 12. İletişim ve Şikayet
+## 13. İletişim ve Şikayet
 
 Gizlilik politikamıza ilişkin soru ve talepleriniz için: destek@bilancoskor.com
 
