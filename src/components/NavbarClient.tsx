@@ -77,7 +77,7 @@ export default function NavbarClient() {
                 </>
               ) : (
                 <>
-                  <Link href="/auth?tab=login" className="text-sm text-gray-600 hover:text-gray-900 transition hidden md:inline">Giriş yap</Link>
+                  <Link href="/auth?tab=login" className="text-sm text-gray-600 hover:text-gray-900 transition">Giriş yap</Link>
                   <Link href="/auth?tab=register" className="btn-primary text-sm py-2 px-4">Üye ol</Link>
                 </>
               )
