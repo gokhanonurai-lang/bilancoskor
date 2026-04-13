@@ -230,7 +230,7 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
             <ST num="5" title="Kredi Türü Önerisi" />
             <div className="card mb-3">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-medium bg-brand-50 text-brand-600 px-2 py-0.5 rounded-full">Önerilen</span>
+                <span className="text-xs font-medium bg-brand-50 text-brand-600 px-2 py-0.5 rounded-full">Finansman Aracı</span>
                 <span className="text-sm font-semibold text-gray-900">Rotatif (Döner) Kredi</span>
               </div>
               <p className="text-sm text-gray-600 leading-relaxed mb-2">Rotatif kredi, ihtiyaç duydukça çekip geri ödeyebildiğiniz esnek bir kredi türüdür. Stok alımı, alacak finansmanı ve günlük işletme giderleri için idealdir.</p>
@@ -358,7 +358,7 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
                       <p className="text-xs text-gray-600">{s.amac}</p>
                     </div>
                     <div className="bg-brand-50 rounded-xl p-3">
-                      <div className="text-xs font-medium text-brand-600 mb-1">Hazır cevap:</div>
+                      <div className="text-xs font-medium text-brand-600 mb-1">Örnek Yanıt Çerçevesi:</div>
                       <p className="text-xs text-gray-600">{s.cevap}</p>
                     </div>
                   </div>

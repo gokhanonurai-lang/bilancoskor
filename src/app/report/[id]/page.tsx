@@ -265,7 +265,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
             <Bolum num="5" title="Kredi Türü Önerisi" />
             <div className="p-5 bg-brand-50 border border-brand-100 rounded-2xl mb-4">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-semibold text-brand-600 bg-brand-100 px-2.5 py-1 rounded-full">Önerilen</span>
+                <span className="text-xs font-semibold text-brand-600 bg-brand-100 px-2.5 py-1 rounded-full">Finansman Aracı</span>
                 <span className="text-base font-semibold text-gray-900">{rapor.kredi_turu.birincil_tur}</span>
               </div>
               <p className="text-sm text-gray-600 leading-relaxed mb-2">{rapor.kredi_turu.birincil_aciklama}</p>
@@ -433,7 +433,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                       <p className="text-xs text-gray-600">{s.bankacinin_amaci}</p>
                     </div>
                     <div className="bg-brand-50 rounded-xl p-3">
-                      <div className="text-xs font-medium text-brand-600 mb-1">Hazır cevap:</div>
+                      <div className="text-xs font-medium text-brand-600 mb-1">Örnek Yanıt Çerçevesi:</div>
                       <p className="text-xs text-gray-600">{s.hazir_cevap}</p>
                     </div>
                   </div>
