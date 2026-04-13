@@ -17,6 +17,8 @@ E-posta: destek@bilancoskor.com
 
 BilancoSkor, Türkiye'de faaliyet gösteren küçük ve orta büyüklükteki işletmelere (KOBİ) yönelik finansal analiz hizmeti sunmaktadır. Platform; kullanıcının yüklediği mizan veya bilanço verilerini otomatik olarak analiz ederek finansal rasyo hesaplaması yapmakta, bilanço skoru üretmekte ve PDF formatında rapor oluşturmaktadır.
 
+Platform, kullanıcı tarafından sağlanan finansal verileri algoritmik olarak işleyen bir yazılım olup herhangi bir finansal danışmanlık, yatırım danışmanlığı veya kredi derecelendirme faaliyeti sunmamaktadır.
+
 ## 3. Üyelik Koşulları
 
 3.1. BilancoSkor'a üye olabilmek için 18 yaşını doldurmuş olmak veya tüzel kişi adına yetkili temsilci sıfatını taşımak zorunludur.
@@ -33,13 +35,19 @@ BilancoSkor, Türkiye'de faaliyet gösteren küçük ve orta büyüklükteki iş
 
 4.2. Raporlar; herhangi bir bankanın, finans kuruluşunun veya derecelendirme kuruluşunun resmi değerlendirmesini, kararını veya tavsiyesini temsil etmez.
 
-4.3. BilancoSkor'un ürettiği kredi skoru, kredi limiti tahmini ve finansal değerlendirme, banka kredi kararını garanti etmez ve hukuki bağlayıcılığı yoktur.
+4.3. Platform tarafından üretilen skorlar ve sınıflandırmalar BilancoSkor'a özgü algoritmik model çıktılarıdır; herhangi bir resmi derecelendirme metodolojisi ile ilişkili değildir ve bağlayıcılığı yoktur.
 
-4.4. Raporlar; yüklenen verinin doğruluğuna dayalıdır. Hatalı veya eksik veri yüklenmesi halinde üretilen rapor da hatalı olabilir.
+4.4. Platform, kullanıcıya herhangi bir finansal, ticari veya krediye ilişkin yönlendirme, tavsiye veya karar önerisi sunmaz; tüm kararlar münhasıran kullanıcıya aittir.
 
-4.5. Bu rapor, 3568 sayılı Kanun kapsamında SMMM veya YMM görüşünün yerine geçmez.
+4.5. Platform tarafından oluşturulan raporlar bankalar veya finansal kuruluşlar nezdinde resmi belge olarak kullanılamaz.
 
-4.6. Kullanıcı, raporda yer alan bilgiler doğrultusunda aldığı kararların tüm sorumluluğunun kendisine ait olduğunu kabul eder.
+4.6. BilancoSkor'un ürettiği kredi skoru, kredi limiti tahmini ve finansal değerlendirme, banka kredi kararını garanti etmez ve hukuki bağlayıcılığı yoktur.
+
+4.7. Raporlar; yüklenen verinin doğruluğuna dayalıdır. Hatalı veya eksik veri yüklenmesi halinde üretilen rapor da hatalı olabilir.
+
+4.8. Bu rapor, 3568 sayılı Kanun kapsamında SMMM veya YMM görüşünün yerine geçmez.
+
+4.9. Kullanıcı, raporda yer alan bilgiler doğrultusunda aldığı kararların tüm sorumluluğunun kendisine ait olduğunu kabul eder.
 
 ## 5. Ödeme ve Ücretlendirme
 
