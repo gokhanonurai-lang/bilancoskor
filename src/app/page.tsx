@@ -8,16 +8,16 @@ import SampleReportModal from '@/components/SampleReportModal'
 const RAPOR_BASLIKLARI = [
   { n: '1',  t: 'Yönetici özeti' },
   { n: '2',  t: 'Güçlü yönler' },
-  { n: '3',  t: 'Zayıf yönler + düzeltme' },
+  { n: '3',  t: 'Zayıf Yönler / Uyarılar' },
   { n: '4',  t: 'Skor bandı tablosu' },
-  { n: '5',  t: 'Kredi türü önerisi' },
+  { n: '5',  t: 'Finansman Araçları' },
   { n: '6',  t: 'Nakit akış analizi' },
   { n: '7',  t: '19 rasyo detayı' },
   { n: '8',  t: 'Senaryo motoru' },
   { n: '9',  t: 'Banka görüşme soruları' },
   { n: '10', t: 'Banka başvuru hazırlığı' },
-  { n: '11', t: 'Aksiyon zaman çizelgesi' },
-  { n: '12', t: 'Maksimum skora yol haritası' },
+  { n: '11', t: 'Model Bazlı İyileştirme Senaryoları' },
+  { n: '12', t: 'Model Skorunu Etkileyen Faktörler' },
   { n: '13', t: 'Bilanço özeti' },
   { n: '14', t: 'Yasal uyarı' },
 ]
@@ -127,7 +127,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="grid grid-cols-3 gap-2 mb-4">
-              {['Yönetici özeti','Güçlü yönler','Zayıf yönler','Skor bandı','Kredi türü önerisi','Nakit akış analizi','19 rasyo detayı','Senaryo motoru','Banka soruları','Banka başvuru rehberi','Aksiyon zaman çizelgesi','Maksimum skor yol haritası','Bilanço özeti','Yasal uyarı'].map(t => (
+              {['Yönetici özeti','Güçlü yönler','Zayıf Yönler / Uyarılar','Skor bandı','Finansman Araçları','Nakit akış analizi','19 rasyo detayı','Senaryo motoru','Banka soruları','Banka başvuru rehberi','Model Bazlı İyileştirme Senaryoları','Model Skorunu Etkileyen Faktörler','Bilanço özeti','Yasal uyarı'].map(t => (
                 <div key={t} className="bg-gray-50 rounded-xl h-9 flex items-center justify-center px-2">
                   <span className="text-xs text-gray-400 text-center">{t}</span>
                 </div>
@@ -144,7 +144,8 @@ export default function LandingPage() {
       {/* FİYATLANDIRMA */}
       <section className="border-t border-gray-100 py-16 bg-gray-50">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="text-xs font-medium text-gray-400 uppercase tracking-widest text-center mb-10">Fiyatlandırma</div>
+          <div className="text-xs font-medium text-gray-400 uppercase tracking-widest text-center mb-4">Fiyatlandırma</div>
+          <p className="text-center text-sm text-gray-500 italic mb-10">"Tek bir finansal hatanın maliyeti, bu raporun fiyatının çok üzerindedir."</p>
           <div className="max-w-2xl mx-auto flex gap-10 items-start">
 
             {/* Sol: fiyat + buton + notlar */}
@@ -153,7 +154,7 @@ export default function LandingPage() {
               <div className="text-sm text-gray-400 mb-6">tek seferlik · KDV dahil</div>
               <Link href="/auth" className="btn-primary w-full block text-center">Rapor oluştur</Link>
               <div className="mt-4 space-y-2">
-                {['Rapor 3 gün hesapta saklanır', 'Mizan analiz sonrası silinir', 'PDF olarak indirilebilir'].map(f => (
+                {['Rapor 1 gün hesapta saklanır, sonra kalıcı silinir', 'Mizan analiz sonrası silinir', 'PDF olarak indirilebilir'].map(f => (
                   <div key={f} className="flex items-center gap-2 text-xs text-gray-500">
                     <div className="w-3.5 h-3.5 rounded-full bg-brand-50 flex items-center justify-center flex-shrink-0">
                       <svg width="6" height="5" viewBox="0 0 6 5" fill="none"><path d="M1 2.5L2.5 4L5 1" stroke="#1D9E75" strokeWidth="1.2" strokeLinecap="round"/></svg>
