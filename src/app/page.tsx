@@ -121,7 +121,7 @@ export default function LandingPage() {
                 <span className="text-xs font-medium text-brand-400">AA</span>
               </div>
               <div>
-                <div className="text-sm font-medium text-gray-900 mb-1">Çok iyi — Uygun koşullarda kredi kullanabilirsiniz</div>
+                <div className="text-sm font-medium text-gray-900 mb-1">Çok iyi — Finansal göstergeler olumlu profil oluştuğuna işaret ediyor</div>
                 <div className="text-xs text-gray-500">Faaliyet etkinliği iyileştirilerek AAA bandına ulaşılabilir.</div>
                 <div className="text-xs text-brand-400 mt-1">Tahmini limit: 10.300.000 ₺ · Teminat: Kefalet + POS/çek</div>
               </div>

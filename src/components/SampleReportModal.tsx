@@ -104,7 +104,7 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
                   <span className="text-sm font-medium text-brand-400">AA</span>
                 </div>
                 <div className="flex-1">
-                  <div className="text-base font-semibold text-gray-900 mb-1">Çok iyi — Finansal yapınız güçlüdür. Uygun koşullarda kredi kullanabilirsiniz.</div>
+                  <div className="text-base font-semibold text-gray-900 mb-1">Çok iyi — Finansal göstergeler olumlu profil oluştuğuna işaret etmektedir.</div>
                   <div className="flex flex-wrap gap-4 text-sm mt-2">
                     <span>Tahmini limit: <strong className="text-brand-400">FAVÖK × 2.5x</strong></span>
                     <span className="text-gray-300">·</span>
@@ -174,9 +174,9 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
             <ST num="3" title="Zayıf Yönler / Uyarılar" />
             <div className="space-y-3">
               {[
-                { seviye: 'kritik', mesaj: 'Stok devir hızı: 0.67x — kritik seviyede. Stoklarınız yılda yalnızca 0.7 kez dönüyor — ortalama 545 günde bir. Bu rasyo bankacılık değerlendirmesinde olumsuz etki yaratıyor.', iyilestir: ['Eski ve yavaş dönen stokları indirimli satın', "Stok sipariş miktarlarını düşürün, 'tam zamanında' tedarik modeline geçin", 'Hangi ürünlerin raflarda çürüdüğünü analiz edin, portföyü daraltın'] },
-                { seviye: 'kritik', mesaj: 'Alacak tahsil süresi: 237 gün — kritik seviyede. Satışlarınızın bedeli ortalama 237 günde tahsil ediliyor — çok yüksek. Bu rasyo bankacılık değerlendirmesinde olumsuz etki yaratıyor.', iyilestir: ['Gecikmiş alacaklar için aktif takip ve hatırlatma kampanyası başlatın', 'Peşin veya kısa vadeli ödemelere %2–3 iskonto teklif edin', 'Yeni satışlarda vade politikasını sıkılaştırın'] },
-                { seviye: 'kritik', mesaj: 'Nakit dönüşüm süresi: 299 gün — kritik seviyede. Nakit döngünüz 299 gün — çok uzun. Bu rasyo bankacılık değerlendirmesinde olumsuz etki yaratıyor.', iyilestir: ['Alacak tahsilini hızlandırın (yukarıdaki adımlar)', 'Stok devir hızını artırın', 'Tedarikçilerle vadeyi uzatın — aynı malı 30 yerine 60 günde ödemek döngüyü kısaltır'] },
+                { seviye: 'kritik', mesaj: 'Stok devir hızı: 0.67x — kritik seviyede. Stoklarınız yılda yalnızca 0.7 kez dönüyor — ortalama 545 günde bir. Bu rasyo kredilendirilme sürecinizi olumsuz etkileyebilir.', iyilestir: ['Eski ve yavaş dönen stokları indirimli satın', "Stok sipariş miktarlarını düşürün, 'tam zamanında' tedarik modeline geçin", 'Hangi ürünlerin raflarda çürüdüğünü analiz edin, portföyü daraltın'] },
+                { seviye: 'kritik', mesaj: 'Alacak tahsil süresi: 237 gün — kritik seviyede. Satışlarınızın bedeli ortalama 237 günde tahsil ediliyor — çok yüksek. Bu rasyo kredilendirilme sürecinizi olumsuz etkileyebilir.', iyilestir: ['Gecikmiş alacaklar için aktif takip ve hatırlatma kampanyası başlatın', 'Peşin veya kısa vadeli ödemelere %2–3 iskonto teklif edin', 'Yeni satışlarda vade politikasını sıkılaştırın'] },
+                { seviye: 'kritik', mesaj: 'Nakit dönüşüm süresi: 299 gün — kritik seviyede. Nakit döngünüz 299 gün — çok uzun. Bu rasyo kredilendirilme sürecinizi olumsuz etkileyebilir.', iyilestir: ['Alacak tahsilini hızlandırın (yukarıdaki adımlar)', 'Stok devir hızını artırın', 'Tedarikçilerle vadeyi uzatın — aynı malı 30 yerine 60 günde ödemek döngüyü kısaltır'] },
                 { seviye: 'uyari', mesaj: 'KV Borç / Toplam Borç: %72.4 — zayıf seviyede. Borçlarınızın %72si kısa vadeli. İyileştirme yapılması önerilir.', iyilestir: ['Kısa vadeli kredileri uzun vadeli krediye çevirmek için bankanızla müzakere edin', 'Rotatif (döner) krediyi uzun vadeli yatırım kredisine dönüştürün', 'Tedarikçi borçlarının vadesini uzatmak için ticari anlaşmalar yapın'] },
               ].map((z, i) => (
                 <div key={i} className={`rounded-2xl p-4 border ${z.seviye === 'kritik' ? 'border-red-100 bg-red-50' : 'border-amber-100 bg-amber-50'}`}>
@@ -227,7 +227,7 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
 
           {/* 5. KREDİ TÜRÜ */}
           <section>
-            <ST num="5" title="Kredi Türü Önerisi" />
+            <ST num="5" title="Finansman Araçları – Genel Bilgilendirme" />
             <div className="card mb-3">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xs font-medium bg-brand-50 text-brand-600 px-2 py-0.5 rounded-full">Finansman Aracı</span>
@@ -261,7 +261,7 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
               </div>
               <div className="bg-amber-50 border border-amber-100 rounded-xl p-4">
                 <div className="text-sm font-semibold text-amber-600 mb-1">⚠ Yüksek borç servisi oranı</div>
-                <div className="text-xs text-amber-600 leading-relaxed">Aylık işletme kârınızın %68i borç servisine gidecek. Bu yüksek bir oran. Satışlarda küçük bir düşüş ödeme güçlüğü yaratabilir. Kredi miktarını azaltmayı veya vadeyi uzatmayı düşünün.</div>
+                <div className="text-xs text-amber-600 leading-relaxed">Aylık işletme kârınızın %68i borç servisine gidecek. Bu yüksek bir oran. Bu oran, satışlarda olası dalgalanmalara karşı hassasiyet oluşturabilir.</div>
               </div>
             </div>
           </section>
@@ -424,7 +424,7 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
             </div>
           </section>
 
-          {/* 12. MAKSİMUM SKORA NASIL ULAŞIRSINız */}
+          {/* 12. MODEL SKORUNU ETKİLEYEN FAKTÖRLER */}
           <section>
             <ST num="12" title="Maksimum Skora Nasıl Ulaşırsınız?" />
             <div className="p-4 bg-brand-50 border border-brand-100 rounded-2xl mb-4">

@@ -43,7 +43,7 @@ export default function HakkimizdaPage() {
             {[
               { baslik: 'Kredi skoru ve bant', aciklama: "AAA'dan D'ye kadar hangi bantta olduğunuz, tahmini kredi limiti ve gereken teminat yapısı." },
               { baslik: '19 finansal rasyo', aciklama: 'Likidite, sermaye yapısı, kârlılık, faaliyet etkinliği ve borç ödeme kapasitesi kategorilerinde — sektör ortalamasıyla karşılaştırmalı, Türkçe yorumlu detaylı analiz.' },
-              { baslik: 'Güçlü yönler ve uyarılar', aciklama: 'Hangi rasyonun güçlü olduğu, hangisinin bankacılık değerlendirmesinde olumsuz etki yarattığı ve her biri için somut iyileştirme önerileri.' },
+              { baslik: 'Güçlü yönler ve uyarılar', aciklama: 'Hangi rasyonun güçlü olduğu, hangisinin kredilendirilme sürecini olumsuz etkileyebileceği ve her biri için model bazlı iyileştirme senaryoları.' },
               { baslik: 'Kredi türü önerisi', aciklama: 'Rotatif, yatırım, faktoring, KGF gibi seçenekler arasında sizin finansal profilinize en uygun olan.' },
               { baslik: 'Senaryo motoru', aciklama: 'Hangi aksiyonu alırsanız (alacak tahsili, stok eritme, kısa vadeyi uzun vadeye çevirme, sermaye artırımı vb.) skorunuzun kaç puan değişeceği.' },
               { baslik: 'Banka yazışmalarına hazırlık', aciklama: 'Bankacının soracağı sorular ve kendi finansal durumunuza özel olarak üretilmiş hazır cevaplar.' },

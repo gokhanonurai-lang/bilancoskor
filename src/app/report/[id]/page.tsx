@@ -477,7 +477,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 11. AKSİYON ZAMAN ÇİZELGESİ */}
         {rapor.zaman_cizelgesi?.length > 0 && (
           <div className="card">
-            <Bolum num="11" title="Aksiyon Zaman Çizelgesi" />
+            <Bolum num="11" title="Model Bazlı İyileştirme Senaryoları" />
             <div className="space-y-4">
               {rapor.zaman_cizelgesi.map((z: any, i: number) => (
                 <div key={i} className="flex gap-4">
@@ -509,7 +509,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 12. MAKSİMUM SKORA NASIL ULAŞIRSINız */}
         {rapor.potansiyel_raporu && (
           <div className="card">
-            <Bolum num="12" title="Maksimum Skora Nasıl Ulaşırsınız?" />
+            <Bolum num="12" title="Model Skorunu Etkileyen Faktörler" />
             <div className="p-4 bg-brand-50 border border-brand-100 rounded-2xl mb-4">
               <div className="flex items-center gap-3">
                 <div className="text-center">
