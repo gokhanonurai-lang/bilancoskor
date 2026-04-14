@@ -24,8 +24,8 @@ export default function SSSPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-3xl mx-auto px-6 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Sikca Sorulan Sorular</h1>
-          <p className="text-gray-500">Aklinizdaki sorularin cevaplari burada.</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Sıkça Sorulan Sorular</h1>
+          <p className="text-gray-500">Aklınızdaki soruların cevapları burada.</p>
         </div>
         <div className="space-y-4">
           {sorular.map((item, i) => (
