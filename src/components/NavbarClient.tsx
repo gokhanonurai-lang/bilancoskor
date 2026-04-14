@@ -118,7 +118,7 @@ export default function NavbarClient() {
                 { href: '/hakkimizda', label: 'Hakkımızda' },
                 { href: '/sss', label: 'SSS' },
                 { href: '/blog', label: 'Blog' },
-                { href: '/iletisim', label: 'İletişim' },
+                { href: 'mailto:destek@bilancoskor.com', label: 'İletişim' },
               ].map(({ href, label }) => (
                 <Link
                   key={href}
