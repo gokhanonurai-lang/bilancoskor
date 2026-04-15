@@ -375,10 +375,34 @@ export default function ReportPage({ params }: { params: { id: string } }) {
           </div>
         )}
 
-        {/* 8. SENARYO MOTORU */}
+        {/* 8. ALT HESAP ANALİZİ */}
+        {rapor.alt_hesap_analizi?.length > 0 && (
+          <div className="card">
+            <Bolum num="8" title="Alt Hesap Analizi" />
+            <div className="space-y-6">
+              {rapor.alt_hesap_analizi.map((h: any, i: number) => (
+                <div key={i} className="border border-gray-100 rounded-2xl p-5">
+                  <div className="font-semibold text-gray-900 mb-3">
+                    {h.ana_hesap_kodu} — {h.ana_hesap_adi}
+                  </div>
+                  {h.uyari_notu && (
+                    <div className="text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2 mb-3">
+                      ⚠ {h.uyari_notu}
+                    </div>
+                  )}
+                  <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+                    {h.analiz_metni}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 9. SENARYO MOTORU */}
         {rapor.senaryolar?.length > 0 && (
           <div className="card">
-            <Bolum num="8" title="Senaryo Motoru" />
+            <Bolum num="9" title="Senaryo Motoru" />
             <div className="flex items-center gap-4 bg-gray-50 rounded-2xl p-4 mb-5">
               <div className="text-center">
                 <div className="text-xs text-gray-500 mb-1">Mevcut</div>
@@ -418,7 +442,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 9. BANKA GÖRÜŞME SORULARI */}
         {rapor.banka_sorulari?.length > 0 && (
           <div className="card">
-            <Bolum num="9" title="Banka Görüşme Soruları" />
+            <Bolum num="10" title="Banka Görüşme Soruları" />
             <div className="space-y-4">
               {rapor.banka_sorulari.map((s: any, i: number) => (
                 <div key={i} className="border border-gray-100 rounded-2xl overflow-hidden">
@@ -446,7 +470,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 10. BANKA BAŞVURU HAZIRLIĞI */}
         {rapor.banka_hazirlik && (
           <div className="card">
-            <Bolum num="10" title="Banka Başvuru Hazırlığı" />
+            <Bolum num="11" title="Banka Başvuru Hazırlığı" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <div className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">Hazırlanacak Belgeler</div>
@@ -477,7 +501,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 11. AKSİYON ZAMAN ÇİZELGESİ */}
         {rapor.zaman_cizelgesi?.length > 0 && (
           <div className="card">
-            <Bolum num="11" title="Model Bazlı İyileştirme Senaryoları" />
+            <Bolum num="12" title="Model Bazlı İyileştirme Senaryoları" />
             <div className="space-y-4">
               {rapor.zaman_cizelgesi.map((z: any, i: number) => (
                 <div key={i} className="flex gap-4">
@@ -509,7 +533,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 12. MAKSİMUM SKORA NASIL ULAŞIRSINız */}
         {rapor.potansiyel_raporu && (
           <div className="card">
-            <Bolum num="12" title="Model Skorunu Etkileyen Faktörler" />
+            <Bolum num="13" title="Model Skorunu Etkileyen Faktörler" />
             <div className="p-4 bg-brand-50 border border-brand-100 rounded-2xl mb-4">
               <div className="flex items-center gap-3">
                 <div className="text-center">
@@ -532,7 +556,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 13. BİLANÇO ÖZETİ */}
         {oz && (
           <div className="card">
-            <Bolum num="13" title="Bilanço Özeti" />
+            <Bolum num="14" title="Bilanço Özeti" />
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {[
                 ['Toplam Aktif', oz.toplam_aktif],
