@@ -400,42 +400,54 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         )}
 
         {/* 9. SENARYO MOTORU */}
-        {rapor.senaryolar?.length > 0 && (
+        {rapor.senaryolar !== undefined && (
           <div className="card">
             <Bolum num="9" title="Senaryo Motoru" />
-            <div className="flex items-center gap-4 bg-gray-50 rounded-2xl p-4 mb-5">
-              <div className="text-center">
-                <div className="text-xs text-gray-500 mb-1">Mevcut</div>
-                <div className="text-3xl font-semibold text-gray-400">{rapor.skor}</div>
-                <div className="text-sm text-gray-400">{rapor.harf}</div>
-              </div>
-              <div className="flex-1 flex items-center gap-2">
-                <div className="h-px flex-1 bg-gray-200"/>
-                <span className="text-xs text-gray-400">aksiyonlar</span>
-                <div className="h-px flex-1 bg-brand-400"/>
-              </div>
-              <div className="text-center">
-                <div className="text-xs text-gray-500 mb-1">Potansiyel</div>
-                <div className="text-3xl font-semibold text-brand-400">
-                  {Math.min(100, rapor.skor + (rapor.senaryolar[rapor.senaryolar.length - 1]?.skor_delta || 0))}
-                </div>
-              </div>
-            </div>
-            <div className="space-y-3">
-              {rapor.senaryolar.map((s: any, i: number) => (
-                <div key={i} className="flex items-center gap-4 p-4 rounded-xl border border-gray-100">
-                  <div className="w-7 h-7 rounded-full bg-brand-50 text-brand-600 text-xs font-semibold flex items-center justify-center flex-shrink-0">{i+1}</div>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium text-gray-900 mb-0.5">{s.aciklama}</div>
-                    {s.yeni_limit_aciklama && <div className="text-xs text-gray-400">Yeni limit: {s.yeni_limit_aciklama}</div>}
+            {rapor.senaryolar.length === 0 ? (
+              <p className="text-sm text-gray-400 text-center py-6">
+                Finansal göstergeleriniz sektör normlarında veya üzerinde; belirgin bir iyileştirme senaryosu tespit edilmedi.
+              </p>
+            ) : (
+              <>
+                <div className="flex items-center gap-4 bg-gray-50 rounded-2xl p-4 mb-5">
+                  <div className="text-center">
+                    <div className="text-xs text-gray-500 mb-1">Mevcut</div>
+                    <div className="text-3xl font-semibold text-gray-400">{rapor.skor}</div>
+                    <div className="text-sm text-gray-400">{rapor.harf}</div>
                   </div>
-                  <div className="text-right flex-shrink-0">
-                    <div className="text-lg font-semibold text-brand-400">+{s.skor_delta}</div>
-                    <div className="text-xs text-gray-400">{s.yeni_harf}</div>
+                  <div className="flex-1 flex items-center gap-2">
+                    <div className="h-px flex-1 bg-gray-200"/>
+                    <span className="text-xs text-gray-400">aksiyonlar</span>
+                    <div className="h-px flex-1 bg-brand-400"/>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-xs text-gray-500 mb-1">Potansiyel</div>
+                    <div className="text-3xl font-semibold text-brand-400">
+                      {Math.min(100, rapor.skor + Math.max(0, ...rapor.senaryolar.map((s: any) => s.skor_delta)))}
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
+                <div className="space-y-3">
+                  {rapor.senaryolar.map((s: any, i: number) => (
+                    <div key={i} className="flex items-center gap-4 p-4 rounded-xl border border-gray-100">
+                      <div className="w-7 h-7 rounded-full bg-brand-50 text-brand-600 text-xs font-semibold flex items-center justify-center flex-shrink-0">{i+1}</div>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-gray-900 mb-0.5">{s.aciklama}</div>
+                        {s.yeni_limit_aciklama && <div className="text-xs text-gray-400">Yeni limit: {s.yeni_limit_aciklama}</div>}
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        {s.skor_delta > 0 ? (
+                          <div className="text-lg font-semibold text-brand-400">+{s.skor_delta}</div>
+                        ) : (
+                          <div className="text-xs font-medium text-gray-400 bg-gray-100 rounded px-2 py-1">Yapısal</div>
+                        )}
+                        <div className="text-xs text-gray-400">{s.yeni_harf}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         )}
 
@@ -581,7 +593,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
 
         {/* 14. YASAL UYARI */}
         <div className="bg-gray-50 rounded-2xl p-5 text-xs text-gray-400 leading-relaxed space-y-1.5">
-          <p className="font-semibold text-gray-500 mb-2">14 · Yasal Uyarı</p>
+          <p className="font-semibold text-gray-500 mb-2">15 · Yasal Uyarı</p>
           <p><strong className="text-gray-500">1. Değerleme faaliyeti değildir:</strong> Bu rapor, 6362 sayılı Sermaye Piyasası Kanunu ve ilgili mevzuat kapsamında SPK tarafından yetkilendirilmiş değerleme kuruluşlarınca gerçekleştirilen resmi değerleme faaliyeti niteliği taşımamaktadır. BilancoSkor, kullanıcı tarafından yüklenen mizan verilerini algoritmik olarak işleyen bir finansal analiz yazılımıdır; üretilen çıktılar tahmini nitelikte olup herhangi bir resmi değerleme, derecelendirme veya kredi kararının yerine geçmez.</p>
           <p><strong className="text-gray-500">2. Resmi derecelendirme değildir:</strong> Bu rapor, SPK veya BDDK tarafından yetkilendirilmiş resmi bir kredi derecelendirme kuruluşunun notu değildir. Bankalar ve finansal kuruluşlar tarafından resmi kredi süreçlerinde bağlayıcı belge olarak kullanılamaz.</p>
           <p><strong className="text-gray-500">3. Finansal analiz aracıdır:</strong> BilancoSkor, kullanıcının kendi verilerini işleyen otomatik bir analiz yazılımıdır. Üretilen skorlar ve harf notları, resmi kredi derecelendirme kuruluşlarının notlarından bağımsız olup yalnızca kullanıcının kendi finansal durumunu anlamasına yardımcı olmak amacıyla tasarlanmıştır.</p>
