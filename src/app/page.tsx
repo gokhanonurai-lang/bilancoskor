@@ -90,8 +90,8 @@ export default function LandingPage() {
       </section>
 
       {/* PAIN BLOCK */}
-      <section style={{backgroundColor:'#0f1623'}} className="w-full py-20 px-8">
-        <div className="max-w-3xl mx-auto">
+      <section className="py-20">
+        <div className="max-w-2xl mx-auto text-center">
           {[
             'Kredi başvurularınız beklediğiniz gibi sonuçlanmadı mı?',
             'Limitinizin neden artırılmadığını biliyor musunuz?',
@@ -99,17 +99,14 @@ export default function LandingPage() {
             'Yeni kredi limiti için yüksek teminatlara mı ihtiyacınız var?',
             'POS bloke ve çek karşılığı gibi nakdi teminatlı limitler nakit akışınızı mı etkiliyor?',
           ].map((q) => {
-            const soru_isareti = q.slice(-1)
             const govde = q.slice(0, -1)
             return (
-              <div key={q} className="border-l-2 border-brand-400 pl-6 py-6">
-                <p className="text-2xl text-gray-300 leading-snug">
-                  {govde}<span className="text-brand-400">{soru_isareti}</span>
-                </p>
-              </div>
+              <p key={q} className="py-4 text-2xl font-semibold text-gray-400 leading-snug">
+                {govde}<span className="text-brand-400 font-bold">?</span>
+              </p>
             )
           })}
-          <p className="mt-12 text-xl text-white italic text-center leading-relaxed">
+          <p className="mt-12 text-xl font-semibold text-brand-400 text-center leading-relaxed">
             Tüm soruların cevabı sizde.<br />
             Siz henüz görmemiş olabilirsiniz.
           </p>
