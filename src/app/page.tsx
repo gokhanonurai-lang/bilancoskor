@@ -90,25 +90,24 @@ export default function LandingPage() {
       </section>
 
       {/* PAIN BLOCK */}
-      <section className="py-20">
-        <div className="max-w-2xl mx-auto text-center">
-          {[
-            'Kredi başvurularınız beklediğiniz gibi sonuçlanmadı mı?',
-            'Limitinizin neden artırılmadığını biliyor musunuz?',
-            'Bankalardan net bir cevap alamadınız mı?',
-            'Yeni kredi limiti için yüksek teminatlara mı ihtiyacınız var?',
-            'POS bloke ve çek karşılığı gibi nakdi teminatlı limitler nakit akışınızı mı etkiliyor?',
-          ].map((q) => {
-            const govde = q.slice(0, -1)
-            return (
-              <p key={q} className="py-4 text-2xl font-semibold text-gray-400 leading-snug">
-                {govde}<span className="text-brand-400 font-bold">?</span>
-              </p>
-            )
-          })}
-          <p className="mt-12 text-xl font-semibold text-brand-400 text-center leading-relaxed">
-            Tüm soruların cevabı sizde.<br />
-            Siz henüz görmemiş olabilirsiniz.
+      <section className="py-10">
+        <div className="max-w-xl mx-auto bg-gray-50 border border-gray-100 rounded-2xl px-7 py-6">
+          <div className="space-y-3 mb-5">
+            {[
+              'Kredi başvurularınız beklediğiniz gibi sonuçlanmadı mı?',
+              'Limitinizin neden artırılmadığını biliyor musunuz?',
+              'Bankalardan net bir cevap alamadınız mı?',
+              'Yeni kredi limiti için yüksek teminatlara mı ihtiyacınız var?',
+              'POS bloke ve çek karşılığı gibi nakdi teminatlı limitler nakit akışınızı mı etkiliyor?',
+            ].map((q) => (
+              <div key={q} className="flex items-start gap-2.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 flex-shrink-0" />
+                <p className="text-sm text-gray-700 leading-snug">{q}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-sm font-semibold text-brand-400 text-center border-t border-gray-200 pt-4">
+            Tüm soruların cevabı sizde. Siz henüz görmemiş olabilirsiniz.
           </p>
         </div>
       </section>
