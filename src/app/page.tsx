@@ -56,28 +56,6 @@ export default function LandingPage() {
           Finansal tablonuzu banka gözüyle görün ve kredi limitinizi artırın.
         </p>
 
-        {/* PAIN BLOCK */}
-        <div className="max-w-xl mx-auto mb-10 text-left bg-gray-50 border border-gray-100 rounded-2xl px-7 py-6">
-          <div className="space-y-3 mb-5">
-            {[
-              'Kredi başvurularınız beklediğiniz gibi sonuçlanmadı mı?',
-              'Limitinizin neden artırılmadığını biliyor musunuz?',
-              'Bankalardan net bir cevap alamadınız mı?',
-              'Yeni kredi limiti için yüksek teminatlara mı ihtiyacınız var?',
-              'POS bloke ve çek karşılığı gibi nakdi teminatlı limitler nakit akışınızı mı etkiliyor?',
-            ].map((q) => (
-              <div key={q} className="flex items-start gap-2.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 flex-shrink-0" />
-                <p className="text-sm text-gray-700 leading-snug">{q}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-sm font-medium text-gray-900 border-t border-gray-200 pt-4">
-            Tüm soruların cevabı sizde.{' '}
-            <span className="text-brand-500">Siz henüz görmemiş olabilirsiniz.</span>
-          </p>
-        </div>
-
         {/* UPLOAD ZONE */}
         <div className="relative border-2 border-dashed border-gray-200 rounded-2xl p-10 mx-auto max-w-2xl hover:border-brand-400 transition-colors cursor-pointer bg-gray-50/50 group">
           {/* Rapor Oluştur badge */}
@@ -108,6 +86,33 @@ export default function LandingPage() {
         <div className="flex items-center justify-center gap-2 mt-5 mb-16 text-xs text-gray-400">
           <div className="w-2 h-2 rounded-full bg-brand-400" />
           Mizanınız analiz sonrası silinir, saklanmaz veya paylaşılmaz
+        </div>
+      </section>
+
+      {/* PAIN BLOCK */}
+      <section style={{backgroundColor:'#0f1623'}} className="w-full py-20 px-8">
+        <div className="max-w-3xl mx-auto">
+          {[
+            'Kredi başvurularınız beklediğiniz gibi sonuçlanmadı mı?',
+            'Limitinizin neden artırılmadığını biliyor musunuz?',
+            'Bankalardan net bir cevap alamadınız mı?',
+            'Yeni kredi limiti için yüksek teminatlara mı ihtiyacınız var?',
+            'POS bloke ve çek karşılığı gibi nakdi teminatlı limitler nakit akışınızı mı etkiliyor?',
+          ].map((q) => {
+            const soru_isareti = q.slice(-1)
+            const govde = q.slice(0, -1)
+            return (
+              <div key={q} className="border-l-2 border-brand-400 pl-6 py-6">
+                <p className="text-2xl text-gray-300 leading-snug">
+                  {govde}<span className="text-brand-400">{soru_isareti}</span>
+                </p>
+              </div>
+            )
+          })}
+          <p className="mt-12 text-xl text-white italic text-center leading-relaxed">
+            Tüm soruların cevabı sizde.<br />
+            Siz henüz görmemiş olabilirsiniz.
+          </p>
         </div>
       </section>
 
