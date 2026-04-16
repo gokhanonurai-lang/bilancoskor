@@ -56,6 +56,28 @@ export default function LandingPage() {
           Finansal tablonuzu banka gözüyle görün ve kredi limitinizi artırın.
         </p>
 
+        {/* PAIN BLOCK */}
+        <div className="max-w-xl mx-auto mb-10 text-left bg-gray-50 border border-gray-100 rounded-2xl px-7 py-6">
+          <div className="space-y-3 mb-5">
+            {[
+              'Kredi başvurularınız beklediğiniz gibi sonuçlanmadı mı?',
+              'Limitinizin neden artırılmadığını biliyor musunuz?',
+              'Bankalardan net bir cevap alamadınız mı?',
+              'Yeni kredi limiti için yüksek teminatlara mı ihtiyacınız var?',
+              'POS bloke ve çek karşılığı gibi nakdi teminatlı limitler nakit akışınızı mı etkiliyor?',
+            ].map((q) => (
+              <div key={q} className="flex items-start gap-2.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 flex-shrink-0" />
+                <p className="text-sm text-gray-700 leading-snug">{q}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-sm font-medium text-gray-900 border-t border-gray-200 pt-4">
+            Tüm soruların cevabı sizde.{' '}
+            <span className="text-brand-500">Siz henüz görmemiş olabilirsiniz.</span>
+          </p>
+        </div>
+
         {/* UPLOAD ZONE */}
         <div className="relative border-2 border-dashed border-gray-200 rounded-2xl p-10 mx-auto max-w-2xl hover:border-brand-400 transition-colors cursor-pointer bg-gray-50/50 group">
           {/* Rapor Oluştur badge */}
@@ -110,7 +132,7 @@ export default function LandingPage() {
                   <path d="M78 65 L78 53 M74 57 L78 53 L82 57" stroke="#3B6D11" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <p className="text-sm font-medium text-gray-900 group-hover:-translate-y-1 transition-transform">Mizanı yükleyin</p>
+              <p className="text-sm font-medium text-gray-900 group-hover:-translate-y-1 transition-transform">Mizanınızı yükleyin</p>
             </div>
 
             {/* CONNECTOR 1 */}
@@ -142,7 +164,7 @@ export default function LandingPage() {
                   </g>
                 </svg>
               </div>
-              <p className="text-sm font-medium text-gray-900 group-hover:-translate-y-1 transition-transform">Otomatik veri analizi</p>
+              <p className="text-sm font-medium text-gray-900 group-hover:-translate-y-1 transition-transform">Sistem finansal tablonuzu bankacılık kriterleriyle analiz etsin</p>
             </div>
 
             {/* CONNECTOR 2 */}
@@ -173,7 +195,7 @@ export default function LandingPage() {
                   <path d="M67 57 L67 64 M64 62 L67 65 L70 62" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <p className="text-sm font-medium text-gray-900 group-hover:-translate-y-1 transition-transform">Raporunuzu alın</p>
+              <p className="text-sm font-medium text-gray-900 group-hover:-translate-y-1 transition-transform">Raporunuzu indirin ve sizi nelerin engellediğini öğrenin</p>
             </div>
 
           </div>
@@ -265,6 +287,20 @@ export default function LandingPage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* SON CTA */}
+      <section className="border-t border-gray-100 py-20">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <p className="text-3xl font-semibold text-gray-900 leading-snug mb-3">
+            Bilmemek sizin için<br />
+            <span className="text-brand-400">tercih değil, büyük bir risktir.</span>
+          </p>
+          <p className="text-sm text-gray-500 mb-8 max-w-md mx-auto">
+            Finansal tablonuzu banka gözüyle görün. Limitinizi ve teminat yapınızı nelerin engellediğini öğrenin.
+          </p>
+          <Link href="/auth" className="btn-primary text-base px-8 py-3">Hemen Başlayın</Link>
         </div>
       </section>
 
