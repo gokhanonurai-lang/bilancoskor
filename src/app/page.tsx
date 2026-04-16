@@ -49,8 +49,8 @@ export default function LandingPage() {
           <span className="text-brand-400">görüyor?</span>
         </h1>
         <p className="text-lg text-gray-500 max-w-xl mx-auto mb-3 leading-relaxed">
-          Mizanınızı yükleyin, bilanço skorunuzu öğrenin.<br />
-          Banka kredi limitinizi artırmanın yolunu keşfedin.
+          Mizanınızı yükleyin, finansal profilinizi hemen öğrenin.<br />
+          Kredi limitinizi ve teminat yapınızı nelerin engellediğini görün.
         </p>
         <p className="text-sm text-gray-400 italic max-w-md mx-auto mb-10">
           Finansal tablonuzu banka gözüyle görün ve kredi limitinizi artırın.
