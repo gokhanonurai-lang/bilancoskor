@@ -61,6 +61,17 @@ export default function AnalyzePage() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) { router.push('/auth'); return }
       setUser(session.user)
+      // Ana sayfadan gelen ön-analiz sonucunu oku
+      const cached = sessionStorage.getItem('analiz_sonucu_cached')
+      if (cached) {
+        try {
+          const { data, sektor: s } = JSON.parse(cached)
+          sessionStorage.removeItem('analiz_sonucu_cached')
+          setSonuc(data)
+          if (s) setSektor(s)
+          setStep('preview')
+        } catch {}
+      }
     })
   }, [router])
 

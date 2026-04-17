@@ -1,9 +1,25 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import SampleReportModal from '@/components/SampleReportModal'
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
+const API_URL = 'https://positive-adventure-production-f3cf.up.railway.app'
+
+const LOADING_STEPS = [
+  'Mizan dosyası okunuyor...',
+  'Finansal rasyolar hesaplanıyor...',
+  'Kredi skoru belirleniyor...',
+  'Yönetici özeti yazılıyor...',
+  'Rapor hazırlanıyor...',
+]
 
 const RAPOR_BASLIKLARI = [
   { n: '1',  t: 'Yönetici özeti' },
@@ -23,21 +39,121 @@ const RAPOR_BASLIKLARI = [
 ]
 
 export default function LandingPage() {
+  const router = useRouter()
+  const inputRef = useRef<HTMLInputElement>(null)
+  const loadingTimerRef = useRef<any>(null)
+
   const [showSample, setShowSample] = useState(false)
   const [rapor_fiyati, setRaporFiyati] = useState<string | null>(null)
+  const [file, setFile] = useState<File | null>(null)
+  const [dragging, setDragging] = useState(false)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [loadingStep, setLoadingStep] = useState(0)
+  const [sektor, setSektor] = useState('ticaret')
 
   useEffect(() => {
-    // Fiyatı Supabase settings tablosundan oku
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
     supabase.from('settings').select('value').eq('key', 'rapor_fiyati').single()
       .then(({ data }) => { if (data) setRaporFiyati(data.value) })
   }, [])
 
+  const handleFile = (f: File) => {
+    if (f.size > 10 * 1024 * 1024) { setError('Dosya boyutu 10MB sınırını aşıyor.'); return }
+    if (!f.name.endsWith('.xlsx') && !f.name.endsWith('.xls')) { setError('Lütfen Excel (.xlsx) dosyası yükleyin.'); return }
+    setError('')
+    setFile(f)
+  }
+
+  const handleUploadClick = async () => {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) { router.push('/auth'); return }
+    inputRef.current?.click()
+  }
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault()
+    setDragging(false)
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) { router.push('/auth'); return }
+    const f = e.dataTransfer.files[0]
+    if (f) handleFile(f)
+  }
+
+  const handleAnaliz = async () => {
+    if (!file) { setError('Lütfen önce bir mizan dosyası seçin.'); return }
+    setLoading(true)
+    setLoadingStep(0)
+    setError('')
+    const stepTimes = [1500, 3000, 5000, 10000]
+    stepTimes.forEach((t, i) => {
+      loadingTimerRef.current = setTimeout(() => setLoadingStep(i + 1), t)
+    })
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('sektor', sektor)
+      formData.append('sirket_adi', file.name.replace('.xlsx', '').replace('.xls', ''))
+      const { data: { session } } = await supabase.auth.getSession()
+      const token = session?.access_token || ''
+      const res = await fetch(`${API_URL}/analyze`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData,
+      })
+      if (!res.ok) {
+        const err = await res.json()
+        throw new Error(err.detail || 'Analiz sırasında hata oluştu.')
+      }
+      const data = await res.json()
+      sessionStorage.setItem('analiz_sonucu_cached', JSON.stringify({
+        data,
+        sektor,
+        firma_adi: file.name.replace('.xlsx', '').replace('.xls', ''),
+      }))
+      router.push('/analyze')
+    } catch (err: any) {
+      setError(err.message || 'API bağlantı hatası. Lütfen tekrar deneyin.')
+    } finally {
+      setLoading(false)
+      setLoadingStep(0)
+      if (loadingTimerRef.current) clearTimeout(loadingTimerRef.current)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white">
+
+      {/* LOADING OVERLAY */}
+      {loading && (
+        <div className="fixed inset-0 z-50 bg-white/90 backdrop-blur-sm flex items-center justify-center">
+          <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-10 w-full max-w-sm mx-4">
+            <div className="flex flex-col items-center mb-8">
+              <svg className="animate-spin w-10 h-10 text-brand-400 mb-4" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="#e5e7eb" strokeWidth="3"/>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke="#1D9E75" strokeWidth="3" strokeLinecap="round"/>
+              </svg>
+              <div className="text-base font-semibold text-gray-900">Rapor Hazırlanıyor</div>
+              <div className="text-xs text-gray-400 mt-1">Bu işlem 30–60 saniye sürebilir</div>
+            </div>
+            <div className="space-y-3">
+              {LOADING_STEPS.map((s, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  {loadingStep > i ? (
+                    <div className="w-5 h-5 rounded-full bg-brand-400 flex items-center justify-center flex-shrink-0">
+                      <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                    </div>
+                  ) : loadingStep === i ? (
+                    <div className="w-5 h-5 rounded-full border-2 border-brand-400 flex-shrink-0 animate-pulse"/>
+                  ) : (
+                    <div className="w-5 h-5 rounded-full border-2 border-gray-200 flex-shrink-0"/>
+                  )}
+                  <span className={`text-sm ${loadingStep > i ? 'text-brand-600 font-medium' : loadingStep === i ? 'text-gray-900 font-medium' : 'text-gray-400'}`}>{s}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* HERO */}
       <section className="max-w-5xl mx-auto px-6 pt-20 pb-0 text-center">
@@ -57,30 +173,90 @@ export default function LandingPage() {
         </p>
 
         {/* UPLOAD ZONE */}
-        <div className="relative border-2 border-dashed border-gray-200 rounded-2xl p-10 mx-auto max-w-2xl hover:border-brand-400 transition-colors cursor-pointer bg-gray-50/50 group">
+        <div
+          onDragOver={e => { e.preventDefault(); setDragging(true) }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={handleDrop}
+          onClick={handleUploadClick}
+          className={`relative border-2 border-dashed rounded-2xl p-10 mx-auto max-w-2xl transition-colors cursor-pointer group ${dragging ? 'border-brand-400 bg-brand-50' : file ? 'border-brand-400 bg-brand-50/50' : 'border-gray-200 hover:border-brand-400 bg-gray-50/50'}`}
+        >
+          <input
+            ref={inputRef}
+            type="file"
+            accept=".xlsx,.xls"
+            className="hidden"
+            onClick={e => e.stopPropagation()}
+            onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])}
+          />
           {/* Rapor Oluştur badge */}
           <div className="absolute top-4 right-4 bg-brand-400 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
             Rapor Oluştur
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center mx-auto mb-4 group-hover:bg-brand-100 transition-colors">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="17 8 12 3 7 8"/>
-              <line x1="12" y1="3" x2="12" y2="15"/>
-            </svg>
-          </div>
-          <div className="text-base font-medium text-gray-900 mb-1.5">Mizanınızı buraya sürükleyin</div>
-          <div className="text-sm text-gray-500 mb-1">veya bilgisayarınızdan seçin</div>
-          <div className="text-xs text-gray-400 mb-6">Excel (.xlsx)</div>
-          <Link href="/auth" className="btn-primary">Analizi Başlat</Link>
+
+          {file ? (
+            <>
+              <div className="w-12 h-12 rounded-2xl bg-brand-100 flex items-center justify-center mx-auto mb-4">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" strokeWidth="1.8" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <div className="text-sm font-medium text-gray-900 mb-1">{file.name}</div>
+              <div className="text-xs text-gray-500 mb-4">{(file.size / 1024).toFixed(1)} KB · Excel</div>
+              <button
+                onClick={e => { e.stopPropagation(); setFile(null) }}
+                className="text-xs text-red-400 hover:text-red-500 transition mb-6"
+              >
+                Kaldır
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center mx-auto mb-4 group-hover:bg-brand-100 transition-colors">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <div className="text-base font-medium text-gray-900 mb-1.5">Mizanınızı buraya sürükleyin</div>
+              <div className="text-sm text-gray-500 mb-1">veya bilgisayarınızdan seçin</div>
+              <div className="text-xs text-gray-400 mb-6">Excel (.xlsx)</div>
+            </>
+          )}
+
+          <button
+            onClick={e => { e.stopPropagation(); handleAnaliz() }}
+            disabled={loading}
+            className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <span className="flex items-center gap-2 justify-center">
+                <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="white" strokeWidth="3" strokeOpacity=".3"/><path d="M12 2a10 10 0 0 1 10 10" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
+                Analiz yapılıyor...
+              </span>
+            ) : 'Analizi Başlat'}
+          </button>
+
           <div className="flex items-center justify-center gap-3 mt-5">
             <span className="text-xs text-gray-400">Sektör:</span>
-            {['Ticaret', 'Üretim', 'Hizmet'].map((s, i) => (
-              <span key={s} className={`text-xs px-3 py-1 rounded-lg border cursor-pointer transition ${i === 0 ? 'border-brand-400 text-brand-600 bg-brand-50' : 'border-gray-200 text-gray-500'}`}>
-                {s}
-              </span>
+            {[{v:'ticaret',l:'Ticaret'},{v:'uretim',l:'Üretim'},{v:'hizmet',l:'Hizmet'}].map(s => (
+              <button
+                key={s.v}
+                type="button"
+                onClick={e => { e.stopPropagation(); setSektor(s.v) }}
+                className={`text-xs px-3 py-1 rounded-lg border cursor-pointer transition ${sektor === s.v ? 'border-brand-400 text-brand-600 bg-brand-50' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}
+              >
+                {s.l}
+              </button>
             ))}
           </div>
+
+          {error && (
+            <div
+              onClick={e => e.stopPropagation()}
+              className="mt-4 text-xs text-red-500 bg-red-50 border border-red-100 rounded-xl px-4 py-3"
+            >
+              {error}
+            </div>
+          )}
         </div>
 
         <div className="flex items-center justify-center gap-2 mt-5 mb-16 text-xs text-gray-400">
