@@ -586,9 +586,146 @@ export default function ReportPage({ params }: { params: { id: string } }) {
           </div>
         )}
 
-        {/* 14. YASAL UYARI */}
+        {/* 15. GELİR TABLOSU */}
+        {oz.net_satislar ? (
+          <div className="card">
+            <Bolum num="15" title="Gelir Tablosu" />
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left pb-2 font-semibold text-gray-700">Kalem</th>
+                    <th className="text-right pb-2 font-semibold text-gray-700 pr-4">Tutar (₺)</th>
+                    <th className="text-right pb-2 font-semibold text-gray-700">Net Satış %</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {(() => {
+                    const ns = oz.net_satislar || 0
+                    const brut = ns - (oz.satis_maliyeti || 0)
+                    const favok = oz.favok || 0
+                    const faaliyet_kar = favok - (oz.enflasyon_duzeltme_zarari || 0)
+                    const vk = faaliyet_kar + (oz.finansman_gelirleri || 0) - (oz.finansman_giderleri || 0)
+                    const p = (v: number) => ns ? ((v / ns) * 100).toFixed(1) + '%' : '—'
+                    const isNeg = (v: number) => v < 0
+
+                    const rows: Array<{label: string; value: number; bold?: boolean; sep?: boolean; red?: boolean}> = [
+                      { label: 'Net Satışlar', value: ns, bold: true },
+                      { label: 'Satış Maliyeti', value: -(oz.satis_maliyeti || 0), red: true },
+                      { label: 'Brüt Kâr', value: brut, bold: true, sep: true },
+                      { label: 'Faaliyet Giderleri', value: -(oz.faaliyet_giderleri || 0), red: true },
+                      { label: 'FAVÖK', value: favok, bold: true, sep: true },
+                      { label: 'Enf. Düzeltme Zararı', value: -(oz.enflasyon_duzeltme_zarari || 0), red: true },
+                      { label: 'Faaliyet Kârı', value: faaliyet_kar },
+                      { label: 'Finansman Gelirleri', value: oz.finansman_gelirleri || 0 },
+                      { label: 'Finansman Giderleri', value: -(oz.finansman_giderleri || 0), red: true },
+                      { label: 'Vergi Öncesi Kâr', value: vk, bold: true, sep: true },
+                      { label: 'Vergi', value: -(oz.vergi || 0), red: true },
+                      { label: 'Net Kâr', value: oz.net_kar || 0, bold: true, sep: true },
+                    ]
+
+                    return rows.map(({ label, value, bold, sep, red }) => (
+                      <tr key={label} className={sep ? 'border-t-2 border-gray-300' : ''}>
+                        <td className={`py-2 ${bold ? 'font-semibold text-gray-900' : 'text-gray-600'}`}>{label}</td>
+                        <td className={`py-2 pr-4 text-right tabular-nums ${red || isNeg(value) ? 'text-red-600' : bold ? 'font-semibold text-gray-900' : 'text-gray-700'} ${bold ? 'font-semibold' : ''}`}>
+                          {value < 0 ? `(${fmt(-value)})` : fmt(value)}
+                        </td>
+                        <td className={`py-2 text-right tabular-nums ${red || isNeg(value) ? 'text-red-500' : 'text-gray-500'}`}>
+                          {p(Math.abs(value))}
+                        </td>
+                      </tr>
+                    ))
+                  })()}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : null}
+
+        {/* 16. BİLANÇO */}
+        {oz.toplam_aktif ? (
+          <div className="card">
+            <Bolum num="16" title="Bilanço" />
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+              {/* AKTİF */}
+              <div>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Aktif</p>
+                <table className="w-full text-sm">
+                  <tbody className="divide-y divide-gray-100">
+                    {(() => {
+                      const ta = oz.toplam_aktif || 0
+                      const dv = oz.donen_varliklar || 0
+                      const duranV = oz.duran_varliklar || 0
+                      const digerDonen = dv - (oz.nakit || 0) - (oz.ticari_alacaklar || 0) - (oz.stoklar || 0)
+                      const digerDuran = duranV - (oz.maddi_duran_varlik || 0)
+                      const p = (v: number) => ta ? ((v / ta) * 100).toFixed(0) + '%' : '—'
+                      const rows: Array<{label: string; value?: number; header?: boolean}> = [
+                        { label: 'DÖNEN VARLIKLAR', value: dv, header: true },
+                        { label: 'Nakit ve Benzerleri', value: oz.nakit || 0 },
+                        { label: 'Ticari Alacaklar', value: oz.ticari_alacaklar || 0 },
+                        { label: 'Stoklar', value: oz.stoklar || 0 },
+                        { label: 'Diğer Dönen', value: digerDonen > 0 ? digerDonen : 0 },
+                        { label: 'DURAN VARLIKLAR', value: duranV, header: true },
+                        { label: 'Maddi Duran Varlık', value: oz.maddi_duran_varlik || 0 },
+                        { label: 'Diğer Duran', value: digerDuran > 0 ? digerDuran : 0 },
+                        { label: 'TOPLAM AKTİF', value: ta, header: true },
+                      ]
+                      return rows.map(({ label, value, header }) => (
+                        <tr key={label} className={header ? 'border-t-2 border-gray-300' : ''}>
+                          <td className={`py-1.5 ${header ? 'font-bold text-gray-800' : 'text-gray-600 pl-2'}`}>{label}</td>
+                          <td className={`py-1.5 text-right tabular-nums ${header ? 'font-bold text-gray-800' : 'text-gray-700'}`}>{fmt(value ?? 0)}</td>
+                          <td className="py-1.5 text-right text-gray-400 text-xs pl-1">{header ? '' : p(value ?? 0)}</td>
+                        </tr>
+                      ))
+                    })()}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* PASİF */}
+              <div>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Pasif</p>
+                <table className="w-full text-sm">
+                  <tbody className="divide-y divide-gray-100">
+                    {(() => {
+                      const ta = oz.toplam_aktif || 0
+                      const kv = oz.kv_borclar || 0
+                      const uv = oz.uv_borclar || 0
+                      const ok = oz.ozkaynaklar || 0
+                      const digerKv = kv - (oz.banka_kredileri_kv || 0) - (oz.ticari_borclar || 0)
+                      const tp = kv + uv + ok
+                      const p = (v: number) => ta ? ((v / ta) * 100).toFixed(0) + '%' : '—'
+                      const rows: Array<{label: string; value?: number; header?: boolean}> = [
+                        { label: 'KV BORÇLAR', value: kv, header: true },
+                        { label: 'Banka Kredileri (KV)', value: oz.banka_kredileri_kv || 0 },
+                        { label: 'Ticari Borçlar', value: oz.ticari_borclar || 0 },
+                        { label: 'Diğer KV', value: digerKv > 0 ? digerKv : 0 },
+                        { label: 'UV BORÇLAR', value: uv, header: true },
+                        { label: 'Banka Kredileri (UV)', value: oz.banka_kredileri_uv || 0 },
+                        { label: 'ÖZKAYNAKLAR', value: ok, header: true },
+                        { label: 'Ödenmiş Sermaye', value: oz.odenmis_sermaye || 0 },
+                        { label: 'Geçmiş Yıl Kârları', value: oz.gecmis_yil_karlari || 0 },
+                        { label: 'Dönem Net Kârı', value: oz.net_kar || 0 },
+                        { label: 'TOPLAM PASİF', value: tp, header: true },
+                      ]
+                      return rows.map(({ label, value, header }) => (
+                        <tr key={label} className={header ? 'border-t-2 border-gray-300' : ''}>
+                          <td className={`py-1.5 ${header ? 'font-bold text-gray-800' : 'text-gray-600 pl-2'}`}>{label}</td>
+                          <td className={`py-1.5 text-right tabular-nums ${header ? 'font-bold text-gray-800' : 'text-gray-700'}`}>{fmt(value ?? 0)}</td>
+                          <td className="py-1.5 text-right text-gray-400 text-xs pl-1">{header ? '' : p(value ?? 0)}</td>
+                        </tr>
+                      ))
+                    })()}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        {/* 17. YASAL UYARI */}
         <div className="bg-gray-50 rounded-2xl p-5 text-xs text-gray-400 leading-relaxed space-y-1.5">
-          <p className="font-semibold text-gray-500 mb-2">15 · Yasal Uyarı</p>
+          <p className="font-semibold text-gray-500 mb-2">17 · Yasal Uyarı</p>
           <p><strong className="text-gray-500">1. Değerleme faaliyeti değildir:</strong> Bu rapor, 6362 sayılı Sermaye Piyasası Kanunu ve ilgili mevzuat kapsamında SPK tarafından yetkilendirilmiş değerleme kuruluşlarınca gerçekleştirilen resmi değerleme faaliyeti niteliği taşımamaktadır. BilancoSkor, kullanıcı tarafından yüklenen mizan verilerini algoritmik olarak işleyen bir finansal analiz yazılımıdır; üretilen çıktılar tahmini nitelikte olup herhangi bir resmi değerleme, derecelendirme veya kredi kararının yerine geçmez.</p>
           <p><strong className="text-gray-500">2. Resmi derecelendirme değildir:</strong> Bu rapor, SPK veya BDDK tarafından yetkilendirilmiş resmi bir kredi derecelendirme kuruluşunun notu değildir. Bankalar ve finansal kuruluşlar tarafından resmi kredi süreçlerinde bağlayıcı belge olarak kullanılamaz.</p>
           <p><strong className="text-gray-500">3. Finansal analiz aracıdır:</strong> BilancoSkor, kullanıcının kendi verilerini işleyen otomatik bir analiz yazılımıdır. Üretilen skorlar ve harf notları, resmi kredi derecelendirme kuruluşlarının notlarından bağımsız olup yalnızca kullanıcının kendi finansal durumunu anlamasına yardımcı olmak amacıyla tasarlanmıştır.</p>
