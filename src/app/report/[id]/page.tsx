@@ -196,11 +196,6 @@ export default function ReportPage({ params }: { params: { id: string } }) {
           <div className="card">
             <Bolum num="3" title="Zayıf Yönler / Uyarılar" />
             <div className="space-y-3">
-              {rapor.kirmizi_bayraklar?.map((b: any, i: number) => (
-                <div key={`kb-${i}`} className="p-4 bg-red-50 border border-red-100 rounded-2xl">
-                  <div className="flex items-start gap-3"><div className="w-4 h-4 rounded-full bg-red-400 flex-shrink-0 mt-0.5"/><span className="text-sm font-medium text-red-700">{b.mesaj}</span></div>
-                </div>
-              ))}
               {rapor.zayif_yonler.map((z: any, i: number) => {
                 const mesaj = typeof z === 'string' ? z : z.mesaj
                 const adimlar = typeof z === 'object' ? (z.nasil_duzeltilir || z.iyilestir || []) : []
