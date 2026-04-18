@@ -723,9 +723,19 @@ export default function ReportPage({ params }: { params: { id: string } }) {
           </div>
         ) : null}
 
-        {/* 17. YASAL UYARI */}
+        {/* 17. FİNANSAL TABLO ANALİZİ */}
+        {rapor.finansal_tablo_yorumu && (
+          <div className="card">
+            <Bolum num="17" title="Finansal Tablo Analizi" />
+            <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+              {rapor.finansal_tablo_yorumu}
+            </div>
+          </div>
+        )}
+
+        {/* 18. YASAL UYARI */}
         <div className="bg-gray-50 rounded-2xl p-5 text-xs text-gray-400 leading-relaxed space-y-1.5">
-          <p className="font-semibold text-gray-500 mb-2">17 · Yasal Uyarı</p>
+          <p className="font-semibold text-gray-500 mb-2">18 · Yasal Uyarı</p>
           <p><strong className="text-gray-500">1. Değerleme faaliyeti değildir:</strong> Bu rapor, 6362 sayılı Sermaye Piyasası Kanunu ve ilgili mevzuat kapsamında SPK tarafından yetkilendirilmiş değerleme kuruluşlarınca gerçekleştirilen resmi değerleme faaliyeti niteliği taşımamaktadır. BilancoSkor, kullanıcı tarafından yüklenen mizan verilerini algoritmik olarak işleyen bir finansal analiz yazılımıdır; üretilen çıktılar tahmini nitelikte olup herhangi bir resmi değerleme, derecelendirme veya kredi kararının yerine geçmez.</p>
           <p><strong className="text-gray-500">2. Resmi derecelendirme değildir:</strong> Bu rapor, SPK veya BDDK tarafından yetkilendirilmiş resmi bir kredi derecelendirme kuruluşunun notu değildir. Bankalar ve finansal kuruluşlar tarafından resmi kredi süreçlerinde bağlayıcı belge olarak kullanılamaz.</p>
           <p><strong className="text-gray-500">3. Finansal analiz aracıdır:</strong> BilancoSkor, kullanıcının kendi verilerini işleyen otomatik bir analiz yazılımıdır. Üretilen skorlar ve harf notları, resmi kredi derecelendirme kuruluşlarının notlarından bağımsız olup yalnızca kullanıcının kendi finansal durumunu anlamasına yardımcı olmak amacıyla tasarlanmıştır.</p>
