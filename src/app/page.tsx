@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import SampleReportModal from '@/components/SampleReportModal'
+import { naceKodlari } from '@/data/naceKodlari'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -50,11 +51,24 @@ export default function LandingPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState(0)
-  const [sektor, setSektor] = useState('ticaret')
+  const [naceKodu, setNaceKodu] = useState('')
+  const [naceSearch, setNaceSearch] = useState('')
+  const [naceOpen, setNaceOpen] = useState(false)
+  const naceRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     supabase.from('settings').select('value').eq('key', 'rapor_fiyati').single()
       .then(({ data }) => { if (data) setRaporFiyati(data.value) })
+  }, [])
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (naceRef.current && !naceRef.current.contains(e.target as Node)) {
+        setNaceOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
   }, [])
 
   const handleFile = (f: File) => {
@@ -91,7 +105,7 @@ export default function LandingPage() {
     try {
       const formData = new FormData()
       formData.append('file', file)
-      formData.append('sektor', sektor)
+      formData.append('sektor', naceKodu || 'ticaret')
       formData.append('sirket_adi', file.name.replace('.xlsx', '').replace('.xls', ''))
       const { data: { session } } = await supabase.auth.getSession()
       const token = session?.access_token || ''
@@ -107,7 +121,7 @@ export default function LandingPage() {
       const data = await res.json()
       sessionStorage.setItem('analiz_sonucu_cached', JSON.stringify({
         data,
-        sektor,
+        sektor: naceKodu || 'ticaret',
         firma_adi: file.name.replace('.xlsx', '').replace('.xls', ''),
       }))
       router.push('/analyze')
@@ -235,18 +249,54 @@ export default function LandingPage() {
             ) : 'Analizi Başlat'}
           </button>
 
-          <div className="flex items-center justify-center gap-3 mt-5">
-            <span className="text-xs text-gray-400">Sektör:</span>
-            {[{v:'ticaret',l:'Ticaret'},{v:'uretim',l:'Üretim'},{v:'hizmet',l:'Hizmet'}].map(s => (
+          <div className="mt-5" ref={naceRef} onClick={e => e.stopPropagation()}>
+            <div className="relative">
               <button
-                key={s.v}
                 type="button"
-                onClick={e => { e.stopPropagation(); setSektor(s.v) }}
-                className={`text-xs px-3 py-1 rounded-lg border cursor-pointer transition ${sektor === s.v ? 'border-brand-400 text-brand-600 bg-brand-50' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}
+                onClick={() => setNaceOpen(o => !o)}
+                className="w-full text-xs px-3 py-2 rounded-xl border border-gray-200 text-left flex items-center justify-between gap-2 hover:border-gray-300 transition"
               >
-                {s.l}
+                <span className={naceKodu ? 'text-gray-700' : 'text-gray-400'}>
+                  {naceKodu
+                    ? `${naceKodu} — ${naceKodlari.find(n => n.kod === naceKodu)?.tanim ?? ''}`
+                    : 'Sektör / NACE kodu seçin (isteğe bağlı)'}
+                </span>
+                <svg className="w-3 h-3 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </button>
-            ))}
+              {naceOpen && (
+                <div className="absolute left-0 right-0 top-full mt-1 z-50 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+                  <div className="p-2 border-b border-gray-100">
+                    <input
+                      autoFocus
+                      type="text"
+                      value={naceSearch}
+                      onChange={e => setNaceSearch(e.target.value)}
+                      placeholder="Kod veya faaliyet adı ara…"
+                      className="w-full text-xs px-3 py-2 rounded-lg border border-gray-200 outline-none focus:border-brand-400"
+                    />
+                  </div>
+                  <ul className="max-h-48 overflow-y-auto">
+                    <li>
+                      <button type="button" onClick={() => { setNaceKodu(''); setNaceSearch(''); setNaceOpen(false) }}
+                        className="w-full text-left text-xs px-3 py-2 text-gray-400 hover:bg-gray-50">
+                        — Seçim yok (genel)
+                      </button>
+                    </li>
+                    {naceKodlari
+                      .filter(n => !naceSearch || n.kod.includes(naceSearch) || n.tanim.toLowerCase().includes(naceSearch.toLowerCase()))
+                      .slice(0, 80)
+                      .map(n => (
+                        <li key={n.kod}>
+                          <button type="button" onClick={() => { setNaceKodu(n.kod); setNaceSearch(''); setNaceOpen(false) }}
+                            className={`w-full text-left text-xs px-3 py-2 hover:bg-brand-50 ${naceKodu === n.kod ? 'bg-brand-50 text-brand-600' : 'text-gray-600'}`}>
+                            <span className="font-mono text-gray-400 mr-2">{n.kod}</span>{n.tanim}
+                          </button>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
 
           {error && (

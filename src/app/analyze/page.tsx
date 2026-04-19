@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { naceKodlari } from '@/data/naceKodlari'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 
@@ -39,7 +40,10 @@ const BANT_RENK: Record<string, string> = {
 export default function AnalyzePage() {
   const router = useRouter()
   const [step, setStep] = useState<Step>('upload')
-  const [sektor, setSektor] = useState('ticaret')
+  const [naceKodu, setNaceKodu] = useState('')
+  const [naceSearch, setNaceSearch] = useState('')
+  const [naceOpen, setNaceOpen] = useState(false)
+  const naceRef = useRef<HTMLDivElement>(null)
   const [file, setFile] = useState<File | null>(null)
   const [dragging, setDragging] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -68,12 +72,22 @@ export default function AnalyzePage() {
           const { data, sektor: s } = JSON.parse(cached)
           sessionStorage.removeItem('analiz_sonucu_cached')
           setSonuc(data)
-          if (s) setSektor(s)
+          if (s) setNaceKodu(s)
           setStep('preview')
         } catch {}
       }
     })
   }, [router])
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (naceRef.current && !naceRef.current.contains(e.target as Node)) {
+        setNaceOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
 
   const handleFile = (f: File) => {
     if (f.size > 10 * 1024 * 1024) {
@@ -100,7 +114,7 @@ export default function AnalyzePage() {
     try {
       const formData = new FormData()
       formData.append('file', file)
-      formData.append('sektor', sektor)
+      formData.append('sektor', naceKodu || 'ticaret')
       formData.append('sirket_adi', file.name.replace('.xlsx', '').replace('.xls', ''))
 
       const { data: { session } } = await supabase.auth.getSession()
@@ -143,7 +157,7 @@ export default function AnalyzePage() {
       const { data: rapor, error } = await supabase.from('reports').insert({
         user_id: user.id,
         firma_adi: sonuc.firma_ozet?.sirket_adi || 'Rapor',
-        sektor: sektor,
+        sektor: naceKodu || 'ticaret',
         skor: sonuc.skor,
         harf: sonuc.harf,
         rapor_json: sonuc,
@@ -264,15 +278,54 @@ export default function AnalyzePage() {
               )}
             </div>
 
-            <div className="mt-5">
-              <label className="label">Sektör</label>
-              <div className="grid grid-cols-3 gap-2">
-                {[{value:'ticaret',label:'Ticaret'},{value:'uretim',label:'Üretim'},{value:'hizmet',label:'Hizmet'}].map(s => (
-                  <button key={s.value} type="button" onClick={() => setSektor(s.value)}
-                    className={`py-3 text-sm font-medium rounded-xl border transition-all ${sektor===s.value?'border-brand-400 text-brand-600 bg-brand-50':'border-gray-200 text-gray-600 hover:border-gray-300'}`}>
-                    {s.label}
-                  </button>
-                ))}
+            <div className="mt-5" ref={naceRef}>
+              <label className="label">Sektör / NACE Kodu</label>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setNaceOpen(o => !o)}
+                  className="w-full text-sm px-3 py-3 rounded-xl border border-gray-200 text-left flex items-center justify-between gap-2 hover:border-gray-300 transition"
+                >
+                  <span className={naceKodu ? 'text-gray-700' : 'text-gray-400'}>
+                    {naceKodu
+                      ? `${naceKodu} — ${naceKodlari.find(n => n.kod === naceKodu)?.tanim ?? ''}`
+                      : 'NACE kodu seçin (isteğe bağlı)'}
+                  </span>
+                  <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                {naceOpen && (
+                  <div className="absolute left-0 right-0 top-full mt-1 z-50 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+                    <div className="p-2 border-b border-gray-100">
+                      <input
+                        autoFocus
+                        type="text"
+                        value={naceSearch}
+                        onChange={e => setNaceSearch(e.target.value)}
+                        placeholder="Kod veya faaliyet adı ara…"
+                        className="w-full text-sm px-3 py-2 rounded-lg border border-gray-200 outline-none focus:border-brand-400"
+                      />
+                    </div>
+                    <ul className="max-h-52 overflow-y-auto">
+                      <li>
+                        <button type="button" onClick={() => { setNaceKodu(''); setNaceSearch(''); setNaceOpen(false) }}
+                          className="w-full text-left text-sm px-3 py-2.5 text-gray-400 hover:bg-gray-50">
+                          — Seçim yok (genel)
+                        </button>
+                      </li>
+                      {naceKodlari
+                        .filter(n => !naceSearch || n.kod.includes(naceSearch) || n.tanim.toLowerCase().includes(naceSearch.toLowerCase()))
+                        .slice(0, 80)
+                        .map(n => (
+                          <li key={n.kod}>
+                            <button type="button" onClick={() => { setNaceKodu(n.kod); setNaceSearch(''); setNaceOpen(false) }}
+                              className={`w-full text-left text-sm px-3 py-2.5 hover:bg-brand-50 ${naceKodu === n.kod ? 'bg-brand-50 text-brand-600' : 'text-gray-600'}`}>
+                              <span className="font-mono text-xs text-gray-400 mr-2">{n.kod}</span>{n.tanim}
+                            </button>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
 

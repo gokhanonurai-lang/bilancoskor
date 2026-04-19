@@ -658,23 +658,23 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                       const duranV = oz.duran_varliklar || 0
                       const digerDonen = dv - (oz.nakit || 0) - (oz.ticari_alacaklar || 0) - (oz.stoklar || 0)
                       const digerDuran = duranV - (oz.maddi_duran_varlik || 0)
-                      const p = (v: number) => ta ? ((v / ta) * 100).toFixed(0) + '%' : '—'
-                      const rows: Array<{label: string; value?: number; header?: boolean}> = [
-                        { label: 'DÖNEN VARLIKLAR', value: dv, header: true },
-                        { label: 'Nakit ve Benzerleri', value: oz.nakit || 0 },
-                        { label: 'Ticari Alacaklar', value: oz.ticari_alacaklar || 0 },
-                        { label: 'Stoklar', value: oz.stoklar || 0 },
-                        { label: 'Diğer Dönen', value: digerDonen > 0 ? digerDonen : 0 },
-                        { label: 'DURAN VARLIKLAR', value: duranV, header: true },
-                        { label: 'Maddi Duran Varlık', value: oz.maddi_duran_varlik || 0 },
-                        { label: 'Diğer Duran', value: digerDuran > 0 ? digerDuran : 0 },
+                      const p = (v: number, base: number) => base ? ((v / base) * 100).toFixed(0) + '%' : '—'
+                      const rows: Array<{label: string; value?: number; header?: boolean; base?: number}> = [
+                        { label: 'DÖNEN VARLIKLAR', value: dv, header: true, base: ta },
+                        { label: 'Nakit ve Benzerleri', value: oz.nakit || 0, base: dv },
+                        { label: 'Ticari Alacaklar', value: oz.ticari_alacaklar || 0, base: dv },
+                        { label: 'Stoklar', value: oz.stoklar || 0, base: dv },
+                        { label: 'Diğer Dönen', value: digerDonen > 0 ? digerDonen : 0, base: dv },
+                        { label: 'DURAN VARLIKLAR', value: duranV, header: true, base: ta },
+                        { label: 'Maddi Duran Varlık', value: oz.maddi_duran_varlik || 0, base: duranV },
+                        { label: 'Diğer Duran', value: digerDuran > 0 ? digerDuran : 0, base: duranV },
                         { label: 'TOPLAM AKTİF', value: ta, header: true },
                       ]
-                      return rows.map(({ label, value, header }) => (
+                      return rows.map(({ label, value, header, base }) => (
                         <tr key={label} className={header ? 'border-t-2 border-gray-300' : ''}>
                           <td className={`py-1.5 ${header ? 'font-bold text-gray-800' : 'text-gray-600 pl-2'}`}>{label}</td>
                           <td className={`py-1.5 text-right tabular-nums ${header ? 'font-bold text-gray-800' : 'text-gray-700'}`}>{fmt(value ?? 0)}</td>
-                          <td className="py-1.5 text-right text-gray-400 text-xs pl-1">{header ? '' : p(value ?? 0)}</td>
+                          <td className="py-1.5 text-right text-gray-400 text-xs pl-1">{(header || base == null) ? '' : p(value ?? 0, base)}</td>
                         </tr>
                       ))
                     })()}
@@ -688,31 +688,30 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                 <table className="w-full text-sm">
                   <tbody className="divide-y divide-gray-100">
                     {(() => {
-                      const ta = oz.toplam_aktif || 0
                       const kv = oz.kv_borclar || 0
                       const uv = oz.uv_borclar || 0
                       const ok = oz.ozkaynaklar || 0
                       const digerKv = kv - (oz.banka_kredileri_kv || 0) - (oz.ticari_borclar || 0)
                       const tp = kv + uv + ok
-                      const p = (v: number) => ta ? ((v / ta) * 100).toFixed(0) + '%' : '—'
-                      const rows: Array<{label: string; value?: number; header?: boolean}> = [
-                        { label: 'KV BORÇLAR', value: kv, header: true },
-                        { label: 'Banka Kredileri (KV)', value: oz.banka_kredileri_kv || 0 },
-                        { label: 'Ticari Borçlar', value: oz.ticari_borclar || 0 },
-                        { label: 'Diğer KV', value: digerKv > 0 ? digerKv : 0 },
-                        { label: 'UV BORÇLAR', value: uv, header: true },
-                        { label: 'Banka Kredileri (UV)', value: oz.banka_kredileri_uv || 0 },
-                        { label: 'ÖZKAYNAKLAR', value: ok, header: true },
-                        { label: 'Ödenmiş Sermaye', value: oz.odenmis_sermaye || 0 },
-                        { label: 'Geçmiş Yıl Kârları', value: oz.gecmis_yil_karlari || 0 },
-                        { label: 'Dönem Net Kârı', value: oz.net_kar || 0 },
+                      const p = (v: number, base: number) => base ? ((v / base) * 100).toFixed(0) + '%' : '—'
+                      const rows: Array<{label: string; value?: number; header?: boolean; base?: number}> = [
+                        { label: 'KV BORÇLAR', value: kv, header: true, base: tp },
+                        { label: 'Banka Kredileri (KV)', value: oz.banka_kredileri_kv || 0, base: kv },
+                        { label: 'Ticari Borçlar', value: oz.ticari_borclar || 0, base: kv },
+                        { label: 'Diğer KV', value: digerKv > 0 ? digerKv : 0, base: kv },
+                        { label: 'UV BORÇLAR', value: uv, header: true, base: tp },
+                        { label: 'Banka Kredileri (UV)', value: oz.banka_kredileri_uv || 0, base: uv },
+                        { label: 'ÖZKAYNAKLAR', value: ok, header: true, base: tp },
+                        { label: 'Ödenmiş Sermaye', value: oz.odenmis_sermaye || 0, base: ok },
+                        { label: 'Geçmiş Yıl Kârları', value: oz.gecmis_yil_karlari || 0, base: ok },
+                        { label: 'Dönem Net Kârı', value: oz.net_kar || 0, base: ok },
                         { label: 'TOPLAM PASİF', value: tp, header: true },
                       ]
-                      return rows.map(({ label, value, header }) => (
+                      return rows.map(({ label, value, header, base }) => (
                         <tr key={label} className={header ? 'border-t-2 border-gray-300' : ''}>
                           <td className={`py-1.5 ${header ? 'font-bold text-gray-800' : 'text-gray-600 pl-2'}`}>{label}</td>
                           <td className={`py-1.5 text-right tabular-nums ${header ? 'font-bold text-gray-800' : 'text-gray-700'}`}>{fmt(value ?? 0)}</td>
-                          <td className="py-1.5 text-right text-gray-400 text-xs pl-1">{header ? '' : p(value ?? 0)}</td>
+                          <td className="py-1.5 text-right text-gray-400 text-xs pl-1">{(header || base == null) ? '' : p(value ?? 0, base)}</td>
                         </tr>
                       ))
                     })()}
