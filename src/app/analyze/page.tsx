@@ -289,7 +289,7 @@ export default function AnalyzePage() {
                   <span className={naceKodu ? 'text-gray-700' : 'text-gray-400'}>
                     {naceKodu
                       ? `${naceKodu} — ${naceKodlari.find(n => n.kod === naceKodu)?.tanim ?? ''}`
-                      : 'NACE kodu seçin (isteğe bağlı)'}
+                      : 'NACE kodu seçin'}
                   </span>
                   <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </button>
@@ -336,7 +336,7 @@ export default function AnalyzePage() {
 
             {error && <div className="mt-3 text-xs text-red-500 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</div>}
 
-            <button onClick={handleAnaliz} disabled={!file || loading} className="btn-primary w-full mt-5 py-3.5 disabled:opacity-50 disabled:cursor-not-allowed">
+            <button onClick={handleAnaliz} disabled={!file || !naceKodu || loading} className="btn-primary w-full mt-5 py-3.5 disabled:opacity-50 disabled:cursor-not-allowed">
               {loading ? (
                 <span className="flex items-center gap-2 justify-center">
                   <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="white" strokeWidth="3" strokeOpacity=".3"/><path d="M12 2a10 10 0 0 1 10 10" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
