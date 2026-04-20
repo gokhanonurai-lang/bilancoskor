@@ -25,18 +25,22 @@ const LOADING_STEPS = [
 const RAPOR_BASLIKLARI = [
   { n: '1',  t: 'Yönetici özeti' },
   { n: '2',  t: 'Güçlü yönler' },
-  { n: '3',  t: 'Zayıf Yönler / Uyarılar' },
+  { n: '3',  t: 'Zayıf yönler / Uyarılar' },
   { n: '4',  t: 'Skor bandı tablosu' },
-  { n: '5',  t: 'Finansman Araçları' },
-  { n: '6',  t: 'Nakit akış analizi' },
+  { n: '5',  t: 'Finansman araçları' },
+  { n: '6',  t: 'Nakit akış ve borç servisi analizi' },
   { n: '7',  t: '19 rasyo detayı' },
-  { n: '8',  t: 'Senaryo motoru' },
-  { n: '9',  t: 'Banka görüşme soruları' },
-  { n: '10', t: 'Banka başvuru hazırlığı' },
-  { n: '11', t: 'Model Bazlı İyileştirme Senaryoları' },
-  { n: '12', t: 'Model Skorunu Etkileyen Faktörler' },
-  { n: '13', t: 'Bilanço özeti' },
-  { n: '14', t: 'Yasal uyarı' },
+  { n: '8',  t: 'Alt hesap analizi' },
+  { n: '9',  t: 'Senaryo motoru' },
+  { n: '10', t: 'Banka görüşme soruları' },
+  { n: '11', t: 'Banka başvuru hazırlığı' },
+  { n: '12', t: 'Model bazlı iyileştirme senaryoları' },
+  { n: '13', t: 'Maksimum skora nasıl ulaşırsınız' },
+  { n: '14', t: 'Bilanço özeti' },
+  { n: '15', t: 'Gelir tablosu' },
+  { n: '16', t: 'Bilanço detayı' },
+  { n: '17', t: 'Finansal tablo analizi' },
+  { n: '18', t: 'Yasal uyarı' },
 ]
 
 export default function LandingPage() {
@@ -462,7 +466,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="grid grid-cols-3 gap-2 mb-4">
-              {['Yönetici özeti','Güçlü yönler','Zayıf Yönler / Uyarılar','Skor bandı','Finansman Araçları','Nakit akış analizi','19 rasyo detayı','Senaryo motoru','Banka soruları','Banka başvuru rehberi','Model Bazlı İyileştirme Senaryoları','Model Skorunu Etkileyen Faktörler','Bilanço özeti','Yasal uyarı'].map(t => (
+              {['Yönetici özeti','Güçlü yönler','Zayıf yönler / Uyarılar','Skor bandı tablosu','Finansman araçları','Nakit akış ve borç servisi analizi','19 rasyo detayı','Alt hesap analizi','Senaryo motoru','Banka görüşme soruları','Banka başvuru hazırlığı','Model bazlı iyileştirme senaryoları','Maksimum skora nasıl ulaşırsınız','Bilanço özeti','Gelir tablosu','Bilanço detayı','Finansal tablo analizi','Yasal uyarı'].map(t => (
                 <div key={t} className="bg-gray-50 rounded-xl h-9 flex items-center justify-center px-2">
                   <span className="text-xs text-gray-400 text-center">{t}</span>
                 </div>
