@@ -86,7 +86,7 @@ export default function HakkimizdaPage() {
               { baslik: 'Finansman araçlarına ilişkin genel bilgilendirme', aciklama: 'Rotatif, yatırım, faktoring, KGF gibi seçeneklere dair genel bilgi.' },
               { baslik: 'Senaryo motoru', aciklama: 'Farklı aksiyonların finansal göstergeler üzerindeki olası etkilerinin analizi.' },
               { baslik: 'Örnek değerlendirme soruları ve ifade kalıpları', aciklama: 'Finansal görüşmelerde kullanılabilecek örnek veri noktaları ve yanıt çerçeveleri.' },
-              { baslik: 'Model bazlı iyileştirme senaryoları', aciklama: 'Kısa, orta ve uzun vadeli iyileştirme adımları.' },
+              { baslik: 'Aksiyon zaman çizelgesi', aciklama: 'Kısa, orta ve uzun vadeli iyileştirme adımları.' },
               { baslik: 'PDF rapor çıktısı', aciklama: 'Tüm analizi tek belgede indirilebilir formatta sunar.' },
             ].map((item, i) => (
               <div key={i} className="flex gap-3">

@@ -34,7 +34,7 @@ const RAPOR_BASLIKLARI = [
   { n: '9',  t: 'Senaryo motoru' },
   { n: '10', t: 'Banka görüşme soruları' },
   { n: '11', t: 'Banka başvuru hazırlığı' },
-  { n: '12', t: 'Model bazlı iyileştirme senaryoları' },
+  { n: '12', t: 'Aksiyon zaman çizelgesi' },
   { n: '13', t: 'Maksimum skora nasıl ulaşırsınız' },
   { n: '14', t: 'Bilanço özeti' },
   { n: '15', t: 'Gelir tablosu' },
@@ -466,7 +466,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="grid grid-cols-3 gap-2 mb-4">
-              {['Yönetici özeti','Güçlü yönler','Zayıf yönler / Uyarılar','Skor bandı tablosu','Finansman araçları','Nakit akış ve borç servisi analizi','19 rasyo detayı','Alt hesap analizi','Senaryo motoru','Banka görüşme soruları','Banka başvuru hazırlığı','Model bazlı iyileştirme senaryoları','Maksimum skora nasıl ulaşırsınız','Bilanço özeti','Gelir tablosu','Bilanço detayı','Finansal tablo analizi','Yasal uyarı'].map(t => (
+              {['Yönetici özeti','Güçlü yönler','Zayıf yönler / Uyarılar','Skor bandı tablosu','Finansman araçları','Nakit akış ve borç servisi analizi','19 rasyo detayı','Alt hesap analizi','Senaryo motoru','Banka görüşme soruları','Banka başvuru hazırlığı','Aksiyon zaman çizelgesi','Maksimum skora nasıl ulaşırsınız','Bilanço özeti','Gelir tablosu','Bilanço detayı','Finansal tablo analizi','Yasal uyarı'].map(t => (
                 <div key={t} className="bg-gray-50 rounded-xl h-9 flex items-center justify-center px-2">
                   <span className="text-xs text-gray-400 text-center">{t}</span>
                 </div>

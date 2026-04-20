@@ -508,7 +508,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         {/* 11. AKSİYON ZAMAN ÇİZELGESİ */}
         {rapor.zaman_cizelgesi?.length > 0 && (
           <div className="card">
-            <Bolum num="12" title="Model Bazlı İyileştirme Senaryoları" />
+            <Bolum num="12" title="Aksiyon Zaman Çizelgesi" />
             <div className="space-y-4">
               {rapor.zaman_cizelgesi.map((z: any, i: number) => (
                 <div key={i} className="flex gap-4">
