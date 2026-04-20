@@ -142,8 +142,8 @@ export default function AnalyzePage() {
     }
   }
 
-  const handleOdeme = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleOdeme = async (e?: React.FormEvent) => {
+    e?.preventDefault()
     if (!sonuc || !user) return
     setStep('processing')
 
@@ -166,13 +166,13 @@ export default function AnalyzePage() {
 
       if (error) throw error
 
-      // Ödeme kaydı
-      await supabase.from('payments').insert({
-        user_id: user.id,
-        report_id: rapor.id,
-        tutar: rapor_fiyati || 600,
-        durum: 'tamamlandi',
-      })
+      // Ödeme kaydı — geçici olarak devre dışı
+      // await supabase.from('payments').insert({
+      //   user_id: user.id,
+      //   report_id: rapor.id,
+      //   tutar: rapor_fiyati || 600,
+      //   durum: 'tamamlandi',
+      // })
 
       router.push(`/report/${rapor.id}`)
     } catch (err: any) {
@@ -409,7 +409,8 @@ export default function AnalyzePage() {
                 ))}
               </div>
 
-              <button onClick={() => setStep('payment')} className="btn-primary w-full py-3.5">Tam raporu satın al — {rapor_fiyati ? rapor_fiyati + " ₺" : "..."}</button>
+              <button onClick={() => handleOdeme()} className="btn-primary w-full py-3.5">Tam raporu al</button>
+              <p className="text-center text-xs text-brand-500 font-medium mt-2">🎉 İlk raporunuz ücretsiz</p>
               <button onClick={() => setStep('upload')} className="btn-outline w-full mt-2 py-3">Geri dön</button>
             </div>
           </div>
