@@ -119,11 +119,19 @@ export default function AnalyzePage() {
 
       const { data: { session } } = await supabase.auth.getSession()
       const token = session?.access_token || ''
-      const res = await fetch(`${API_URL}/analyze`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
-        body: formData,
-      })
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 600_000)
+      let res: Response
+      try {
+        res = await fetch(`${API_URL}/analyze`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData,
+          signal: controller.signal,
+        })
+      } finally {
+        clearTimeout(timeoutId)
+      }
 
       if (!res.ok) {
         const err = await res.json()
