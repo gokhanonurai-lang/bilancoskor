@@ -177,7 +177,7 @@ export default function AnalyzePage() {
       router.push(`/report/${rapor.id}`)
     } catch (err: any) {
       setError('Kayıt hatası: ' + err.message)
-      setStep('payment')
+      setStep('preview')
     }
   }
 
