@@ -557,6 +557,35 @@ export default function ReportPage({ params }: { params: { id: string } }) {
               </div>
             </div>
             <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{rapor.potansiyel_raporu}</div>
+            {rapor.oncelik_tablosu && rapor.oncelik_tablosu.length > 0 && (
+              <div className="mt-6">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Öncelik Özet Tablosu</div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm border-collapse">
+                    <thead>
+                      <tr className="bg-gray-50">
+                        <th className="text-left px-3 py-2 text-xs font-semibold text-gray-600 border border-gray-200">Rasyo</th>
+                        <th className="text-center px-3 py-2 text-xs font-semibold text-gray-600 border border-gray-200">Mevcut</th>
+                        <th className="text-center px-3 py-2 text-xs font-semibold text-gray-600 border border-gray-200">Hedef</th>
+                        <th className="text-center px-3 py-2 text-xs font-semibold text-gray-600 border border-gray-200">Sektör Ort.</th>
+                        <th className="text-center px-3 py-2 text-xs font-semibold text-gray-600 border border-gray-200">Kayıp Puan</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rapor.oncelik_tablosu.map((row: any, i: number) => (
+                        <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                          <td className="px-3 py-2 text-gray-800 font-medium border border-gray-200">{row.rasyo}</td>
+                          <td className="px-3 py-2 text-center text-red-500 font-mono border border-gray-200">{row.mevcut}</td>
+                          <td className="px-3 py-2 text-center text-brand-600 font-mono border border-gray-200">{row.hedef}</td>
+                          <td className="px-3 py-2 text-center text-gray-500 font-mono border border-gray-200">{row.sektor_ort}</td>
+                          <td className="px-3 py-2 text-center text-amber-600 font-mono border border-gray-200">{row.kayip_puan}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
