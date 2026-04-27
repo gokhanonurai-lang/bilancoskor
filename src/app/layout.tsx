@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import NavbarClient from '@/components/NavbarClient'
 import Script from 'next/script'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
   title: 'BilancoSkor — Bilanço Skorunuzu Öğrenin',
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         <NavbarClient />
         {children}
+        <Analytics />
       </body>
     </html>
   )
