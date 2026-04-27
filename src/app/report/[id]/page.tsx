@@ -137,24 +137,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
               </div>
             </div>
           </div>
-          {rapor.yonetici_ozeti && (
-            <div className="mt-5 pt-5 border-t border-gray-100">
-              <div className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Yönetici Özeti</div>
-              <div className="space-y-4">
-                {rapor.yonetici_ozeti.split('\n').filter((l: string) => l.trim()).map((line: string, i: number) => {
-                  const baslik = line.match(/^\*\*(.+)\*\*$/)
-                  if (baslik) return (
-                    <div key={i} className="flex items-center gap-2 pt-1">
-                      <div className="w-1 h-4 bg-brand-400 rounded-full flex-shrink-0"/>
-                      <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{baslik[1]}</span>
-                    </div>
-                  )
-                  return <p key={i} className="text-sm text-gray-600 leading-relaxed">{line.replace(/\*\*/g, '')}</p>
-                })}
-              </div>
-            </div>
-          )}
-          <div className="grid grid-cols-5 gap-2 text-center">
+          <div className="grid grid-cols-5 gap-2 text-center mt-5">
             {[
               {k:'Likidite',p:rapor.likidite_puan,m:22},
               {k:'Sermaye',p:rapor.sermaye_puan,m:24},
@@ -173,6 +156,23 @@ export default function ReportPage({ params }: { params: { id: string } }) {
             ))}
           </div>
         </div>
+        {rapor.yonetici_ozeti && (
+          <div className="card">
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Yönetici Özeti</div>
+            <div className="space-y-4">
+              {rapor.yonetici_ozeti.split('\n').filter((l: string) => l.trim()).map((line: string, i: number) => {
+                const baslik = line.match(/^\*\*(.+)\*\*$/)
+                if (baslik) return (
+                  <div key={i} className="flex items-center gap-2 pt-1">
+                    <div className="w-1 h-4 bg-brand-400 rounded-full flex-shrink-0"/>
+                    <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{baslik[1]}</span>
+                  </div>
+                )
+                return <p key={i} className="text-sm text-gray-600 leading-relaxed">{line.replace(/\*\*/g, '')}</p>
+              })}
+            </div>
+          </div>
+        )}
 
         {/* 2. GÜÇLÜ YÖNLER */}
         {rapor.guclu_yonler?.length > 0 && (
