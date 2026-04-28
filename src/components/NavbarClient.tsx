@@ -36,7 +36,7 @@ export default function NavbarClient() {
 
           {/* SOL: Sandviç (sadece mobil) + Logo */}
           <div className="flex items-center gap-3">
-            {!loading && !user && (
+            {!loading && (
               <button
                 className="md:hidden p-1.5 rounded hover:bg-gray-100 transition"
                 onClick={() => setDrawerOpen(true)}
@@ -55,7 +55,7 @@ export default function NavbarClient() {
           </div>
 
           {/* ORTA: Masaüstü linkleri (sadece giriş yapmamış) */}
-          {!loading && !user && (
+          {!loading && (
             <div className="hidden md:flex items-center gap-6">
               <a href="/#ornek-rapor" className="text-sm text-gray-600 hover:text-gray-900 transition">Örnek Rapor</a>
               <Link href="/hakkimizda" className="text-sm text-gray-600 hover:text-gray-900 transition">Hakkımızda</Link>
@@ -131,14 +131,17 @@ export default function NavbarClient() {
               ))}
             </div>
 
-            <div className="mt-auto px-4 py-5 border-t border-gray-100">
-              <Link
-                href="/auth?tab=login"
-                className="block w-full text-center text-sm text-gray-600 hover:text-gray-900 py-2"
-                onClick={() => setDrawerOpen(false)}
-              >
-                Giriş yap
-              </Link>
+            <div className="mt-auto px-4 py-5 border-t border-gray-100 flex flex-col gap-2">
+              {user ? (
+                <>
+                  <span className="text-xs text-gray-400 px-1">{user.email}</span>
+                  <Link href="/dashboard" className="block w-full text-center text-sm text-gray-600 hover:text-gray-900 py-2" onClick={() => setDrawerOpen(false)}>Hesabım</Link>
+                  <Link href="/analyze" className="block w-full text-center btn-primary text-sm py-2" onClick={() => setDrawerOpen(false)}>Yeni Rapor</Link>
+                  <button onClick={() => { cikis(); setDrawerOpen(false); }} className="w-full text-center text-sm text-gray-500 hover:text-gray-800 py-2">Çıkış</button>
+                </>
+              ) : (
+                <Link href="/auth?tab=login" className="block w-full text-center text-sm text-gray-600 hover:text-gray-900 py-2" onClick={() => setDrawerOpen(false)}>Giriş yap</Link>
+              )}
             </div>
           </div>
         </div>
