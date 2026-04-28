@@ -183,11 +183,11 @@ export default function LandingPage() {
           <span className="text-brand-400">görüyor?</span>
         </h1>
         <p className="text-lg text-gray-500 max-w-xl mx-auto mb-3 leading-relaxed">
-          Mizanınızı yükleyin, finansal profilinizi hemen öğrenin.<br />
-          Kredi limitinizi ve teminat yapınızı nelerin engellediğini görün.
+          Mizanınızı yükleyin, finansal tablonuzun kredi açısından güçlü ve zayıf yönlerini görün.<br />
+          BilancoSkor; nakit akışı, teminat ihtiyacı ve finansal oranlarınızı banka bakış açısıyla değerlendirir.
         </p>
         <p className="text-sm text-gray-400 italic max-w-md mx-auto mb-10">
-          Finansal tablonuzu banka gözüyle görün ve kredi limitinizi artırın.
+          Finansal tablonuzu banka gözüyle görün. Bankaların dikkat ettiği noktaları önceden öğrenin.
         </p>
 
         {/* UPLOAD ZONE */}
@@ -337,7 +337,7 @@ export default function LandingPage() {
             ))}
           </div>
           <p className="text-sm font-semibold text-brand-400 text-center border-t border-gray-200 pt-4">
-            Tüm soruların cevabı sizde. Siz henüz görmemiş olabilirsiniz.
+            Cevaplar finansal tablonuzda gizli. BilancoSkor bu cevapları sizin için ortaya çıkarır.
           </p>
         </div>
       </section>
