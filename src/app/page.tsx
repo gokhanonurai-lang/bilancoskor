@@ -417,7 +417,7 @@ export default function LandingPage() {
                   <rect x="15" y="6" width="52" height="66" rx="5" fill="#EAF3DE" stroke="#639922" strokeWidth="1.2"/>
                   <rect x="22" y="14" width="30" height="5" rx="2" fill="#639922" opacity="0.5"/>
                   <circle cx="60" cy="20" r="10" fill="#3B6D11" opacity="0.15" stroke="#3B6D11" strokeWidth="1"/>
-                  <text x="60" y="24" textAnchor="middle" fontSize="9" fontWeight="500" fill="#3B6D11">AA</text>
+                  <text x="60" y="24" textAnchor="middle" fontSize="9" fontWeight="500" fill="#3B6D11">B</text>
                   <rect x="22" y="30" width="6" height="18" rx="1.5" fill="#639922" opacity="0.7"/>
                   <rect x="31" y="36" width="6" height="12" rx="1.5" fill="#639922" opacity="0.5"/>
                   <rect x="40" y="33" width="6" height="15" rx="1.5" fill="#639922" opacity="0.6"/>
@@ -453,19 +453,37 @@ export default function LandingPage() {
           <div className="text-xs font-medium text-gray-400 uppercase tracking-widest text-center mb-8">Örnek rapor önizlemesi</div>
           <div className="max-w-2xl mx-auto card">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-sm font-medium text-gray-900">Örnek Firma · Ticaret Sektörü · 2024</div>
+              <div className="text-sm font-medium text-gray-900">Örnek Şirket · Ticaret Sektörü · 46.17.01</div>
               <span className="text-xs bg-amber-50 text-amber-600 px-2 py-1 rounded-lg">Örnek</span>
             </div>
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-16 h-16 rounded-full border-2 border-brand-400 flex flex-col items-center justify-center flex-shrink-0">
-                <span className="text-xl font-semibold text-brand-400 leading-none">77</span>
-                <span className="text-xs font-medium text-brand-400">AA</span>
+              <div className="w-16 h-16 rounded-full border-2 border-red-400 flex flex-col items-center justify-center flex-shrink-0">
+                <span className="text-xl font-semibold text-red-400 leading-none">35</span>
+                <span className="text-xs font-medium text-red-400">B</span>
               </div>
               <div>
-                <div className="text-sm font-medium text-gray-900 mb-1">Çok iyi — Finansal göstergeler olumlu profil oluştuğuna işaret ediyor</div>
-                <div className="text-xs text-gray-500">Faaliyet etkinliği iyileştirilerek AAA bandına ulaşılabilir.</div>
-                <div className="text-xs text-brand-400 mt-1">Tahmini limit: 10.300.000 ₺ · Teminat: Kefalet + POS/çek</div>
+                <div className="text-sm font-medium text-gray-900 mb-1">Finansal yapıda önemli zayıflıklar — acil iyileştirme adımları gerekiyor</div>
+                <div className="text-xs text-gray-500">Özkaynak ve borç yapısı güçlendirilerek skor yükseltilebilir.</div>
+                <div className="text-xs text-gray-500 mt-1">Tahmini limit: Teminat değeri bazlı — çok sınırlı · Teminat: Tam ipotek + mevduat blokesi + kişisel kefalet</div>
               </div>
+            </div>
+            <div className="grid grid-cols-5 gap-1.5 mb-4">
+              {[
+                { k: 'Likidite', p: 17.1, m: 22 },
+                { k: 'Sermaye', p: 0.9, m: 24 },
+                { k: 'Kârlılık', p: 14.1, m: 26 },
+                { k: 'Faaliyet', p: 1.8, m: 18 },
+                { k: 'Borç öd.', p: 1.2, m: 16 },
+              ].map(x => (
+                <div key={x.k} className="bg-gray-50 rounded-xl p-2 text-center">
+                  <div className="text-xs text-gray-400 mb-0.5">{x.k}</div>
+                  <div className="text-xs font-semibold text-gray-900">{x.p}</div>
+                  <div className="text-xs text-gray-400">/ {x.m}</div>
+                  <div className="mt-1 bg-gray-200 rounded-full h-1 overflow-hidden">
+                    <div className="h-full bg-red-400 rounded-full" style={{ width: `${Math.min(100, (x.p / x.m) * 100)}%` }} />
+                  </div>
+                </div>
+              ))}
             </div>
             <div className="grid grid-cols-3 gap-2 mb-4">
               {['Yönetici özeti','Güçlü yönler','Zayıf yönler / Uyarılar','Skor bandı tablosu','Finansman araçları','Nakit akış ve borç servisi analizi','19 rasyo detayı','Alt hesap analizi','Senaryo motoru','Banka görüşme soruları','Banka başvuru hazırlığı','Aksiyon zaman çizelgesi','Maksimum skora nasıl ulaşırsınız','Bilanço özeti','Gelir tablosu','Bilanço detayı','Finansal tablo analizi','Yasal uyarı'].map(t => (
