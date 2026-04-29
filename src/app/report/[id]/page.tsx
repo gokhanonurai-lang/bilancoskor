@@ -732,7 +732,9 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                         { label: 'Banka Kredileri (UV)', value: oz.banka_kredileri_uv || 0, base: uv },
                         { label: 'ÖZKAYNAKLAR', value: ok, header: true, base: tp },
                         { label: 'Ödenmiş Sermaye', value: oz.odenmis_sermaye || 0, base: ok },
+                        { label: 'Kâr Yedekleri', value: oz.kar_yedekleri || 0, base: ok },
                         { label: 'Geçmiş Yıl Kârları', value: oz.gecmis_yil_karlari || 0, base: ok },
+                        { label: 'Geçmiş Yıl Zararları', value: -(oz.gecmis_yil_zararlari || 0), base: ok },
                         { label: 'Dönem Net Kârı', value: oz.net_kar || 0, base: ok },
                         { label: 'TOPLAM PASİF', value: tp, header: true },
                       ]
