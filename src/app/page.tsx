@@ -182,8 +182,10 @@ export default function LandingPage() {
           Bankanız sizi nasıl<br />
           <span className="text-brand-400">görüyor?</span>
         </h1>
-        <p className="text-lg text-gray-500 max-w-xl mx-auto mb-3 leading-relaxed">
-          Mizanınızı yükleyin, finansal tablonuzun kredi açısından güçlü ve zayıf yönlerini görün.<br />
+        <p className="text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
+          Mizanınızı yükleyin, finansal tablonuzun kredi açısından güçlü ve zayıf yönlerini görün.
+        </p>
+        <p className="text-lg text-gray-500 max-w-xl mx-auto mt-3 mb-3 leading-relaxed">
           BilancoSkor; nakit akışı, teminat ihtiyacı ve finansal oranlarınızı banka bakış açısıyla değerlendirir.
         </p>
         <p className="text-sm text-gray-400 italic max-w-md mx-auto mb-10">
