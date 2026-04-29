@@ -578,24 +578,163 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
                 </section>
               )}
 
-              {/* 15. FİNANSAL TABLO ANALİZİ */}
+              {/* 15. GELİR TABLOSU */}
+              {oz.net_satislar ? (
+                <section>
+                  <ST num="15" title="Gelir Tablosu" />
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200">
+                          <th className="text-left pb-2 font-semibold text-gray-700">Kalem</th>
+                          <th className="text-right pb-2 font-semibold text-gray-700 pr-4">Tutar (₺)</th>
+                          <th className="text-right pb-2 font-semibold text-gray-700">Net Satış %</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100">
+                        {(() => {
+                          const ns = oz.net_satislar || 0
+                          const brut = ns - (oz.satis_maliyeti || 0)
+                          const favok = oz.favok || 0
+                          const faaliyet_kar = favok - (oz.enflasyon_duzeltme_zarari || 0)
+                          const vk = faaliyet_kar + (oz.finansman_gelirleri || 0) - (oz.finansman_giderleri || 0)
+                          const p = (v: number) => ns ? ((v / ns) * 100).toFixed(1) + '%' : '—'
+                          const isNeg = (v: number) => v < 0
+                          const rows: Array<{ label: string; value: number; bold?: boolean; sep?: boolean; red?: boolean }> = [
+                            { label: 'Net Satışlar', value: ns, bold: true },
+                            { label: 'Satış Maliyeti', value: -(oz.satis_maliyeti || 0), red: true },
+                            { label: 'Brüt Kâr', value: brut, bold: true, sep: true },
+                            { label: 'Faaliyet Giderleri', value: -(oz.faaliyet_giderleri || 0), red: true },
+                            { label: 'FAVÖK', value: favok, bold: true, sep: true },
+                            { label: 'Enf. Düzeltme Zararı', value: -(oz.enflasyon_duzeltme_zarari || 0), red: true },
+                            { label: 'Faaliyet Kârı', value: faaliyet_kar },
+                            { label: 'Finansman Gelirleri', value: oz.finansman_gelirleri || 0 },
+                            { label: 'Finansman Giderleri', value: -(oz.finansman_giderleri || 0), red: true },
+                            { label: 'Vergi Öncesi Kâr', value: vk, bold: true, sep: true },
+                            { label: 'Vergi', value: -(oz.vergi || 0), red: true },
+                            { label: 'Net Kâr', value: oz.net_kar || 0, bold: true, sep: true },
+                          ]
+                          return rows.map(({ label, value, bold, sep, red }) => (
+                            <tr key={label} className={sep ? 'border-t-2 border-gray-300' : ''}>
+                              <td className={`py-2 ${bold ? 'font-semibold text-gray-900' : 'text-gray-600'}`}>{label}</td>
+                              <td className={`py-2 pr-4 text-right tabular-nums ${red || isNeg(value) ? 'text-red-600' : 'text-gray-700'} ${bold ? 'font-semibold' : ''}`}>
+                                {value < 0 ? `(${fmt(-value)})` : fmt(value)}
+                              </td>
+                              <td className={`py-2 text-right tabular-nums ${red || isNeg(value) ? 'text-red-500' : 'text-gray-500'}`}>
+                                {p(Math.abs(value))}
+                              </td>
+                            </tr>
+                          ))
+                        })()}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              ) : null}
+
+              {/* 16. BİLANÇO */}
+              {oz.toplam_aktif ? (
+                <section>
+                  <ST num="16" title="Bilanço" />
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* AKTİF */}
+                    <div>
+                      <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Aktif</p>
+                      <table className="w-full text-sm">
+                        <tbody className="divide-y divide-gray-100">
+                          {(() => {
+                            const ta = oz.toplam_aktif || 0
+                            const dv = oz.donen_varliklar || 0
+                            const duranV = oz.duran_varliklar || 0
+                            const digerDonen = dv - (oz.nakit || 0) - (oz.ticari_alacaklar || 0) - (oz.stoklar || 0)
+                            const digerDuran = duranV - (oz.maddi_duran_varlik || 0)
+                            const p = (v: number, base: number) => base ? ((v / base) * 100).toFixed(0) + '%' : '—'
+                            const rows: Array<{ label: string; value?: number; header?: boolean; base?: number }> = [
+                              { label: 'DÖNEN VARLIKLAR', value: dv, header: true, base: ta },
+                              { label: 'Nakit ve Benzerleri', value: oz.nakit || 0, base: dv },
+                              { label: 'Ticari Alacaklar', value: oz.ticari_alacaklar || 0, base: dv },
+                              { label: 'Stoklar', value: oz.stoklar || 0, base: dv },
+                              { label: 'Diğer Dönen', value: digerDonen > 0 ? digerDonen : 0, base: dv },
+                              { label: 'DURAN VARLIKLAR', value: duranV, header: true, base: ta },
+                              { label: 'Maddi Duran Varlık', value: oz.maddi_duran_varlik || 0, base: duranV },
+                              { label: 'Diğer Duran', value: digerDuran > 0 ? digerDuran : 0, base: duranV },
+                              { label: 'TOPLAM AKTİF', value: ta, header: true },
+                            ]
+                            return rows.map(({ label, value, header, base }) => (
+                              <tr key={label} className={header ? 'border-t-2 border-gray-300' : ''}>
+                                <td className={`py-1.5 ${header ? 'font-bold text-gray-800' : 'text-gray-600 pl-2'}`}>{label}</td>
+                                <td className={`py-1.5 text-right tabular-nums ${header ? 'font-bold text-gray-800' : 'text-gray-700'}`}>{fmt(value ?? 0)}</td>
+                                <td className="py-1.5 text-right text-gray-400 text-xs pl-1">{(header || base == null) ? '' : p(value ?? 0, base)}</td>
+                              </tr>
+                            ))
+                          })()}
+                        </tbody>
+                      </table>
+                    </div>
+                    {/* PASİF */}
+                    <div>
+                      <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Pasif</p>
+                      <table className="w-full text-sm">
+                        <tbody className="divide-y divide-gray-100">
+                          {(() => {
+                            const kv = oz.kv_borclar || 0
+                            const uv = oz.uv_borclar || 0
+                            const ok = oz.ozkaynaklar || 0
+                            const digerKv = kv - (oz.banka_kredileri_kv || 0) - (oz.ticari_borclar || 0)
+                            const tp = kv + uv + ok
+                            const p = (v: number, base: number) => base ? ((v / base) * 100).toFixed(0) + '%' : '—'
+                            const rows: Array<{ label: string; value?: number; header?: boolean; base?: number }> = [
+                              { label: 'KV BORÇLAR', value: kv, header: true, base: tp },
+                              { label: 'Banka Kredileri (KV)', value: oz.banka_kredileri_kv || 0, base: kv },
+                              { label: 'Ticari Borçlar', value: oz.ticari_borclar || 0, base: kv },
+                              { label: 'Diğer KV', value: digerKv > 0 ? digerKv : 0, base: kv },
+                              { label: 'UV BORÇLAR', value: uv, header: true, base: tp },
+                              { label: 'Banka Kredileri (UV)', value: oz.banka_kredileri_uv || 0, base: uv },
+                              { label: 'ÖZKAYNAKLAR', value: ok, header: true, base: tp },
+                              { label: 'Ödenmiş Sermaye', value: oz.odenmis_sermaye || 0, base: ok },
+                              { label: 'Geçmiş Yıl Kârları', value: oz.gecmis_yil_karlari || 0, base: ok },
+                              { label: 'Dönem Net Kârı', value: oz.net_kar || 0, base: ok },
+                              { label: 'TOPLAM PASİF', value: tp, header: true },
+                            ]
+                            return rows.map(({ label, value, header, base }) => (
+                              <tr key={label} className={header ? 'border-t-2 border-gray-300' : ''}>
+                                <td className={`py-1.5 ${header ? 'font-bold text-gray-800' : 'text-gray-600 pl-2'}`}>{label}</td>
+                                <td className={`py-1.5 text-right tabular-nums ${header ? 'font-bold text-gray-800' : 'text-gray-700'}`}>{fmt(value ?? 0)}</td>
+                                <td className="py-1.5 text-right text-gray-400 text-xs pl-1">{(header || base == null) ? '' : p(value ?? 0, base)}</td>
+                              </tr>
+                            ))
+                          })()}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+              ) : null}
+
+              {/* 17. FİNANSAL TABLO ANALİZİ */}
               {rapor.finansal_tablo_yorumu && (
                 <section>
-                  <ST num="15" title="Finansal Tablo Analizi" />
+                  <ST num="17" title="Finansal Tablo Analizi" />
                   <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
                     {rapor.finansal_tablo_yorumu}
                   </div>
                 </section>
               )}
 
-              {/* 16. YASAL UYARI */}
+              {/* 18. YASAL UYARI */}
               <section>
-                <div className="bg-gray-50 rounded-2xl p-4 text-xs text-gray-400 leading-relaxed space-y-1.5">
-                  <p className="font-semibold text-gray-500 mb-2">Yasal Uyarı</p>
-                  <p><strong className="text-gray-500">1. Değerleme faaliyeti değildir:</strong> Bu rapor, 6362 sayılı Sermaye Piyasası Kanunu kapsamında SPK tarafından yetkilendirilmiş değerleme kuruluşlarınca gerçekleştirilen resmi değerleme faaliyeti niteliği taşımamaktadır.</p>
+                <div className="bg-gray-50 rounded-2xl p-5 text-xs text-gray-400 leading-relaxed space-y-1.5">
+                  <p className="font-semibold text-gray-500 mb-2">18 · Yasal Uyarı</p>
+                  <p><strong className="text-gray-500">1. Değerleme faaliyeti değildir:</strong> Bu rapor, 6362 sayılı Sermaye Piyasası Kanunu ve ilgili mevzuat kapsamında SPK tarafından yetkilendirilmiş değerleme kuruluşlarınca gerçekleştirilen resmi değerleme faaliyeti niteliği taşımamaktadır. BilancoSkor, kullanıcı tarafından yüklenen mizan verilerini algoritmik olarak işleyen bir finansal analiz yazılımıdır; üretilen çıktılar tahmini nitelikte olup herhangi bir resmi değerleme, derecelendirme veya kredi kararının yerine geçmez.</p>
                   <p><strong className="text-gray-500">2. Resmi derecelendirme değildir:</strong> Bu rapor, SPK veya BDDK tarafından yetkilendirilmiş resmi bir kredi derecelendirme kuruluşunun notu değildir. Bankalar ve finansal kuruluşlar tarafından resmi kredi süreçlerinde bağlayıcı belge olarak kullanılamaz.</p>
-                  <p><strong className="text-gray-500">3. Tahmini analiz:</strong> Rapordaki kredi skoru, limit tahminleri ve skor bandı hesaplamaları tamamen algoritmik ve tahmini niteliktedir; herhangi bir bankanın kredi kararını, onayını veya reddini temsil etmez.</p>
-                  <p><strong className="text-gray-500">4. Sorumluluk sınırı:</strong> BilancoSkor, bu rapordaki bilgilere dayanılarak alınan kararlar sonucunda doğabilecek doğrudan veya dolaylı zararlardan hiçbir koşulda sorumlu tutulamaz.</p>
+                  <p><strong className="text-gray-500">3. Finansal analiz aracıdır:</strong> BilancoSkor, kullanıcının kendi verilerini işleyen otomatik bir analiz yazılımıdır. Üretilen skorlar ve harf notları, resmi kredi derecelendirme kuruluşlarının notlarından bağımsız olup yalnızca kullanıcının kendi finansal durumunu anlamasına yardımcı olmak amacıyla tasarlanmıştır.</p>
+                  <p><strong className="text-gray-500">4. Tahmini analiz:</strong> Rapordaki kredi skoru, limit tahminleri ve skor bandı hesaplamaları tamamen algoritmik ve tahmini niteliktedir; herhangi bir bankanın kredi kararını, onayını veya reddini temsil etmez.</p>
+                  <p><strong className="text-gray-500">5. Banka bağımsızlığı:</strong> Her bankanın kendi metodolojisi, risk iştahı ve değerlendirme kriterleri farklıdır. Bu rapordan elde edilen sonuçlar bankanın vereceği kararı öngörmez veya garanti etmez.</p>
+                  <p><strong className="text-gray-500">6. Veri sorumluluğu:</strong> Analizin doğruluğu ve kalitesi yüklenen mizanın eksiksizliğine ve doğruluğuna bağlıdır. Hatalı, eksik veya yanıltıcı veri girilmesi sonucu oluşan çıktılardan BilancoSkor sorumlu tutulamaz; veri doğruluğu tamamen kullanıcıya aittir.</p>
+                  <p><strong className="text-gray-500">7. Mali müşavir yerini tutmaz:</strong> Bu rapor, SMMM veya YMM tarafından düzenlenen resmi mali müşavirlik görüşünün, vergi beyanının veya bağımsız denetim raporunun yerini almaz.</p>
+                  <p><strong className="text-gray-500">8. Hukuki belge niteliği taşımaz:</strong> Bu rapor herhangi bir hukuki uyuşmazlıkta, idari süreçte veya resmi başvuruda delil ya da resmi belge olarak kullanılamaz.</p>
+                  <p><strong className="text-gray-500">9. Paylaşım sorumluluğu:</strong> Raporun üçüncü şahıslarla, kurumlarla veya bankalarla paylaşılması kullanıcının kendi sorumluluğundadır. BilancoSkor, raporun üçüncü taraflarca kullanımından doğabilecek sonuçlardan sorumlu tutulamaz.</p>
+                  <p><strong className="text-gray-500">10. Sorumluluk sınırı:</strong> BilancoSkor, bu rapordaki bilgilere, tahminlere veya önerilere dayanılarak alınan kararlar sonucunda doğabilecek doğrudan veya dolaylı zararlardan, kâr kaybından ya da üçüncü kişilere verilen zararlardan hiçbir koşulda sorumlu tutulamaz.</p>
                   <p className="pt-1 border-t border-gray-200">Bu raporu kullanmaya devam etmekle yukarıdaki tüm koşulları okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan etmiş olursunuz.</p>
                 </div>
               </section>
