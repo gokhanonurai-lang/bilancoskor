@@ -694,7 +694,7 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
                               { label: 'Ödenmiş Sermaye', value: oz.odenmis_sermaye || 0, base: ok },
                               { label: 'Geçmiş Yıl Kârları', value: oz.gecmis_yil_karlari || 0, base: ok },
                               { label: 'Dönem Net Kârı', value: oz.net_kar || 0, base: ok },
-                              { label: 'TOPLAM PASİF', value: tp, header: true },
+                              { label: 'TOPLAM PASİF', value: oz.toplam_aktif || tp, header: true },
                             ]
                             return rows.map(({ label, value, header, base }) => (
                               <tr key={label} className={header ? 'border-t-2 border-gray-300' : ''}>
@@ -731,10 +731,11 @@ export default function SampleReportModal({ onClose }: { onClose: () => void }) 
                   <p><strong className="text-gray-500">4. Tahmini analiz:</strong> Rapordaki kredi skoru, limit tahminleri ve skor bandı hesaplamaları tamamen algoritmik ve tahmini niteliktedir; herhangi bir bankanın kredi kararını, onayını veya reddini temsil etmez.</p>
                   <p><strong className="text-gray-500">5. Banka bağımsızlığı:</strong> Her bankanın kendi metodolojisi, risk iştahı ve değerlendirme kriterleri farklıdır. Bu rapordan elde edilen sonuçlar bankanın vereceği kararı öngörmez veya garanti etmez.</p>
                   <p><strong className="text-gray-500">6. Veri sorumluluğu:</strong> Analizin doğruluğu ve kalitesi yüklenen mizanın eksiksizliğine ve doğruluğuna bağlıdır. Hatalı, eksik veya yanıltıcı veri girilmesi sonucu oluşan çıktılardan BilancoSkor sorumlu tutulamaz; veri doğruluğu tamamen kullanıcıya aittir.</p>
-                  <p><strong className="text-gray-500">7. Mali müşavir yerini tutmaz:</strong> Bu rapor, SMMM veya YMM tarafından düzenlenen resmi mali müşavirlik görüşünün, vergi beyanının veya bağımsız denetim raporunun yerini almaz.</p>
-                  <p><strong className="text-gray-500">8. Hukuki belge niteliği taşımaz:</strong> Bu rapor herhangi bir hukuki uyuşmazlıkta, idari süreçte veya resmi başvuruda delil ya da resmi belge olarak kullanılamaz.</p>
-                  <p><strong className="text-gray-500">9. Paylaşım sorumluluğu:</strong> Raporun üçüncü şahıslarla, kurumlarla veya bankalarla paylaşılması kullanıcının kendi sorumluluğundadır. BilancoSkor, raporun üçüncü taraflarca kullanımından doğabilecek sonuçlardan sorumlu tutulamaz.</p>
-                  <p><strong className="text-gray-500">10. Sorumluluk sınırı:</strong> BilancoSkor, bu rapordaki bilgilere, tahminlere veya önerilere dayanılarak alınan kararlar sonucunda doğabilecek doğrudan veya dolaylı zararlardan, kâr kaybından ya da üçüncü kişilere verilen zararlardan hiçbir koşulda sorumlu tutulamaz.</p>
+                  <p><strong className="text-gray-500">7. Geçmiş veri sınırlılığı:</strong> Rapor yalnızca yüklenen döneme ait finansal veriler üzerinden üretilmektedir. Geçmiş finansal performans gelecekteki sonuçları garanti etmez.</p>
+                  <p><strong className="text-gray-500">8. Mali müşavir yerini tutmaz:</strong> Bu rapor, SMMM veya YMM tarafından düzenlenen resmi mali müşavirlik görüşünün, vergi beyanının veya bağımsız denetim raporunun yerini almaz.</p>
+                  <p><strong className="text-gray-500">9. Hukuki belge niteliği taşımaz:</strong> Bu rapor herhangi bir hukuki uyuşmazlıkta, idari süreçte veya resmi başvuruda delil ya da resmi belge olarak kullanılamaz.</p>
+                  <p><strong className="text-gray-500">10. Paylaşım sorumluluğu:</strong> Raporun üçüncü şahıslarla, kurumlarla veya bankalarla paylaşılması kullanıcının kendi sorumluluğundadır. BilancoSkor, raporun üçüncü taraflarca kullanımından doğabilecek sonuçlardan sorumlu tutulamaz.</p>
+                  <p><strong className="text-gray-500">11. Sorumluluk sınırı:</strong> BilancoSkor, bu rapordaki bilgilere, tahminlere veya önerilere dayanılarak alınan kararlar sonucunda doğabilecek doğrudan veya dolaylı zararlardan, kâr kaybından ya da üçüncü kişilere verilen zararlardan hiçbir koşulda sorumlu tutulamaz.</p>
                   <p className="pt-1 border-t border-gray-200">Bu raporu kullanmaya devam etmekle yukarıdaki tüm koşulları okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan etmiş olursunuz.</p>
                 </div>
               </section>
