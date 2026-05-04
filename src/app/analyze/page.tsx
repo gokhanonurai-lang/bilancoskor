@@ -265,7 +265,7 @@ export default function AnalyzePage() {
               onClick={() => inputRef.current?.click()}
               className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-colors ${dragging?'border-brand-400 bg-brand-50':file?'border-brand-400 bg-brand-50':'border-gray-200 hover:border-gray-300 bg-gray-50'}`}
             >
-              <input ref={inputRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])}/>
+              <input ref={inputRef} type="file" accept=".xlsx" className="hidden" onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])}/>
               {file ? (
                 <div>
                   <div className="w-12 h-12 rounded-2xl bg-brand-100 flex items-center justify-center mx-auto mb-3">
@@ -281,7 +281,8 @@ export default function AnalyzePage() {
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.8" strokeLinecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                   </div>
                   <div className="text-sm font-medium text-gray-700 mb-1">Sürükleyip bırakın</div>
-                  <div className="text-xs text-gray-400">veya tıklayarak dosya seçin · Excel (.xlsx, .xls)</div>
+                  <div className="text-xs text-gray-400">veya tıklayarak dosya seçin · Excel (.xlsx)</div>
+                  <div className="text-xs text-amber-600 mt-2">Yalnızca .xlsx formatı desteklenmektedir. Excel&apos;de Dosya → Farklı Kaydet → .xlsx ile dönüştürebilirsiniz.</div>
                 </div>
               )}
             </div>
