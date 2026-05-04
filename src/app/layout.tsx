@@ -3,6 +3,7 @@ import './globals.css'
 import NavbarClient from '@/components/NavbarClient'
 import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/react'
+import ClarityProvider from '@/components/ClarityProvider'
 
 export const metadata: Metadata = {
   title: 'BilancoSkor — Bilanço Skorunuzu Öğrenin',
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', 'AW-18068999649');
           `}
         </Script>
+        <ClarityProvider />
         <NavbarClient />
         {children}
         <Analytics />

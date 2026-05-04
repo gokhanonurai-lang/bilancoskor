@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
+import Clarity from '@microsoft/clarity'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import SampleReportModal from '@/components/SampleReportModal'
@@ -128,6 +129,7 @@ export default function LandingPage() {
         sektor: naceKodu || 'ticaret',
         firma_adi: file.name.replace('.xlsx', '').replace('.xls', ''),
       }))
+      Clarity.event('rapor_uretildi')
       router.push('/analyze')
     } catch (err: any) {
       setError(err.message || 'API bağlantı hatası. Lütfen tekrar deneyin.')
