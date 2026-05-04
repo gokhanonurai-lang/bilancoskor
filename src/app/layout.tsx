@@ -1,36 +1,42 @@
 import type { Metadata } from 'next'
+import * as Sentry from '@sentry/nextjs'
 import './globals.css'
 import NavbarClient from '@/components/NavbarClient'
 import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/react'
 import ClarityProvider from '@/components/ClarityProvider'
 
-export const metadata: Metadata = {
-  title: 'BilancoSkor — Bilanço Skorunuzu Öğrenin',
-  description: 'Mizanınızı yükleyin, bankanın sizi nasıl gördüğünü öğrenin. KOBİler için finansal analiz ve bilanço skorlama platformu.',
-  keywords: ['bilanço skoru', 'finansal analiz', 'kredi skoru', 'mizan analizi', 'banka kredi', 'KOBİ finansal rapor'],
-  authors: [{ name: 'BilancoSkor' }],
-  metadataBase: new URL('https://www.bilancoskor.com'),
-  openGraph: {
+export function generateMetadata(): Metadata {
+  return {
     title: 'BilancoSkor — Bilanço Skorunuzu Öğrenin',
-    description: 'Mizanınızı yükleyin, bankanın sizi nasıl gördüğünü öğrenin. KOBİler için finansal analiz platformu.',
-    url: 'https://www.bilancoskor.com',
-    siteName: 'BilancoSkor',
-    locale: 'tr_TR',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary',
-    title: 'BilancoSkor — Bilanço Skorunuzu Öğrenin',
-    description: 'Mizanınızı yükleyin, bankanın sizi nasıl gördüğünü öğrenin.',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: 'https://www.bilancoskor.com',
-  },
+    description: 'Mizanınızı yükleyin, bankanın sizi nasıl gördüğünü öğrenin. KOBİler için finansal analiz ve bilanço skorlama platformu.',
+    keywords: ['bilanço skoru', 'finansal analiz', 'kredi skoru', 'mizan analizi', 'banka kredi', 'KOBİ finansal rapor'],
+    authors: [{ name: 'BilancoSkor' }],
+    metadataBase: new URL('https://www.bilancoskor.com'),
+    openGraph: {
+      title: 'BilancoSkor — Bilanço Skorunuzu Öğrenin',
+      description: 'Mizanınızı yükleyin, bankanın sizi nasıl gördüğünü öğrenin. KOBİler için finansal analiz platformu.',
+      url: 'https://www.bilancoskor.com',
+      siteName: 'BilancoSkor',
+      locale: 'tr_TR',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary',
+      title: 'BilancoSkor — Bilanço Skorunuzu Öğrenin',
+      description: 'Mizanınızı yükleyin, bankanın sizi nasıl gördüğünü öğrenin.',
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: {
+      canonical: 'https://www.bilancoskor.com',
+    },
+    other: {
+      ...Sentry.getTraceData(),
+    },
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
