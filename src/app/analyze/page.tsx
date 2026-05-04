@@ -208,7 +208,7 @@ export default function AnalyzePage() {
                 <path d="M12 2a10 10 0 0 1 10 10" stroke="#1D9E75" strokeWidth="3" strokeLinecap="round"/>
               </svg>
               <div className="text-base font-semibold text-gray-900">Rapor Hazırlanıyor</div>
-              <div className="text-xs text-gray-400 mt-1">Bu işlem 30–60 saniye sürebilir</div>
+              <div className="text-xs text-gray-400 mt-1">Bu işlem genellikle 2–4 dakika sürer. Sayfayı kapatmayın, raporunuz hazırlanıyor.</div>
             </div>
             <div className="space-y-3">
               {LOADING_STEPS.map((s, i) => (
