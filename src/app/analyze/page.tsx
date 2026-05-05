@@ -29,6 +29,7 @@ type AnalizSonuc = {
   karlilik_puan: number
   faaliyet_puan: number
   borc_puan: number
+  rapor_id: string
 }
 
 const BANT_RENK: Record<string, string> = {
