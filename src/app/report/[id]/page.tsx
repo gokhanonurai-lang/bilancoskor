@@ -9,6 +9,8 @@ const supabase = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inltand0bnRsZmlvZXh1ZHZhY3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzODY5NTQsImV4cCI6MjA5MDk2Mjk1NH0.xW8XVjr0q7LQ_UStIf0s8q8MoYOsnJyg5ALkDAbT-CI'
 )
 
+const API_URL = 'https://positive-adventure-production-f3cf.up.railway.app'
+
 const BANT_STYLE: Record<string, { label: string; cls: string }> = {
   mukemmel: { label: 'Mükemmel', cls: 'bg-brand-50 text-brand-600' },
   iyi:      { label: 'İyi',      cls: 'bg-blue-50 text-blue-600'   },
@@ -57,9 +59,17 @@ export default function ReportPage({ params }: { params: { id: string } }) {
   const [meta, setMeta] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
-  const handlePrint = () => {
+  const handlePrint = async () => {
     const title = document.title
     document.title = (meta?.firma_adi || 'Rapor') + ' — BilancoSkor Raporu'
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) {
+      fetch(`${API_URL}/log-event`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify({ event: 'INDIRME', rapor_id: params.id }),
+      }).catch(() => {})
+    }
     window.print()
     setTimeout(() => { document.title = title }, 1000)
   }
@@ -74,6 +84,11 @@ export default function ReportPage({ params }: { params: { id: string } }) {
       setMeta(data)
       setRapor(data.rapor_json)
       setLoading(false)
+      fetch(`${API_URL}/log-event`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify({ event: 'GORUNTULEME', rapor_id: params.id }),
+      }).catch(() => {})
     }
     load()
   }, [params.id, router])

@@ -163,6 +163,7 @@ export default function AnalyzePage() {
       expires.setDate(expires.getDate() + erisimGun)
 
       const { data: rapor, error } = await supabase.from('reports').insert({
+        id: sonuc.rapor_id,
         user_id: user.id,
         firma_adi: sonuc.firma_ozet?.sirket_adi || 'Rapor',
         sektor: naceKodu || 'ticaret',
