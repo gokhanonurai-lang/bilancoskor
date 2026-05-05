@@ -649,7 +649,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                     const brut = ns - (oz.satis_maliyeti || 0)
                     const favok = oz.favok || 0
                     const faaliyet_kar = favok - (oz.enflasyon_duzeltme_zarari || 0)
-                    const vk = faaliyet_kar + (oz.finansman_gelirleri || 0) - (oz.finansman_giderleri || 0)
+                    const vk = faaliyet_kar - (oz.olagandisi_giderler || 0) + (oz.finansman_gelirleri || 0) - (oz.finansman_giderleri || 0)
                     const p = (v: number) => ns ? ((v / ns) * 100).toFixed(1) + '%' : '—'
                     const isNeg = (v: number) => v < 0
 
@@ -661,6 +661,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                       { label: 'FAVÖK', value: favok, bold: true, sep: true },
                       { label: 'Enf. Düzeltme Zararı', value: -(oz.enflasyon_duzeltme_zarari || 0), red: true },
                       { label: 'Faaliyet Kârı', value: faaliyet_kar },
+                      ...(oz.olagandisi_giderler ? [{ label: 'Olağandışı Giderler (689)', value: -(oz.olagandisi_giderler), red: true }] : []),
                       { label: 'Finansman Gelirleri', value: oz.finansman_gelirleri || 0 },
                       { label: 'Finansman Giderleri', value: -(oz.finansman_giderleri || 0), red: true },
                       { label: 'Vergi Öncesi Kâr', value: vk, bold: true, sep: true },
