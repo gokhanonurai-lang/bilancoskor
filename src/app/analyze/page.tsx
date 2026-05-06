@@ -50,6 +50,11 @@ export default function AnalyzePage() {
   const [loading, setLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState(0)
   const loadingTimerRef = useRef<any>(null)
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    return () => { if (pollRef.current) clearInterval(pollRef.current) }
+  }, [])
   const [cardForm, setCardForm] = useState({ ad: '', no: '', tarih: '', cvv: '' })
   const [error, setError] = useState('')
   const [sonuc, setSonuc] = useState<AnalizSonuc | null>(null)
@@ -120,28 +125,50 @@ export default function AnalyzePage() {
 
       const { data: { session } } = await supabase.auth.getSession()
       const token = session?.access_token || ''
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 600_000)
-      let res: Response
-      try {
-        res = await fetch(`${API_URL}/analyze`, {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}` },
-          body: formData,
-          signal: controller.signal,
-        })
-      } finally {
-        clearTimeout(timeoutId)
-      }
 
+      // POST → hemen job_id al (< 2s)
+      const res = await fetch(`${API_URL}/analyze`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData,
+      })
       if (!res.ok) {
         const err = await res.json()
         throw new Error(err.detail || 'Analiz sırasında hata oluştu.')
       }
+      const { job_id } = await res.json()
 
-      const data = await res.json()
-      setSonuc(data)
-      setStep('preview')
+      // Polling: her 4s'de bir sonucu kontrol et
+      await new Promise<void>((resolve, reject) => {
+        pollRef.current = setInterval(async () => {
+          try {
+            const { data: { session: s } } = await supabase.auth.getSession()
+            const t = s?.access_token || ''
+            const jobRes = await fetch(`${API_URL}/job/${job_id}`, {
+              headers: { 'Authorization': `Bearer ${t}` },
+            })
+            if (!jobRes.ok) {
+              clearInterval(pollRef.current!)
+              reject(new Error('Analiz sonucu alınamadı. Lütfen tekrar deneyin.'))
+              return
+            }
+            const job = await jobRes.json()
+            if (job.status === 'done') {
+              clearInterval(pollRef.current!)
+              setSonuc(job.result)
+              setStep('preview')
+              resolve()
+            } else if (job.status === 'error') {
+              clearInterval(pollRef.current!)
+              reject(new Error(job.error || 'Analiz sırasında hata oluştu.'))
+            }
+            // pending / running → beklemeye devam
+          } catch (e: any) {
+            clearInterval(pollRef.current!)
+            reject(e)
+          }
+        }, 4000)
+      })
     } catch (err: any) {
       setError(err.message || 'API bağlantı hatası. Lütfen tekrar deneyin.')
     } finally {
