@@ -2,12 +2,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  'https://ymjwtntlfioexudvacsj.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inltand0bnRsZmlvZXh1ZHZhY3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzODY5NTQsImV4cCI6MjA5MDk2Mjk1NH0.xW8XVjr0q7LQ_UStIf0s8q8MoYOsnJyg5ALkDAbT-CI'
-)
+import { supabase } from '@/lib/supabase'
 
 type Report = { id: string; firma_adi: string; sektor: string; skor: number; harf: string; pdf_url: string; created_at: string; expires_at: string }
 const HR: Record<string, string> = { AAA:'text-brand-400',AA:'text-brand-400',A:'text-brand-400',BBB:'text-amber-500',BB:'text-amber-500',B:'text-red-400',D:'text-red-500' }
