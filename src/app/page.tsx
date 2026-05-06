@@ -1,17 +1,12 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@supabase/supabase-js'
 import Clarity from '@microsoft/clarity'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import SampleReportModal from '@/components/SampleReportModal'
 import { naceKodlari } from '@/data/naceKodlari'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+import { supabase } from '@/lib/supabase'
 
 const API_URL = 'https://positive-adventure-production-f3cf.up.railway.app'
 
