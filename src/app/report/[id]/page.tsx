@@ -386,26 +386,45 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         )}
 
         {/* 8. ALT HESAP ANALİZİ */}
-        {rapor.alt_hesap_analizi?.length > 0 && (
+        {(rapor.alt_hesap_analizi?.length > 0 || rapor.alt_hesap_mevcut === false) && (
           <div className="card">
             <Bolum num="8" title="Alt Hesap Analizi" />
-            <div className="space-y-6">
-              {rapor.alt_hesap_analizi.map((h: any, i: number) => (
-                <div key={i} className="border border-gray-100 rounded-2xl p-5">
-                  <div className="font-semibold text-gray-900 mb-3">
-                    {h.ana_hesap_kodu} — {h.ana_hesap_adi}
-                  </div>
-                  {h.uyari_notu && (
-                    <div className="text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2 mb-3">
-                      ⚠ {h.uyari_notu}
+            {rapor.alt_hesap_mevcut === false ? (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800">
+                <div className="font-semibold mb-2">Özet Mizan — Alt Hesap Analizi Yapılamadı</div>
+                <p className="mb-3 text-amber-700">
+                  Bu rapor özet mizan baz alınarak hazırlandı. Ana hesap bakiyeleri kullanıldı;
+                  alt kalem dökümü mevcut olmadığından aşağıdaki analizler yapılamadı:
+                </p>
+                <ul className="list-disc list-inside space-y-1 text-amber-700 mb-3">
+                  <li>Alacak kalite ve vade dağılımı</li>
+                  <li>Stok kırılımı ve dönen kalem detayı</li>
+                  <li>Gider yapısı alt analizi</li>
+                  <li>Borç hesaplarının vade ve karşı taraf dağılımı</li>
+                </ul>
+                <p className="text-amber-600 text-xs">
+                  Detaylı mizan (alt hesap kodlu) yüklenirse bu bölüm otomatik oluşturulur.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {rapor.alt_hesap_analizi.map((h: any, i: number) => (
+                  <div key={i} className="border border-gray-100 rounded-2xl p-5">
+                    <div className="font-semibold text-gray-900 mb-3">
+                      {h.ana_hesap_kodu} — {h.ana_hesap_adi}
                     </div>
-                  )}
-                  <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
-                    {h.analiz_metni}
+                    {h.uyari_notu && (
+                      <div className="text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2 mb-3">
+                        ⚠ {h.uyari_notu}
+                      </div>
+                    )}
+                    <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+                      {h.analiz_metni}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
