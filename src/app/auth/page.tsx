@@ -1,6 +1,6 @@
 'use client'
 export const dynamic = 'force-dynamic'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
@@ -8,6 +8,12 @@ import { supabase } from '@/lib/supabase'
 export default function AuthPage() {
   const router = useRouter()
   const [tab, setTab] = useState<'login' | 'register'>('register')
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) router.replace('/dashboard')
+    })
+  }, [])
   const [sozlesmeKabul, setSozlesmeKabul] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')

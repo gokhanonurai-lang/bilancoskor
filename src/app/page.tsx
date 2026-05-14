@@ -71,6 +71,15 @@ export default function LandingPage() {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
+  const handleRaporOlustur = async () => {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) {
+      document.getElementById('mizan-yukle')?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      router.push('/auth')
+    }
+  }
+
   const handleFile = (f: File) => {
     if (f.size > 10 * 1024 * 1024) { setError('Dosya boyutu 10MB sınırını aşıyor.'); return }
     if (!f.name.endsWith('.xlsx') && !f.name.endsWith('.xls')) { setError('Lütfen Excel (.xlsx) dosyası yükleyin.'); return }
@@ -171,7 +180,7 @@ export default function LandingPage() {
       )}
 
       {/* HERO */}
-      <section className="max-w-5xl mx-auto px-6 pt-20 pb-0 text-center">
+      <section id="mizan-yukle" className="max-w-5xl mx-auto px-6 pt-20 pb-0 text-center">
         <div className="inline-flex items-center gap-2 bg-brand-50 text-brand-600 text-xs font-medium px-3 py-1.5 rounded-full mb-6">
           Finansal farkındalık platformu
         </div>
@@ -524,7 +533,7 @@ export default function LandingPage() {
               <div className="text-5xl font-semibold text-gray-900 mb-1 leading-none">{rapor_fiyati ?? "..."} ₺</div>
               <div className="text-sm text-gray-400">tek seferlik · KDV dahil</div>
               <div className="text-xs font-semibold text-brand-500 mt-1 mb-6">🎉 İlk rapor ücretsiz</div>
-              <Link href="/auth" className="btn-primary w-full block text-center">Rapor Oluştur</Link>
+              <button onClick={handleRaporOlustur} className="btn-primary w-full block text-center">Rapor Oluştur</button>
               <div className="mt-4 space-y-2">
                 {['Rapor 1 gün hesapta saklanır, sonra kalıcı silinir', 'Mizan analiz sonrası silinir', 'PDF olarak indirilebilir'].map(f => (
                   <div key={f} className="flex items-center gap-2 text-xs text-gray-500">
@@ -564,7 +573,7 @@ export default function LandingPage() {
           <p className="text-sm text-gray-500 mb-8 max-w-md mx-auto">
             Finansal tablonuzu banka gözüyle görün. Limitinizi ve teminat yapınızı nelerin engellediğini öğrenin.
           </p>
-          <Link href="/auth" className="btn-primary text-base px-8 py-3">Hemen Başlayın</Link>
+          <button onClick={handleRaporOlustur} className="btn-primary text-base px-8 py-3">Hemen Başlayın</button>
           <div className="mt-6 max-w-sm mx-auto space-y-1">
             <p className="text-base text-gray-800">Ne kadar güçlüsünüz?</p>
             <p className="text-base text-gray-800">Ne kadar daha güçlenebilirsiniz?</p>
