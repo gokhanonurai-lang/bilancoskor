@@ -318,24 +318,35 @@ export default function LandingPage() {
 
       {/* PAIN BLOCK */}
       <section className="py-10">
-        <div className="max-w-xl mx-auto bg-gray-50 border border-gray-100 rounded-2xl px-7 py-6">
-          <div className="space-y-3 mb-5">
-            {[
-              'Kredi başvurularınız beklediğiniz gibi sonuçlanmadı mı?',
-              'Limitinizin neden artırılmadığını biliyor musunuz?',
-              'Bankalardan net bir cevap alamadınız mı?',
-              'Yeni kredi limiti için yüksek teminatlara mı ihtiyacınız var?',
-              'POS bloke ve çek karşılığı gibi nakdi teminatlı limitler nakit akışınızı mı etkiliyor?',
-            ].map((q) => (
-              <div key={q} className="flex items-start gap-2.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 flex-shrink-0" />
-                <p className="text-sm text-gray-700 leading-snug">{q}</p>
-              </div>
-            ))}
+        <div className="max-w-3xl mx-auto space-y-3">
+          {/* Üst blok */}
+          <div className="bg-gray-50 border border-gray-100 rounded-2xl px-7 py-6">
+            <p className="text-xl font-semibold text-gray-900 mb-4">Kredi başvurularınız beklediğiniz gibi sonuçlanmadı mı?</p>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                'Limitinizin neden artırılmadığını biliyor musunuz?',
+                'Bankalardan net bir cevap alamadınız mı?',
+                'Yeni kredi limiti için yüksek teminatlara mı ihtiyaç duyuyorsunuz?',
+                'POS bloke ve çek karşılığı gibi nakdi teminatlı limitler nakit akışınızı mı etkiliyor?',
+                'Mizanınızı gönderdikten sonra detaylı sorular mı alıyorsunuz?',
+                'Bankanızdan gelen finansal sorulara net cevap vermekte zorlanıyor musunuz?',
+              ].map((q) => (
+                <div key={q} className="bg-white border border-gray-100 rounded-xl px-4 py-3">
+                  <p className="text-sm text-gray-700 leading-snug">{q}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="text-sm font-semibold text-brand-400 text-center border-t border-gray-200 pt-4">
-            Cevaplar finansal tablonuzda gizli. BilancoSkor bu cevapları sizin için ortaya çıkarır.
-          </p>
+          {/* Alt blok */}
+          <div className="bg-brand-50 border border-brand-100 rounded-2xl px-8 py-6">
+            <p className="text-2xl font-semibold text-gray-900 mb-2">
+              Soruları da, Cevapları da{' '}
+              <span className="text-brand-400">Veriyoruz.</span>
+            </p>
+            <p className="text-sm text-gray-600">
+              BilancoSkor yapay zeka sistemi, bankacınızdan size gelebilecek tüm olası soruları ve cevapları çıkartır, alacağınız soruların nedeni açıklar ve şirketiniz üzerindeki hakimiyetinizi en üst seviyeye taşır.
+            </p>
+          </div>
         </div>
       </section>
 
