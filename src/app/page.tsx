@@ -183,7 +183,7 @@ export default function LandingPage() {
           Mizanınızı yükleyin, finansal tablonuzun kredi açısından güçlü ve zayıf yönlerini görün.
         </p>
         <p className="text-base text-gray-700 max-w-lg mx-auto mt-5 mb-8 leading-relaxed">
-          Birçok KOBİ, finansal tablolarındaki gizli gücün ve risklerin farkında değil.
+          Şirketler, finansal tablolarındaki gizli gücün ve risklerin farkında değil.
           Biz sizin için görünür hale getiriyoruz.
         </p>
 
@@ -231,7 +231,7 @@ export default function LandingPage() {
                   <line x1="12" y1="3" x2="12" y2="15"/>
                 </svg>
               </div>
-              <div className="text-base font-medium text-gray-900 mb-1.5">Mizanınızı buraya sürükleyin</div>
+              <div className="text-base font-medium text-gray-900 mb-1.5">Detay Mizanınızı buraya sürükleyin</div>
               <div className="text-sm text-gray-500 mb-1">veya bilgisayarınızdan seçin</div>
               <div className="text-xs text-gray-400 mb-6">Excel (.xlsx)</div>
             </>
@@ -260,7 +260,7 @@ export default function LandingPage() {
                 <span className={naceKodu ? 'text-gray-700' : 'text-gray-400'}>
                   {naceKodu
                     ? `${naceKodu} — ${naceKodlari.find(n => n.kod === naceKodu)?.tanim ?? ''}`
-                    : 'Sektör / NACE kodu seçin (isteğe bağlı)'}
+                    : 'Sektör / NACE kodu seçin'}
                 </span>
                 <svg className="w-3 h-3 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </button>
