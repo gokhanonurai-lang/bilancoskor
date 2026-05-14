@@ -27,6 +27,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: 'https://www.bilancoskor.com/sss', changeFrequency: 'monthly', priority: 0.7 },
     { url: 'https://www.bilancoskor.com/hakkimizda', changeFrequency: 'monthly', priority: 0.6 },
     { url: 'https://www.bilancoskor.com/auth', changeFrequency: 'monthly', priority: 0.5 },
+    { url: 'https://www.bilancoskor.com/sozlesmeler/kullanici-sozlesmesi', changeFrequency: 'yearly', priority: 0.3 },
+    { url: 'https://www.bilancoskor.com/sozlesmeler/gizlilik-politikasi', changeFrequency: 'yearly', priority: 0.3 },
+    { url: 'https://www.bilancoskor.com/sozlesmeler/mesafeli-satis', changeFrequency: 'yearly', priority: 0.3 },
+    { url: 'https://www.bilancoskor.com/sozlesmeler/aydinlatma-metni', changeFrequency: 'yearly', priority: 0.3 },
+    { url: 'https://www.bilancoskor.com/sozlesmeler/cerez-politikasi', changeFrequency: 'yearly', priority: 0.3 },
     ...blogUrls,
   ]
 }
