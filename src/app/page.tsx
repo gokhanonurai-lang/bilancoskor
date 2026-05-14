@@ -310,9 +310,11 @@ export default function LandingPage() {
           )}
         </div>
 
-        <div className="flex items-center justify-center gap-2 mt-5 mb-16 text-xs text-gray-400">
-          <div className="w-2 h-2 rounded-full bg-brand-400" />
-          Mizanınız analiz sonrası silinir, saklanmaz veya paylaşılmaz
+        <div className="flex items-start justify-center gap-2.5 mt-5 mb-16 max-w-sm mx-auto">
+          <div className="w-2 h-2 rounded-full bg-brand-400 mt-1.5 flex-shrink-0" />
+          <p className="text-sm text-gray-500 leading-snug">
+            Lütfen en iyi analiz için detay mizanınızı yükleyin, mizanınız analiz sonrası silinir, saklanmaz veya paylaşılmaz.
+          </p>
         </div>
       </section>
 
