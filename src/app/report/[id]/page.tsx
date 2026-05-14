@@ -722,7 +722,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                       const dv = oz.donen_varliklar || 0
                       const duranV = oz.duran_varliklar || 0
                       const vc = oz.verilen_cekler || 0
-                      const digerDonen = dv - (oz.nakit || 0) - vc - (oz.ticari_alacaklar || 0) - (oz.stoklar || 0)
+                      const digerDonen = dv - (oz.nakit || 0) - vc - (oz.ticari_alacaklar || 0) - (oz.stoklar || 0) - (oz.yillara_yaygin_insaat || 0)
                       const digerDuran = duranV - (oz.maddi_duran_varlik || 0)
                       const p = (v: number, base: number) => base ? ((Math.abs(v) / Math.abs(base)) * 100).toFixed(0) + '%' : '—'
                       const rows: Array<{label: string; value?: number; header?: boolean; base?: number; deduction?: boolean}> = [
@@ -731,6 +731,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                         ...(vc < 0 ? [{ label: 'Verilen Çekler (103)', value: vc, base: dv, deduction: true }] : []),
                         { label: 'Ticari Alacaklar', value: oz.ticari_alacaklar || 0, base: dv },
                         { label: 'Stoklar', value: oz.stoklar || 0, base: dv },
+                        ...(oz.yillara_yaygin_insaat ? [{ label: 'Yıllara Yaygın İnşaat (170)', value: oz.yillara_yaygin_insaat, base: dv }] : []),
                         { label: 'Diğer Dönen', value: digerDonen > 0 ? digerDonen : 0, base: dv },
                         { label: 'DURAN VARLIKLAR', value: duranV, header: true, base: ta },
                         { label: 'Maddi Duran Varlık', value: oz.maddi_duran_varlik || 0, base: duranV },
