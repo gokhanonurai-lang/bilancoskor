@@ -552,9 +552,11 @@ export default function LandingPage() {
             Finansal tablonuzu banka gözüyle görün. Limitinizi ve teminat yapınızı nelerin engellediğini öğrenin.
           </p>
           <Link href="/auth" className="btn-primary text-base px-8 py-3">Hemen Başlayın</Link>
-          <p className="text-sm text-gray-400 italic mt-5 max-w-sm mx-auto">
-            Ne kadar güçlüsünüz? Ne kadar daha güçlenebilirsiniz? Tercih sizin.
-          </p>
+          <div className="mt-6 max-w-sm mx-auto space-y-1">
+            <p className="text-base text-gray-800">Ne kadar güçlüsünüz?</p>
+            <p className="text-base text-gray-800">Ne kadar daha güçlenebilirsiniz?</p>
+            <p className="text-base text-brand-400 font-medium">Tercih sizin.</p>
+          </div>
         </div>
       </section>
 
