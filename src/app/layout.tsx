@@ -44,6 +44,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="tr">
       <body>
         <Script
+          src="https://t.contentsquare.net/uxa/d654d62c772e2.js"
+          strategy="afterInteractive"
+        />
+        <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-18068999649"
           strategy="afterInteractive"
         />
