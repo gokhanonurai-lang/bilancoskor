@@ -668,7 +668,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                     const brut = ns - (oz.satis_maliyeti || 0)
                     const favok = oz.favok || 0
                     const faaliyet_kar = favok - (oz.enflasyon_duzeltme_zarari || 0)
-                    const vk = faaliyet_kar - (oz.olagandisi_giderler || 0) + (oz.finansman_gelirleri || 0) - (oz.finansman_giderleri || 0)
+                    const vk = faaliyet_kar - (oz.olagandisi_giderler || 0) + (oz.finansman_gelirleri || 0) - (oz.finansman_giderleri || 0) - (oz.yillara_yaygin_enflasyon_net || 0)
                     const p = (v: number) => ns ? ((v / ns) * 100).toFixed(1) + '%' : '—'
                     const isNeg = (v: number) => v < 0
 
@@ -683,6 +683,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
                       ...(oz.olagandisi_giderler ? [{ label: 'Olağandışı Giderler (689)', value: -(oz.olagandisi_giderler), red: true }] : []),
                       { label: 'Finansman & Diğer Gelirler', value: oz.finansman_gelirleri || 0 },
                       { label: 'Finansman Giderleri', value: -(oz.finansman_giderleri || 0), red: true },
+                      ...(oz.yillara_yaygin_enflasyon_net ? [{ label: 'Yıllara Yaygın Enf. Düzeltmesi (697)', value: -(oz.yillara_yaygin_enflasyon_net), red: true }] : []),
                       { label: 'Vergi Öncesi Kâr', value: vk, bold: true, sep: true },
                       { label: 'Vergi', value: -(oz.vergi || 0), red: true },
                       { label: 'Net Kâr', value: oz.net_kar || 0, bold: true, sep: true },
