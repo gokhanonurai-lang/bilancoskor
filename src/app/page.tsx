@@ -173,7 +173,7 @@ export default function LandingPage() {
       {/* HERO */}
       <section className="max-w-5xl mx-auto px-6 pt-20 pb-0 text-center">
         <div className="inline-flex items-center gap-2 bg-brand-50 text-brand-600 text-xs font-medium px-3 py-1.5 rounded-full mb-6">
-          Finansal analiz platformu
+          Finansal farkındalık platformu
         </div>
         <h1 className="text-5xl font-semibold tracking-tight text-gray-900 mb-5 leading-[1.15]">
           Bankanız sizi nasıl<br />
@@ -182,11 +182,9 @@ export default function LandingPage() {
         <p className="text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
           Mizanınızı yükleyin, finansal tablonuzun kredi açısından güçlü ve zayıf yönlerini görün.
         </p>
-        <p className="text-lg text-gray-500 max-w-xl mx-auto mt-3 mb-3 leading-relaxed">
-          BilancoSkor; nakit akışı, teminat ihtiyacı ve finansal oranlarınızı banka bakış açısıyla değerlendirir.
-        </p>
-        <p className="text-sm text-gray-400 italic max-w-md mx-auto mb-10">
-          Finansal tablonuzu banka gözüyle görün. Bankaların dikkat ettiği noktaları önceden öğrenin.
+        <p className="text-base text-gray-700 max-w-lg mx-auto mt-5 mb-8 leading-relaxed">
+          Birçok KOBİ, finansal tablolarındaki gizli gücün ve risklerin farkında değil.
+          Biz sizin için görünür hale getiriyoruz.
         </p>
 
         {/* UPLOAD ZONE */}
@@ -500,6 +498,10 @@ export default function LandingPage() {
       {/* FİYATLANDIRMA */}
       <section className="border-t border-gray-100 py-16 bg-gray-50">
         <div className="max-w-5xl mx-auto px-6">
+          <p className="text-3xl font-semibold text-center mb-6 leading-snug">
+            <span className="text-brand-400">Güç sizde saklı.</span>{' '}
+            <span className="text-gray-900">Biz sadece gösteriyoruz.</span>
+          </p>
           <div className="text-xs font-medium text-gray-400 uppercase tracking-widest text-center mb-4">Fiyatlandırma</div>
           <p className="text-center text-sm text-gray-500 italic mb-10">"Tek bir finansal hatanın maliyeti, bu raporun fiyatının çok üzerindedir."</p>
           <div className="max-w-2xl mx-auto flex gap-10 items-start">
@@ -550,6 +552,9 @@ export default function LandingPage() {
             Finansal tablonuzu banka gözüyle görün. Limitinizi ve teminat yapınızı nelerin engellediğini öğrenin.
           </p>
           <Link href="/auth" className="btn-primary text-base px-8 py-3">Hemen Başlayın</Link>
+          <p className="text-sm text-gray-400 italic mt-5 max-w-sm mx-auto">
+            Ne kadar güçlüsünüz? Ne kadar daha güçlenebilirsiniz? Tercih sizin.
+          </p>
         </div>
       </section>
 
