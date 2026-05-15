@@ -650,7 +650,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         )}
 
         {/* 15. GELİR TABLOSU */}
-        {oz.net_satislar ? (
+        {(oz.net_satislar || oz.favok) ? (
           <div className="card">
             <Bolum num="15" title="Gelir Tablosu" />
             <div className="overflow-x-auto">
